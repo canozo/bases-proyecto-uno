@@ -24,55 +24,63 @@ class AdminPersonas extends Component {
     return (
       <Form>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Completo</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="nombre-completo">Nombre Completo</Label>
+          <Input type="text" name="nombre-completo" id="nombre-completo" placeholder="Juan Mauricio" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Identidad</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="num-identidad">Numero de Identidad</Label>
+          <Input type="text" name="num-identidad" id="num-identidad" placeholder="0801-1990-00000" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Telefono</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="telefono">Telefono</Label>
+          <Input type="text" name="telefono" id="telefono" placeholder="50422000000" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Email</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="email">Correo electronico</Label>
+          <Input type="text" name="email" id="email" placeholder="ejemplo@gmail.com" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Direccion</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="direccion">Direccion</Label>
+          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3ra ave" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleCheckbox">Registros Sanitarios</Label>
-          <div>
-            <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Check this custom checkbox" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox2" label="Or this one" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox3" label="But not this disabled one" disabled />
+          <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>
+          <div id="requisitos-sanitarios">
+            <CustomInput type="checkbox" id="req-sanitario-1" label="Requisito 1" />
+            <CustomInput type="checkbox" id="req-sanitario-2" label="Requisito 2" />
+            <CustomInput type="checkbox" id="req-sanitario-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleCheckbox">Registros Legales</Label>
-          <div>
-            <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Check this custom checkbox" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox2" label="Or this one" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox3" label="But not this disabled one" disabled />
+          <Label for="requisitos-legal">Requisitos Legales</Label>
+          <div id="requisitos-legal">
+            <CustomInput type="checkbox" id="req-legal-1" label="Requisito 1" />
+            <CustomInput type="checkbox" id="req-legal-2" label="Requisito 2" />
+            <CustomInput type="checkbox" id="req-legal-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleCheckbox">Registros Academicos</Label>
-          <div>
-            <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Check this custom checkbox" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox2" label="Or this one" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox3" label="But not this disabled one" disabled />
+          <Label for="requisitos-academicos">Requisitos Academicos</Label>
+          <div id="requisitos-academicos">
+            <CustomInput type="checkbox" id="req-academicos-1" label="Requisito 1" />
+            <CustomInput type="checkbox" id="req-academicos-2" label="Requisito 2" />
+            <CustomInput type="checkbox" id="req-academicos-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleCheckbox">Registros Profesionales y Laborales</Label>
-          <div>
-            <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Check this custom checkbox" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox2" label="Or this one" />
-            <CustomInput type="checkbox" id="exampleCustomCheckbox3" label="But not this disabled one" disabled />
+          <Label for="requisitos-profesionales">Requisitos Profesionales</Label>
+          <div id="requisitos-profesionales">
+            <CustomInput type="checkbox" id="req-profesionales-1" label="Requisito 1" />
+            <CustomInput type="checkbox" id="req-profesionales-2" label="Requisito 2" />
+            <CustomInput type="checkbox" id="req-profesionales-3" label="Requisito 3" />
+          </div>
+        </FormGroup>
+        <FormGroup>
+          <Label for="requisitos-laborales">Requisitos Laborales</Label>
+          <div id="requisitos-laborales">
+            <CustomInput type="checkbox" id="req-laborales-1" label="Requisito 1" />
+            <CustomInput type="checkbox" id="req-laborales-2" label="Requisito 2" />
+            <CustomInput type="checkbox" id="req-laborales-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <Button>Submit</Button>

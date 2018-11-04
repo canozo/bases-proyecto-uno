@@ -24,20 +24,16 @@ class AdminEmpresas extends Component {
     return (
       <Form>
         <FormGroup>
-          <Label for="exampleEmail">CF</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="director">Nombre del director</Label>
+          <Input type="text" name="director" id="director" placeholder="Juan Mauricio" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Director</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="direccion">Direccion de la empresa</Label>
+          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3 ave" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Direccion</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleEmail">Rubro</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="rubro">Rubro</Label>
+          <Input type="text" name="rubro" id="rubro" placeholder="Telecomunicaciones" />
         </FormGroup>
         <Button>Submit</Button>
       </Form>
