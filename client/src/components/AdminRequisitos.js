@@ -12,7 +12,7 @@ const styles = {
   },
 };
 
-class Test extends Component {
+class AdminRequisitos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,14 +22,14 @@ class Test extends Component {
   render() {
     return (
       <div>
-        <h1>Test</h1>
+        <h1>AdminRequisitos</h1>
       </div>
     );
   }
 }
 
-Test.propTypes = {
+AdminRequisitos.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Test);
+export default withStyles(styles)(AdminRequisitos);
