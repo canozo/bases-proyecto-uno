@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Route, Link, Switch } from 'react-router-dom';
 // import { Redirect } from 'react-router-dom';
-import Pagina from './Pagina';
-import Test from './Test';
 import Home from './Home';
 import Seleccion from './Seleccion';
 import SolicitarPuesto from './SolicitarPuesto';
@@ -47,12 +45,6 @@ class App extends Component {
       <div>
         <Link to="/" color="inherit">
           <Button style={{ color: '#fff' }} >Home</Button>
-        </Link>
-        <Link to="/pagina">
-          <Button style={{ color: '#fff' }} >Pagina</Button>
-        </Link>
-        <Link to="/test">
-          <Button style={{ color: '#fff' }} >Test</Button>
         </Link>
         <Link to="/seleccion">
           <Button style={{ color: '#fff' }} >Seleccion</Button>
@@ -101,8 +93,6 @@ class App extends Component {
           <div >
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/pagina" exact component={Pagina} />
-              <Route path="/test" exact component={Test} />
               <Route path="/seleccion" exact component={Seleccion} />
               <Route path="/solicitarpuesto" exact component={SolicitarPuesto} />
               <Route path="/solicitarempleo" exact component={SolicitarEmpleo} />
