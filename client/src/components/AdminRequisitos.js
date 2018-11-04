@@ -73,7 +73,7 @@ class AdminRequisitos extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="fechaProfesional">Fecha de Profesioanles</Label>
-          <Input type="datetime" name="fechaProfesional" id="fechaProfesional" placeholder="Ingrese una fecha" />
+          <Input type="date" name="fechaProfesional" id="fechaProfesional" placeholder="Ingrese una fecha" />
         </FormGroup>
         <FormGroup>
           <Label for="NombreInstLabo">Nombre Institucion Laboral</Label>
