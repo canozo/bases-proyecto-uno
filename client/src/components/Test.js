@@ -28,12 +28,14 @@ class Test extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
+      // cambiar aqui con los valores que mandas
       body: JSON.stringify({ test: 'its a test', key: 'javier', value: 'cano'}),
       // body: JSON.stringify({ test: 'its a test', key: 2, value: "prueba"}),
       // body: JSON.stringify({ test: 'its a test', key: 3, value: { prueba: "super" }}),
     })
       .then(res => res.json())
       .then(res => {
+        // cambiar aqui cuando recibis los valores
         this.setState({
           status: res.status,
           response: res.response
