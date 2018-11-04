@@ -33,12 +33,13 @@ class AdminRequisitos extends Component {
             <CustomInput type="checkbox" id="Laborales" label="Laborales" />
           </div>
         </FormGroup>
-        <FormGroup><FormGroup>
-          <Label for="exampleEmail">Nombre Sanitarios</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+        <FormGroup>
+          <Label for="nombre-sanitario">Nombre Sanitarios</Label>
+          <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
         </FormGroup>
-          <Label for="exampleEmail">Sanitarios Status</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+        <FormGroup>
+            <Label for="status-sanitario">Sanitarios Status</Label>
+            <Input type="text" name="status-sanitario" id="status-sanitario" placeholder="Positivo" />
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Nombre Legales</Label>
