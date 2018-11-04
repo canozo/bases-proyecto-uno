@@ -13,7 +13,7 @@ const styles = {
   }
 };
 
-class Home extends Component {
+class Datos extends Component {
   constructor(props) {
     super(props);
     this.state = {};
