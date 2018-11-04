@@ -26,11 +26,11 @@ class AdminRequisitos extends Component {
         <FormGroup>
           <Label for="exampleCheckbox">Tipos de Datos</Label>
           <div>
-            <CustomInput type="checkbox" id="Sanitarios" label="Check this custom checkbox" />
-            <CustomInput type="checkbox" id="Legales" label="Or this one" />
-            <CustomInput type="checkbox" id="Académicos" label="But not this disabled one" disabled />
-            <CustomInput type="checkbox" id="Profesionales" label="Or this one" />
-            <CustomInput type="checkbox" id="Laborales" label="Or this one" />
+            <CustomInput type="checkbox" id="Sanitarios" label="Sanitarios" />
+            <CustomInput type="checkbox" id="Legales" label="Legales" />
+            <CustomInput type="checkbox" id="Académicos" label="Académicos" />
+            <CustomInput type="checkbox" id="Profesionales" label="Profesionales" />
+            <CustomInput type="checkbox" id="Laborales" label="Laborales" />
           </div>
         </FormGroup>
         <FormGroup><FormGroup>
