@@ -109,7 +109,7 @@ class App extends Component {
               <Route path="/adminpuestos" exact component={AdminPuestos} />
               <Route path="/adminempleos" exact component={AdminEmpleos} />
               <Route path="/adminpersonas" exact component={AdminPersonas} />
-              <Route path="/adminempresar" exact component={AdminEmpresas} />
+              <Route path="/adminempresas" exact component={AdminEmpresas} />
               <Route path="/adminrequisitos" exact component={AdminRequisitos} />
               <Route render={() => <h3>Pagina no existe!</h3>} />
             </Switch>
