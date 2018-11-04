@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Button, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
 
 const styles = {
   card: {
@@ -21,9 +22,21 @@ class AdminPuestos extends Component {
 
   render() {
     return (
-      <div>
-        <h1>AdminPuestos</h1>
-      </div>
+      <Form>
+        <FormGroup>
+          <Label for="LugarEmpleo">Lugar de Empleo</Label>
+          <Input type="text" name="LugarEmpleo" id="LugarEmpleo" placeholder="BAC Credomatic" />
+        </FormGroup>
+        <FormGroup>
+          <Label for="sueldo">Sueldo</Label>
+          <Input type="number" name="sueldo" id="sueldo" placeholder="23000" />
+        </FormGroup>
+        <FormGroup>
+          <Label for="cantidadPlazas">Cantidad de Plazas</Label>
+          <Input type="number" name="cantidadPlazas" id="cantidadPlazas" placeholder="1" />
+        </FormGroup>
+        <Button>Submit</Button>
+      </Form>
     );
   }
 }

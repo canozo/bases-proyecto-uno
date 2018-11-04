@@ -42,24 +42,20 @@ class AdminRequisitos extends Component {
             <Input type="text" name="status-sanitario" id="status-sanitario" placeholder="Positivo" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Legales</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="nombre-legales">Nombre Legales</Label>
+          <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Expendientes" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Legales</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="status-legales">Status Legales</Label>
+          <Input type="text" name="status-legales" id="status-legales" placeholder="Verdadero" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Status Legales</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
+          <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Institucion Academicá</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleSelect">Calificación Media Academicá</Label>
-          <Input type="select" name="select" id="exampleSelect">
+          <Label for="caliAcade">Calificación Media Academicá</Label>
+          <Input type="select" name="select" id="caliAcade">
             <option>90-100</option>
             <option>80-90</option>
             <option>70-80</option>
@@ -68,24 +64,24 @@ class AdminRequisitos extends Component {
           </Input>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Institucion Profesionales</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="NomInstProfe">Nombre Institucion Profesionales</Label>
+          <Input type="text" name="NomInstProfe" id="NomInstProfe" placeholder="ICONIC" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Certificados Profesionales</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="certiProfe">Certificados Profesionales</Label>
+          <Input type="text" name="certiProfe" id="certiProfe" placeholder="Master en ....." />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleDatetime">Fecha de Profesioanles</Label>
-          <Input type="datetime" name="datetime" id="exampleDatetime" placeholder="datetime placeholder" />
+          <Label for="fechaProfesional">Fecha de Profesioanles</Label>
+          <Input type="datetime" name="fechaProfesional" id="fechaProfesional" placeholder="Ingrese una fecha" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Nombre Institucion Laboral</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Label for="NombreInstLabo">Nombre Institucion Laboral</Label>
+          <Input type="text" name="NombreInstLabo" id="NombreInstLabo" placeholder="Agile Solutions" />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleNumber">Año de Experiencia Laboral</Label>
-          <Input type="number" name="number" id="exampleNumber" placeholder="number placeholder" />
+          <Label for="añoslaborales">Año de Experiencia Laboral</Label>
+          <Input type="number" name="añoslaborales" id="añoslaborales" placeholder="Ingrese una cantidad" />
         </FormGroup>
         <Button>Submit</Button>
       </Form>
