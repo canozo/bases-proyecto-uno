@@ -17,23 +17,41 @@ class AdminEmpresas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    };
-  }
+      nombre:' ',
+      direccion:'',
+      director: '',
+      rubro:''
 
+    };
+    this.submitState = this.submitState.bind(this);
+  }
+  submitState(event){
+    alert(JSON.stringify(this.state, null, '  '));
+    event.preventDefault();
+      
+  }
   render() {
     return (
-      <Form>
+      <Form onSubmit ={this.submitState}>
+        <FormGroup>
+          <Label for="director">Nombre de Empresa</Label>
+          <Input type="text" name="nombre" id="nombre" placeholder="ENEE" 
+          onChange={e => this.setState({ nombre: e.target.value })}/>
+        </FormGroup>
         <FormGroup>
           <Label for="director">Nombre del director</Label>
-          <Input type="text" name="director" id="director" placeholder="Juan Mauricio" />
+          <Input type="text" name="director" id="director" placeholder="Juan Mauricio" 
+          onChange={e => this.setState({ director: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="direccion">Direccion de la empresa</Label>
-          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3 ave" />
+          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3 ave" 
+          onChange={e => this.setState({ direccion: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="rubro">Rubro</Label>
-          <Input type="text" name="rubro" id="rubro" placeholder="Telecomunicaciones" />
+          <Input type="text" name="rubro" id="rubro" placeholder="Telecomunicaciones" 
+          onChange={e => this.setState({ rubro: e.target.value })}/>
         </FormGroup>
         <Button>Submit</Button>
       </Form>
