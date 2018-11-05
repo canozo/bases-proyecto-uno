@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
+import { Button, Form, FormGroup, Label, CustomInput } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const styles = {
@@ -17,30 +17,48 @@ const styles = {
 class SolicitarPuesto extends Component {
   constructor(props) {
     super(props);
+
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+
     this.state = {
+      dropdownOpen: false,
+      dropdownSelectedName: 'Escoger Persona',
+      dropdownSelectedValue: ''
     };
+  }
+
+  toggleDropdown(name, value, event) {
+    if (name && value) {
+      this.setState({
+        dropdownSelectedName: name,
+        dropdownSelectedValue: value,
+        dropdownOpen: !this.state.dropdownOpen
+      });
+    } else {
+      this.setState({
+        dropdownOpen: !this.state.dropdownOpen
+      });
+    }
   }
 
   render() {
     return (
       <Form>
         <FormGroup>
-        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          Personas
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem header>Header</DropdownItem>
-          <DropdownItem disabled>Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Another Action</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+          <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+            <DropdownToggle caret>
+              {this.state.dropdownSelectedName}
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={this.toggleDropdown.bind(this, 'Nombre 1', '1')}>Opcion 1</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem onClick={this.toggleDropdown.bind(this, 'Nombre 2', '2')}>Opcion 2</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </FormGroup>
         <FormGroup>
-          <Label for="Puestos">Puestos</Label>
-          <div>
+          <Label for="puestos">Puestos</Label>
+          <div id="puestos">
             <CustomInput type="checkbox" id="Uno" label="Uno" />
             <CustomInput type="checkbox" id="Dos" label="Dos" />
             <CustomInput type="checkbox" id="Tres" label="Tres" />
