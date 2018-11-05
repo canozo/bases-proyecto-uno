@@ -20,7 +20,8 @@ class AdminEmpresas extends Component {
       nombre:' ',
       direccion:'',
       director: '',
-      rubro:''
+      rubro:'',
+      cfi:'git '
 
     };
     this.submitState = this.submitState.bind(this);
@@ -52,6 +53,11 @@ class AdminEmpresas extends Component {
           <Label for="rubro">Rubro</Label>
           <Input type="text" name="rubro" id="rubro" placeholder="Telecomunicaciones" 
           onChange={e => this.setState({ rubro: e.target.value })}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="cfi">CFI</Label>
+          <Input type="text" name="cfi" id="cfi" placeholder="CFI" 
+          onChange={e => this.setState({ cfi: e.target.value })}/>
         </FormGroup>
         <Button>Submit</Button>
       </Form>

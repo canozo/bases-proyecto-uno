@@ -21,6 +21,7 @@ class AdminRequisitos extends Component {
     this.radioChangeSanitario = this.radioChangeSanitario.bind(this);
     this.obtenerFormularios = this.obtenerFormularios.bind(this);
     this.verficiarCalificacion = this.verficiarCalificacion.bind(this);
+    this.submitState = this.submitState.bind(this);
 
     this.state = {
       tipoRequisito: 'Sanitarios',
@@ -149,9 +150,13 @@ class AdminRequisitos extends Component {
     }
   }
 
+  submitState(event){
+    
+  }
+
   render() {
     return (
-      <Form >
+      <Form onSubmit={this.submitState}>
         <FormGroup tag="fieldset">
           <legend>Tipo Requisito</legend>
           <FormGroup check>
