@@ -17,31 +17,50 @@ class AdminPersonas extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      nombre:'',
+      numID:'',
+      telefono:'',
+      email:'',
+      direccion:'',
+
+
     };
+    this.submitState = this.submitState.bind(this);
   }
+  submitState(event){
+    alert(JSON.stringify(this.state, null, '  '));
+    event.preventDefault();
+  }
+
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.submitState}>
         <FormGroup>
           <Label for="nombre-completo">Nombre Completo</Label>
-          <Input type="text" name="nombre-completo" id="nombre-completo" placeholder="Juan Mauricio" />
+          <Input type="text" name="nombre-completo" id="nombre-completo" placeholder="Juan Mauricio"  
+          onChange={e => this.setState({ nombre: e.target.value })}/>
+         
         </FormGroup>
         <FormGroup>
           <Label for="num-identidad">Numero de Identidad</Label>
-          <Input type="text" name="num-identidad" id="num-identidad" placeholder="0801-1990-00000" />
+          <Input type="text" name="num-identidad" id="num-identidad" placeholder="0801-1990-00000" 
+          onChange={e => this.setState({ numID: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="telefono">Telefono</Label>
-          <Input type="text" name="telefono" id="telefono" placeholder="50422000000" />
+          <Input type="text" name="telefono" id="telefono" placeholder="50422000000" 
+          onChange={e => this.setState({ telefono: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="email">Correo electronico</Label>
-          <Input type="text" name="email" id="email" placeholder="ejemplo@gmail.com" />
+          <Input type="text" name="email" id="email" placeholder="ejemplo@gmail.com" 
+          onChange={e => this.setState({ email: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="direccion">Direccion</Label>
-          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3ra ave" />
+          <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3ra ave" 
+          onChange={e => this.setState({ direccion: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>
