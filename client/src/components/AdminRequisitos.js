@@ -63,19 +63,6 @@ class AdminRequisitos extends Component {
             <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
             <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
           </FormGroup>
-          <FormGroup tag="fieldset">
-            <legend>Paso la prueba?</legend>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" onChange={this.radioChangeSanitario} name="prueba-req" id='si' />Si
-              </Label>
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" onChange={this.radioChangeSanitario} name="prueba-req" id='no'/>No
-              </Label>
-            </FormGroup>
-          </FormGroup>
         </div>
       );
 
@@ -85,19 +72,6 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nombre-legales">Nombre Legales</Label>
             <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" />
-          </FormGroup>
-          <FormGroup tag="fieldset">
-            <legend>Cumple el requisito legal?</legend>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" onChange={this.radioChangeLegal} name="prueba-req-legal" id='si' />Si
-              </Label>
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" onChange={this.radioChangeLegal} name="prueba-req-legal" id='no'/>No
-              </Label>
-            </FormGroup>
           </FormGroup>
         </div>
       );
@@ -109,10 +83,6 @@ class AdminRequisitos extends Component {
             <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
             <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" />
           </FormGroup>
-          <FormGroup>
-            <Label for="calificacion-academica">Calificación Media Academicá</Label>
-            <Input type="number" onChange={this.verficiarCalificacion} name="calificacion-academica" id="calificacion-academica" placeholder="0-100" />
-          </FormGroup>
         </div>
       );
 
@@ -123,14 +93,6 @@ class AdminRequisitos extends Component {
             <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
             <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="ICONIC" />
           </FormGroup>
-          <FormGroup>
-            <Label for="cert-profe">Certificados Profesionales</Label>
-            <Input type="text" name="cert-profe" id="cert-profe" placeholder="Certificado IEEE 1227" />
-          </FormGroup>
-          <FormGroup>
-            <Label for="fecha-profe">Fecha de Obtencion del Certificado</Label>
-            <Input type="date" name="fecha-profe" id="fecha-profe"/>
-          </FormGroup>
         </div>
       );
 
@@ -140,10 +102,6 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
             <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Agile Solutions" />
-          </FormGroup>
-          <FormGroup>
-            <Label for="experiencia-laboral">Años de Experiencia Laboral</Label>
-            <Input type="number" name="experiencia-laboral" id="experiencia-laboral" placeholder="Ingrese una cantidad" />
           </FormGroup>
         </div>
       );
