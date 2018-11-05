@@ -17,23 +17,18 @@ class AdminRequisitos extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      tipoRequisito: 'Sanitarios'
     };
+    this.handleChange2 = this.handleChange2.bind(this);
   }
 
-  render() {
-    return (
-      <Form>
-        <FormGroup>
-          <Label for="exampleCheckbox">Tipos de Datos</Label>
-          <div>
-            <CustomInput type="checkbox" id="Sanitarios" label="Sanitarios" />
-            <CustomInput type="checkbox" id="Legales" label="Legales" />
-            <CustomInput type="checkbox" id="Académicos" label="Académicos" />
-            <CustomInput type="checkbox" id="Profesionales" label="Profesionales" />
-            <CustomInput type="checkbox" id="Laborales" label="Laborales" />
-          </div>
-        </FormGroup>
-        <FormGroup>
+  handleChange2 (event){
+    this.setState({ tipoRequisito: event.target.id  });
+    if(this.state.tipoRequisito === 'Sanitario'){
+      alert(JSON.stringify(this.state, null, '  '));
+      return(
+      <div> 
+      <FormGroup>
           <Label for="nombre-sanitario">Nombre Sanitarios</Label>
           <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
         </FormGroup>
@@ -41,6 +36,45 @@ class AdminRequisitos extends Component {
             <Label for="status-sanitario">Sanitarios Status</Label>
             <Input type="text" name="status-sanitario" id="status-sanitario" placeholder="Positivo" />
         </FormGroup>
+        </div>)
+    }
+    
+    
+};
+
+  render() {
+    return (
+      <Form >
+        <FormGroup tag="fieldset">
+          <legend>Tipo Requisito</legend>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Sanitarios' />{' '}Sanitarios
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Legales'/>{' '}Legales
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Academicos'/>{' '}Academicos
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Profesionales'/>{' '}Profesionales
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.handleChange2} name="tipoR" id= 'Laborales'/>{' '}Laborales
+            </Label>
+          </FormGroup>
+
+        </FormGroup>
+        
         <FormGroup>
           <Label for="nombre-legales">Nombre Legales</Label>
           <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Expendientes" />
