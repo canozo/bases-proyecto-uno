@@ -16,22 +16,31 @@ const styles = {
 class AdminPersonas extends Component {
   constructor(props) {
     super(props);
+
+    this.submitState = this.submitState.bind(this);
+    this.checkearFamilia = this.checkearFamilia.bind(this);
+  
     this.state = {
       nombre:'',
       numID:'',
       telefono:'',
       email:'',
       direccion:'',
-
-
+      familiares: {},
     };
-    this.submitState = this.submitState.bind(this);
-  }
-  submitState(event){
-    alert(JSON.stringify(this.state, null, '  '));
-    event.preventDefault();
   }
 
+  submitState(event) {
+    event.preventDefault();
+    alert(JSON.stringify(this.state, null, '  '));
+  }
+
+  checkearFamilia(event) {
+    var familiares = this.state.familiares;
+    familiares[event.target.id] = event.target.checked;
+    this.setState({ familiares: familiares });
+    console.log(this.state);
+  }
 
   render() {
     return (
@@ -40,7 +49,6 @@ class AdminPersonas extends Component {
           <Label for="nombre-completo">Nombre Completo</Label>
           <Input type="text" name="nombre-completo" id="nombre-completo" placeholder="Juan Mauricio"  
           onChange={e => this.setState({ nombre: e.target.value })}/>
-         
         </FormGroup>
         <FormGroup>
           <Label for="num-identidad">Numero de Identidad</Label>
@@ -61,6 +69,14 @@ class AdminPersonas extends Component {
           <Label for="direccion">Direccion</Label>
           <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3ra ave" 
           onChange={e => this.setState({ direccion: e.target.value })}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="familiares">Familiares del empleado</Label>
+          <div id="familiares">
+            <CustomInput onChange={this.checkearFamilia} type="checkbox" id="familiar-1" label="Familiar 1" />
+            <CustomInput onChange={this.checkearFamilia} type="checkbox" id="familiar-2" label="Familiar 2" />
+            <CustomInput onChange={this.checkearFamilia} type="checkbox" id="familiar-3" label="Familiar 3" />
+          </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>

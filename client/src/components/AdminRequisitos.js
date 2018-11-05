@@ -109,7 +109,7 @@ class AdminRequisitos extends Component {
   }
 
   submitState(event){
-    
+    event.preventDefault();
   }
 
   render() {
