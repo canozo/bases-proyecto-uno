@@ -19,21 +19,29 @@ class AdminRequisitos extends Component {
 
     this.radioChange = this.radioChange.bind(this);
     this.radioChangeSanitario = this.radioChangeSanitario.bind(this);
+    this.radioChangeLegal = this.radioChangeLegal.bind(this);
     this.obtenerFormularios = this.obtenerFormularios.bind(this);
     this.verficiarCalificacion = this.verficiarCalificacion.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       tipoRequisito: 'Sanitarios',
       pruebaSanitario: false,
+      pruebaLegal: false
     };
   }
 
   radioChange (event) {
+    // TODO hay un bug que hace que los radio de sanitario y legales siempre esten conectados
     this.setState({ tipoRequisito: event.target.id });
   }
 
   radioChangeSanitario (event) {
     this.setState({ pruebaSanitario: event.target.id === 'si' });
+  }
+
+  radioChangeLegal (event) {
+    this.setState({ pruebaLegal: event.target.id === 'si' });
   }
 
   verficiarCalificacion(event) {
@@ -52,7 +60,28 @@ class AdminRequisitos extends Component {
       event.target.value = 0;
     }
   }
-  
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log('submit');
+    console.log(this.state);
+
+    // enviar datos al servidor
+    fetch('/requisitos', {
+      method: 'put',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state),
+    })
+      .then(res => res.json())
+      .then(res => {
+        // codigo a ejecutarse al recibir la respuesta del servidor
+        console.log(res);
+      });
+  }
+
   obtenerFormularios() {
     // devuelve los formularios dependiendo de que radio button esta seleccionado
     if (this.state.tipoRequisito === 'Sanitarios') {
@@ -151,7 +180,7 @@ class AdminRequisitos extends Component {
 
   render() {
     return (
-      <Form >
+      <Form onSubmit={this.handleSubmit}>
         <FormGroup tag="fieldset">
           <legend>Tipo Requisito</legend>
           <FormGroup check>
