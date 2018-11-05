@@ -19,26 +19,26 @@ class SolicitarPuesto extends Component {
     super(props);
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.selectDropdown = this.selectDropdown.bind(this);
 
     this.state = {
       dropdownOpen: false,
-      dropdownSelectedName: 'Escoger Persona',
-      dropdownSelectedValue: ''
+      selectedName: 'Escoger Persona',
+      selectedValue: ''
     };
   }
 
-  toggleDropdown(name, value, event) {
-    if (name && value) {
-      this.setState({
-        dropdownSelectedName: name,
-        dropdownSelectedValue: value,
-        dropdownOpen: !this.state.dropdownOpen
-      });
-    } else {
+  toggleDropdown() {
       this.setState({
         dropdownOpen: !this.state.dropdownOpen
       });
-    }
+  }
+
+  selectDropdown(event) {
+    this.setState({
+      selectedName: event.target.innerText,
+      selectedValue: event.target.value
+    });
   }
 
   render() {
@@ -47,12 +47,12 @@ class SolicitarPuesto extends Component {
         <FormGroup>
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
             <DropdownToggle caret>
-              {this.state.dropdownSelectedName}
+              {this.state.selectedName}
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={this.toggleDropdown.bind(this, 'Nombre 1', '1')}>Opcion 1</DropdownItem>
+              <DropdownItem value='1' onClick={this.selectDropdown}>Opcion 1</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem onClick={this.toggleDropdown.bind(this, 'Nombre 2', '2')}>Opcion 2</DropdownItem>
+              <DropdownItem value='2' onClick={this.selectDropdown}>Opcion 2</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </FormGroup>
