@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const styles = {
   card: {
@@ -16,31 +16,138 @@ const styles = {
 class AdminRequisitos extends Component {
   constructor(props) {
     super(props);
+
+    this.radioChange = this.radioChange.bind(this);
+    this.radioChangeSanitario = this.radioChangeSanitario.bind(this);
+    this.obtenerFormularios = this.obtenerFormularios.bind(this);
+    this.verficiarCalificacion = this.verficiarCalificacion.bind(this);
+
     this.state = {
-      tipoRequisito: 'Sanitarios'
+      tipoRequisito: 'Sanitarios',
+      pruebaSanitario: false,
     };
-    this.handleChange2 = this.handleChange2.bind(this);
   }
 
-  handleChange2 (event){
-    this.setState({ tipoRequisito: event.target.id  });
-    if(this.state.tipoRequisito === 'Sanitario'){
-      alert(JSON.stringify(this.state, null, '  '));
-      return(
-      <div> 
-      <FormGroup>
-          <Label for="nombre-sanitario">Nombre Sanitarios</Label>
-          <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
-        </FormGroup>
-        <FormGroup>
-            <Label for="status-sanitario">Sanitarios Status</Label>
-            <Input type="text" name="status-sanitario" id="status-sanitario" placeholder="Positivo" />
-        </FormGroup>
-        </div>)
+  radioChange (event) {
+    this.setState({ tipoRequisito: event.target.id });
+  }
+
+  radioChangeSanitario (event) {
+    this.setState({ pruebaSanitario: event.target.id === 'si' });
+  }
+
+  verficiarCalificacion(event) {
+    // verificar que la calificacion este entre 0 y 100
+    let calificacion = event.target.value;
+    if (calificacion) {
+      let num = Number(calificacion);
+      if (num < 0) {
+        // se sale del rango, setear a 0
+        event.target.value = 0;
+      } else if (num > 100) {
+        event.target.value = 100;
+      }
+    } else {
+      // esta vacio, setear a 0
+      event.target.value = 0;
     }
-    
-    
-};
+  }
+  
+  obtenerFormularios() {
+    // devuelve los formularios dependiendo de que radio button esta seleccionado
+    if (this.state.tipoRequisito === 'Sanitarios') {
+      return (
+        <div>
+          <FormGroup>
+            <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
+            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
+          </FormGroup>
+          <FormGroup tag="fieldset">
+            <legend>Paso la prueba?</legend>
+            <FormGroup check>
+              <Label check>
+                <Input type="radio" onChange={this.radioChangeSanitario} name="prueba-req" id='si' />Si
+              </Label>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="radio" onChange={this.radioChangeSanitario} name="prueba-req" id='no'/>No
+              </Label>
+            </FormGroup>
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Legales') {
+      return (
+        <div>
+          <FormGroup>
+            <Label for="nombre-legales">Nombre Legales</Label>
+            <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" />
+          </FormGroup>
+          <FormGroup tag="fieldset">
+            <legend>Cumple el requisito legal?</legend>
+            <FormGroup check>
+              <Label check>
+                <Input type="radio" onChange={this.radioChangeLegal} name="prueba-req-legal" id='si' />Si
+              </Label>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="radio" onChange={this.radioChangeLegal} name="prueba-req-legal" id='no'/>No
+              </Label>
+            </FormGroup>
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Academicos') {
+      return (
+        <div>
+          <FormGroup>
+            <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
+            <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="calificacion-academica">Calificación Media Academicá</Label>
+            <Input type="number" onChange={this.verficiarCalificacion} name="calificacion-academica" id="calificacion-academica" placeholder="0-100" />
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Profesionales') {
+      return (
+        <div>
+          <FormGroup>
+            <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
+            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="ICONIC" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="cert-profe">Certificados Profesionales</Label>
+            <Input type="text" name="cert-profe" id="cert-profe" placeholder="Certificado IEEE 1227" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="fecha-profe">Fecha de Obtencion del Certificado</Label>
+            <Input type="date" name="fecha-profe" id="fecha-profe"/>
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Laborales') {
+      return (
+        <div>
+          <FormGroup>
+            <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
+            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Agile Solutions" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="experiencia-laboral">Años de Experiencia Laboral</Label>
+            <Input type="number" name="experiencia-laboral" id="experiencia-laboral" placeholder="Ingrese una cantidad" />
+          </FormGroup>
+        </div>
+      );
+    }
+  }
 
   render() {
     return (
@@ -49,74 +156,33 @@ class AdminRequisitos extends Component {
           <legend>Tipo Requisito</legend>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Sanitarios' />{' '}Sanitarios
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Sanitarios' />Sanitarios
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Legales'/>{' '}Legales
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Legales'/>Legales
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Academicos'/>{' '}Academicos
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Academicos'/>Academicos
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.handleChange2} name="tipoR" id='Profesionales'/>{' '}Profesionales
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Profesionales'/>Profesionales
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.handleChange2} name="tipoR" id= 'Laborales'/>{' '}Laborales
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id= 'Laborales'/>Laborales
             </Label>
           </FormGroup>
+        </FormGroup>
 
-        </FormGroup>
-        
-        <FormGroup>
-          <Label for="nombre-legales">Nombre Legales</Label>
-          <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Expendientes" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="status-legales">Status Legales</Label>
-          <Input type="text" name="status-legales" id="status-legales" placeholder="Verdadero" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
-          <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="caliAcade">Calificación Media Academicá</Label>
-          <Input type="select" name="select" id="caliAcade">
-            <option>90-100</option>
-            <option>80-90</option>
-            <option>70-80</option>
-            <option>60-70</option>
-            <option>60 y menos</option>
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="NomInstProfe">Nombre Institucion Profesionales</Label>
-          <Input type="text" name="NomInstProfe" id="NomInstProfe" placeholder="ICONIC" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="certiProfe">Certificados Profesionales</Label>
-          <Input type="text" name="certiProfe" id="certiProfe" placeholder="Master en ....." />
-        </FormGroup>
-        <FormGroup>
-          <Label for="fechaProfesional">Fecha de Profesioanles</Label>
-          <Input type="date" name="fechaProfesional" id="fechaProfesional" placeholder="Ingrese una fecha" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="NombreInstLabo">Nombre Institucion Laboral</Label>
-          <Input type="text" name="NombreInstLabo" id="NombreInstLabo" placeholder="Agile Solutions" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="añoslaborales">Año de Experiencia Laboral</Label>
-          <Input type="number" name="añoslaborales" id="añoslaborales" placeholder="Ingrese una cantidad" />
-        </FormGroup>
+        {this.obtenerFormularios()}
+
         <Button>Submit</Button>
       </Form>
     );
