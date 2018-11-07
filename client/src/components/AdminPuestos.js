@@ -27,7 +27,24 @@ class AdminPuestos extends Component {
   submitState(event){
     alert(JSON.stringify(this.state, null, '  '));
     event.preventDefault();
-      
+    fetch('/adminpuestos', {
+      method: 'put',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // informacion a enviar
+      body: JSON.stringify(this.state),
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+        console.log(res);
+      });
   }
 
   render() {

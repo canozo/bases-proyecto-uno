@@ -42,9 +42,27 @@ class AdminPersonas extends Component {
     };
   }
 
-  submitState(event) {
-    event.preventDefault();
+  submitState(event){
     alert(JSON.stringify(this.state, null, '  '));
+    event.preventDefault();
+    fetch('/adminpersonas', {
+      method: 'put',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // informacion a enviar
+      body: JSON.stringify(this.state),
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+        console.log(res);
+      });
   }
   checkearAcademicos(event) {
     var academicos = this.state.academicos;
@@ -83,6 +101,7 @@ class AdminPersonas extends Component {
     this.setState({ legales: legales });
     console.log(this.state);
   }
+  
 
   render() {
     return (

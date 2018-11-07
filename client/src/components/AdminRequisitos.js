@@ -25,7 +25,7 @@ class AdminRequisitos extends Component {
 
     this.state = {
       tipoRequisito: 'Sanitarios',
-      pruebaSanitario: false,
+      nombre:''
     };
   }
 
@@ -61,7 +61,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
-            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" />
+            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" 
+            onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -71,7 +72,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nombre-legales">Nombre Legales</Label>
-            <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" />
+            <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" 
+            onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -81,7 +83,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
-            <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" />
+            <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" 
+            onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -91,7 +94,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
-            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="ICONIC" />
+            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="ICONIC" 
+            onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -101,7 +105,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
-            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Agile Solutions" />
+            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Agile Solutions" 
+            onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -109,7 +114,26 @@ class AdminRequisitos extends Component {
   }
 
   submitState(event){
+    alert(JSON.stringify(this.state, null, '  '));
     event.preventDefault();
+    fetch('/adminrequisitos', {
+      method: 'put',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // informacion a enviar
+      body: JSON.stringify(this.state),
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+        console.log(res);
+      });
   }
 
   render() {
