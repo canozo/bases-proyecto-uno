@@ -16,21 +16,41 @@ const styles = {
 class AdminEmpresas extends Component {
   constructor(props) {
     super(props);
+
+    this.submitState = this.submitState.bind(this);
+
     this.state = {
-      nombre:' ',
+      nombre:'',
       direccion:'',
       director: '',
       rubro:'',
-      cfi:'git '
-
+      cfi:''
     };
-    this.submitState = this.submitState.bind(this);
   }
+
   submitState(event){
     alert(JSON.stringify(this.state, null, '  '));
     event.preventDefault();
-      
+    fetch('/adminempresas', {
+      method: 'put',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // informacion a enviar
+      body: JSON.stringify(this.state),
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+        console.log(res);
+      });
   }
+
   render() {
     return (
       <Form onSubmit ={this.submitState}>
