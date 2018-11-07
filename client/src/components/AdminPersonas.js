@@ -19,6 +19,12 @@ class AdminPersonas extends Component {
 
     this.submitState = this.submitState.bind(this);
     this.checkearFamilia = this.checkearFamilia.bind(this);
+    this.checkearSanitarios = this.checkearSanitarios.bind(this);
+    this.checkearLegales = this.checkearLegales.bind(this);
+    this.checkearAcademicos = this.checkearAcademicos.bind(this);
+    this.checkearLaborales = this.checkearLaborales.bind(this);
+    this.checkearProfesionales = this.checkearProfesionales.bind(this);
+
   
     this.state = {
       nombre:'',
@@ -27,6 +33,12 @@ class AdminPersonas extends Component {
       email:'',
       direccion:'',
       familiares: {},
+      sanitarios: {}, 
+      legales: {},
+      laborales: {},
+      profesionales: {},
+      academicos: {}
+
     };
   }
 
@@ -34,11 +46,41 @@ class AdminPersonas extends Component {
     event.preventDefault();
     alert(JSON.stringify(this.state, null, '  '));
   }
+  checkearAcademicos(event) {
+    var academicos = this.state.academicos;
+    academicos[event.target.id] = event.target.checked;
+    this.setState({ academicos: academicos });
+    console.log(this.state);
+  }
+  checkearProfesionales(event) {
+    var profesionales = this.state.profesionales;
+    profesionales[event.target.id] = event.target.checked;
+    this.setState({ profesionales: profesionales });
+    console.log(this.state);
+  }
+  checkearLaborales(event) {
+    var laborales = this.state.laborales;
+    laborales[event.target.id] = event.target.checked;
+    this.setState({ laborales: laborales });
+    console.log(this.state);
+  }
 
   checkearFamilia(event) {
     var familiares = this.state.familiares;
     familiares[event.target.id] = event.target.checked;
     this.setState({ familiares: familiares });
+    console.log(this.state);
+  }
+  checkearSanitarios(event) {
+    var sanitarios = this.state.sanitarios;
+    sanitarios[event.target.id] = event.target.checked;
+    this.setState({ sanitarios: sanitarios });
+    console.log(this.state);
+  }
+  checkearLegales(event) {
+    var legales = this.state.legales;
+    legales[event.target.id] = event.target.checked;
+    this.setState({ legales: legales });
     console.log(this.state);
   }
 
@@ -81,41 +123,41 @@ class AdminPersonas extends Component {
         <FormGroup>
           <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>
           <div id="requisitos-sanitarios">
-            <CustomInput type="checkbox" id="req-sanitario-1" label="Requisito 1" />
-            <CustomInput type="checkbox" id="req-sanitario-2" label="Requisito 2" />
-            <CustomInput type="checkbox" id="req-sanitario-3" label="Requisito 3" />
+            <CustomInput onChange={this.checkearSanitarios} type="checkbox" id="req-sanitario-1" label="Requisito 1" />
+            <CustomInput onChange={this.checkearSanitarios}  type="checkbox" id="req-sanitario-2" label="Requisito 2" />
+            <CustomInput onChange={this.checkearSanitarios} type="checkbox" id="req-sanitario-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-legal">Requisitos Legales</Label>
           <div id="requisitos-legal">
-            <CustomInput type="checkbox" id="req-legal-1" label="Requisito 1" />
-            <CustomInput type="checkbox" id="req-legal-2" label="Requisito 2" />
-            <CustomInput type="checkbox" id="req-legal-3" label="Requisito 3" />
+            <CustomInput onChange={this.checkearLegales} type="checkbox" id="req-legal-1" label="Requisito 1" />
+            <CustomInput onChange={this.checkearLegales} type="checkbox" id="req-legal-2" label="Requisito 2" />
+            <CustomInput onChange={this.checkearLegales} type="checkbox" id="req-legal-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-academicos">Requisitos Academicos</Label>
           <div id="requisitos-academicos">
-            <CustomInput type="checkbox" id="req-academicos-1" label="Requisito 1" />
-            <CustomInput type="checkbox" id="req-academicos-2" label="Requisito 2" />
-            <CustomInput type="checkbox" id="req-academicos-3" label="Requisito 3" />
+            <CustomInput onChange={this.checkearAcademicos} type="checkbox" id="req-academicos-1" label="Requisito 1" />
+            <CustomInput onChange={this.checkearAcademicos} type="checkbox" id="req-academicos-2" label="Requisito 2" />
+            <CustomInput onChange={this.checkearAcademicos} type="checkbox" id="req-academicos-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-profesionales">Requisitos Profesionales</Label>
           <div id="requisitos-profesionales">
-            <CustomInput type="checkbox" id="req-profesionales-1" label="Requisito 1" />
-            <CustomInput type="checkbox" id="req-profesionales-2" label="Requisito 2" />
-            <CustomInput type="checkbox" id="req-profesionales-3" label="Requisito 3" />
+            <CustomInput onChange={this.checkearProfesionales} type="checkbox" id="req-profesionales-1" label="Requisito 1" />
+            <CustomInput onChange={this.checkearProfesionales} type="checkbox" id="req-profesionales-2" label="Requisito 2" />
+            <CustomInput onChange={this.checkearProfesionales} type="checkbox" id="req-profesionales-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-laborales">Requisitos Laborales</Label>
           <div id="requisitos-laborales">
-            <CustomInput type="checkbox" id="req-laborales-1" label="Requisito 1" />
-            <CustomInput type="checkbox" id="req-laborales-2" label="Requisito 2" />
-            <CustomInput type="checkbox" id="req-laborales-3" label="Requisito 3" />
+            <CustomInput onChange={this.checkearLaborales}  type="checkbox" id="req-laborales-1" label="Requisito 1" />
+            <CustomInput onChange={this.checkearLaborales}  type="checkbox" id="req-laborales-2" label="Requisito 2" />
+            <CustomInput onChange={this.checkearLaborales}  type="checkbox" id="req-laborales-3" label="Requisito 3" />
           </div>
         </FormGroup>
         <Button>Submit</Button>
