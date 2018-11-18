@@ -27,7 +27,7 @@ class AdminPersonas extends Component {
     this.agregarAcademicos = this.agregarAcademicos .bind(this);
     this.agregarStateAcademicos = this.agregarStateAcademicos.bind(this);
     this.restarStateAcademicos = this.restarStateAcademicos.bind(this);
-    
+    this.agregarAcademicos = this.agregarAcademicos.bind(this);
  
     this.state = {
       nombre: "",

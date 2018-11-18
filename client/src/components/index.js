@@ -14,14 +14,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Link, Switch } from 'react-router-dom';
 import ItemNavegacion from './ItemNavegacion';
 import Home from './Home';
-import Seleccion from './Seleccion';
-import SolicitarEmpleo from './SolicitarEmpleo';
-import SolicitarPuestos from './SolicitarPuestos';
-import AdminPuestos from './AdminPuestos';
-import AdminEmpleos from './AdminEmpleos';
+import Seleccion from './agencia/Seleccion';
+import SolicitarEmpleo from './empresa/SolicitarEmpleo';
+import SolicitarPuestos from './persona/SolicitarPuestos';
+import AdminPuestos from './agencia/AdminPuestos';
 import AdminPersonas from './AdminPersonas';
-import AdminEmpresas from './AdminEmpresas';
-import AdminRequisitos from './AdminRequisitos';
+import AdminEmpresas from './empresa/AdminEmpresas';
+import AdminRequisitos from './agencia/AdminRequisitos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const drawerWidth = 240;
@@ -124,12 +123,6 @@ class App extends React.Component {
               icon_name='mail'
             />
           </Link>
-          <Link to='/adminempleos'>
-            <ItemNavegacion
-              text='Administrar empleos'
-              icon_name='mail'
-            />
-          </Link>
           <Link to='/adminpersonas'>
             <ItemNavegacion
               text='Administrar personas'
@@ -205,7 +198,6 @@ class App extends React.Component {
             <Route path="/solicitarempleo" exact component={SolicitarEmpleo} />
             <Route path="/solicitarpuestos" exact component={SolicitarPuestos} />
             <Route path="/adminpuestos" exact component={AdminPuestos} />
-            <Route path="/adminempleos" exact component={AdminEmpleos} />
             <Route path="/adminpersonas" exact component={AdminPersonas} />
             <Route path="/adminempresas" exact component={AdminEmpresas} />
             <Route path="/adminrequisitos" exact component={AdminRequisitos} />
