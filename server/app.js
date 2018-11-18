@@ -3,11 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var redis = require('redis');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testRouter = require('./routes/test');
-var adminempresasRouter = require('./routes/adminempresas');
 var requisitosRouter = require('./routes/requisitos');
 
 var app = express();
@@ -22,11 +20,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// cliente de redis
+client = redis.createClient();
+client.on('connect', () => {
+  console.log('Conectado a Redis.');
+});
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/test', testRouter);
 app.use('/requisitos', requisitosRouter);
-app.use('/adminempresas', adminempresasRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
