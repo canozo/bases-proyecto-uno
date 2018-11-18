@@ -24,6 +24,9 @@ class AdminPersonas extends Component {
     this.checkearAcademicos = this.checkearAcademicos.bind(this);
     this.checkearLaborales = this.checkearLaborales.bind(this);
     this.checkearProfesionales = this.checkearProfesionales.bind(this);
+    this.agregarAcademicos = this.agregarAcademicos .bind(this);
+    this.agregarStateAcademicos = this.agregarStateAcademicos.bind(this);
+    this.restarStateAcademicos = this.restarStateAcademicos.bind(this);
     this.agregarAcademicos = this.agregarAcademicos.bind(this);
  
     this.state = {
@@ -46,7 +49,6 @@ class AdminPersonas extends Component {
   }
 
   submitState(event) {
-    alert(JSON.stringify(this.state, null, "  "));
     event.preventDefault();
     fetch("/adminpersonas", {
       method: "put",
@@ -105,58 +107,75 @@ class AdminPersonas extends Component {
     console.log(this.state);
   }
   agregarAcademicos(event){
-    alert('Say what?');
-    event.preventDefault();
-    return(
-      <div>
+    let componentes = [];
+    for(let i=0; i<this.state.numeroAcademicos; i++){
+      componentes.push(
         <div>
-            <label>Institutos Academicos</label>
-            <Input
-              type="select"
-              onChange={e =>
-                this.setState({
-                  estado_civil: e.target.value
-                })
-              }
-            >
-              <option value="Soltero" id="Soltero">
-                Soltero
-              </option>
-            </Input>
-          </div>
           <div>
-            <label>Carrera</label>
-            <Input
-              type="select"
-              onChange={e =>
-                this.setState({
-                  estado_civil: e.target.value
-                })
-              }
-            >
-              <option value="Soltero" id="Soltero">
-                Soltero
-              </option>
-            </Input>
-          </div>
-          <div>
-            <label>Grado</label>
-            <Input
-              type="select"
-              onChange={e =>
-                this.setState({
-                  estado_civil: e.target.value
-                })
-              }
-            >
-              <option value="Soltero" id="Soltero">
-                Soltero
-              </option>
-            </Input>
-          </div>
-      </div>
-    );
-
+              <label>Institutos Academicos</label>
+              <Input
+                type="select"
+                onChange={e =>
+                  this.setState({
+                    estado_civil: e.target.value
+                  })
+                }
+              >
+                <option value="Soltero" id="Soltero">
+                  Soltero
+                </option>
+              </Input>
+            </div>
+            <div>
+              <label>Carrera</label>
+              <Input
+                type="select"
+                onChange={e =>
+                  this.setState({
+                    estado_civil: e.target.value
+                  })
+                }
+              >
+                <option value="Soltero" id="Soltero">
+                  Soltero
+                </option>
+              </Input>
+            </div>
+            <div>
+              <label>Grado</label>
+              <Input
+                type="select"
+                onChange={e =>
+                  this.setState({
+                    estado_civil: e.target.value
+                  })
+                }
+              >
+                <option value="Soltero" id="Soltero">
+                  Soltero
+                </option>
+              </Input>
+            </div>
+        </div>
+      );
+    }
+    if (componentes)
+      return componentes;
+    else 
+      return <div>No hay componentes</div>
+  }
+  agregarStateAcademicos(event){
+    this.setState({numeroAcademicos : this.state.numeroAcademicos +1});
+    this.agregarAcademicos()
+  }
+  restarStateAcademicos(event){
+    if(this.state.numeroAcademicos>0){
+      this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
+      this.agregarAcademicos()
+    }else{
+      
+    }
+      
   }
 
   render() {
@@ -329,13 +348,13 @@ class AdminPersonas extends Component {
 
         <FormGroup>
           <h5 for="requisitos-academicos">Requisitos Academicos </h5>
-          <Button size="sm" type="button" outline color="primary">
+          <Button size="sm" type="button" outline color="primary" onClick={this.restarStateAcademicos}>
             -
           </Button>{" "}
-          <Button size="sm" type="button" outline color="primary" onClick={this.agregarAcademicos}>
+          <Button size="sm" type="button" outline color="primary" onClick={this.agregarStateAcademicos}>
             +
           </Button>{" "}
-          
+          {this.agregarAcademicos()}
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-profesionales">Requisitos Profesionales</Label>
