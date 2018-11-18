@@ -55,7 +55,7 @@ class AdminRequisitos extends Component {
   }
   
   obtenerFormularios() {
-    // TODO agregar grado de estudios
+    // TODO agregar grado de estudios 
     // TODO agregar carrera de estudios
     // devuelve los formularios dependiendo de que radio button esta seleccionado
     if (this.state.tipoRequisito === 'Sanitarios') {
@@ -80,7 +80,7 @@ class AdminRequisitos extends Component {
         </div>
       );
 
-    } else if (this.state.tipoRequisito === 'Academicos') {
+    } else if (this.state.tipoRequisito === 'Institución Académica') {
       return (
         <div>
           <FormGroup>
@@ -110,6 +110,30 @@ class AdminRequisitos extends Component {
             {/* Cuantos anios trabajo y donde */}
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
             <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Experiencia laboral"
+            onChange={e => this.setState({ nombre: e.target.value })}/>
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Grado de Estudio') {
+      return (
+        <div>
+          <FormGroup>
+            {/* Que titulo universitario obtuvo */}
+            <Label for="grado-estudio">Tipo de grado de estudio</Label>
+            <Input type="text" name="grado-estudio" id="grado-estudio" placeholder="Ingeniería/Licenciatura/Técnico"
+            onChange={e => this.setState({ nombre: e.target.value })}/>
+          </FormGroup>
+        </div>
+      );
+
+    } else if (this.state.tipoRequisito === 'Carrera de Estudio') {
+      return (
+        <div>
+          <FormGroup>
+            {/* nombre de la carrera cursada */}
+            <Label for="carrera-estudio">Tipo de carrera de estudio</Label>
+            <Input type="text" name="carrera-estudio" id="carrera-estudio" placeholder="Medicina"
             onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
@@ -168,6 +192,16 @@ class AdminRequisitos extends Component {
           <FormGroup check>
             <Label check>
               <Input type="radio" onChange={this.radioChange} name="tipoR" id= 'Laborales'/>Laborales
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Grado de Estudio'/>Grado de Estudio
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Carrera de Estudio'/>Carrera de Estudio
             </Label>
           </FormGroup>
         </FormGroup>
