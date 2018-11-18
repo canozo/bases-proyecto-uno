@@ -16,6 +16,7 @@ import ItemNavegacion from './ItemNavegacion';
 import Home from './Home';
 import Seleccion from './Seleccion';
 import SolicitarEmpleo from './SolicitarEmpleo';
+import SolicitarPuestos from './SolicitarPuestos';
 import AdminPuestos from './AdminPuestos';
 import AdminEmpleos from './AdminEmpleos';
 import AdminPersonas from './AdminPersonas';
@@ -103,6 +104,12 @@ class App extends React.Component {
           <Link to='/solicitarempleo'>
             <ItemNavegacion
               text='Solicitar empleo'
+              icon_name='mail'
+            />
+          </Link>
+          <Link to='/solicitarpuestos'>
+            <ItemNavegacion
+              text='Solicitar Puestos'
               icon_name='mail'
             />
           </Link>
@@ -196,6 +203,7 @@ class App extends React.Component {
             <Route path="/" exact component={Home} />
             <Route path="/seleccion" exact component={Seleccion} />
             <Route path="/solicitarempleo" exact component={SolicitarEmpleo} />
+            <Route path="/solicitarpuestos" exact component={SolicitarPuestos} />
             <Route path="/adminpuestos" exact component={AdminPuestos} />
             <Route path="/adminempleos" exact component={AdminEmpleos} />
             <Route path="/adminpersonas" exact component={AdminPersonas} />
