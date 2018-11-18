@@ -64,7 +64,7 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
             <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" 
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreSanitario: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -75,18 +75,18 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nombre-legales">Nombre Legales</Label>
             <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" 
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreLegales: e.target.value })}/>
           </FormGroup>
         </div>
       );
 
-    } else if (this.state.tipoRequisito === 'Institución Académica') {
+    } else if (this.state.tipoRequisito === 'Institucion Academica') {
       return (
         <div>
           <FormGroup>
             <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
             <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" 
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreInstitucionAcademica: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -98,7 +98,7 @@ class AdminRequisitos extends Component {
             {/* Si saco algun certificado */}
             <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
             <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="Certificados"
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreProfesionales: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -110,7 +110,7 @@ class AdminRequisitos extends Component {
             {/* Cuantos anios trabajo y donde */}
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
             <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Experiencia laboral"
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreLaborales: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -122,7 +122,7 @@ class AdminRequisitos extends Component {
             {/* Que titulo universitario obtuvo */}
             <Label for="grado-estudio">Tipo de grado de estudio</Label>
             <Input type="text" name="grado-estudio" id="grado-estudio" placeholder="Ingeniería/Licenciatura/Técnico"
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreGradoEstudio: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -134,7 +134,7 @@ class AdminRequisitos extends Component {
             {/* nombre de la carrera cursada */}
             <Label for="carrera-estudio">Tipo de carrera de estudio</Label>
             <Input type="text" name="carrera-estudio" id="carrera-estudio" placeholder="Medicina"
-            onChange={e => this.setState({ nombre: e.target.value })}/>
+            onChange={e => this.setState({ nombreCarreraEstudio: e.target.value })}/>
           </FormGroup>
         </div>
       );
@@ -181,7 +181,7 @@ class AdminRequisitos extends Component {
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Academicos'/>Academicos
+              <Input type="radio" onChange={this.radioChange} name="tipoR" id='Institucion Academica'/>Institucion Academica
             </Label>
           </FormGroup>
           <FormGroup check>
