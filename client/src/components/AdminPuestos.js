@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const styles = {
   card: {
@@ -13,20 +14,34 @@ const styles = {
   },
 };
 
-
-// TODO en administrar puestos manejar el tipo de puesto y el puesto padre
-// TODO mover esto a solicitar puestos (para empresas)
-// TODO en solicitar puestos agregar un campo de SI/NO donde pregunta si la especializacion es obligatoria o versatil
 class AdminPuestos extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      lugar:'',
-      tipoEmpleo:'',
-      sueldo:'',
-      cantidadPlazas:''
-    };
+
     this.submitState = this.submitState.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.selectDropdown = this.selectDropdown.bind(this);
+
+    this.state = {
+      tipoPuesto: '',
+      puestoPadre: '',
+      dropdownOpen: false,
+      selectedName: 'Escoger puesto padre',
+      selectedValue: '0',
+    };
+  }
+
+  toggleDropdown() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  selectDropdown(event) {
+    this.setState({
+      selectedName: event.target.innerText,
+      selectedValue: event.target.value
+    });
   }
 
   submitState(event){
@@ -55,37 +70,24 @@ class AdminPuestos extends Component {
   render() {
     return (
       <Form onSubmit={this.submitState}>
-      {/* TODO Requisitos personales: La edad, casado/soltero, sexo */}
-      {/* TODO Puede ser que por lo siguiente no se pueda hacer automatico: */}
-      {/* TODO Agregar tipo de puesto (jefe, gerente, etc) */}
-      {/* TODO Checkbox en duro -> Condiciones de empleo, agregar un nivel de prioridad (Ninguno, deseable, obligatorio) para cada una de las siguientes:
-          Saber manejar,
-          Hablar Ingles,
-          Saber usar office,
-          Hacer marketing (llamadas),
-          Reparar autos,
-          Trabaje bajo presion,
-          Conocer de primeros auxilios,
-      */}
         <FormGroup>
-          <Label for="LugarEmpleo">Lugar de Empleo</Label>
-          <Input type="text" name="LugarEmpleo" id="LugarEmpleo" placeholder="BAC Credomatic" 
-          onChange={e => this.setState({ lugar: e.target.value })}/>
+          <Label for="tipoPuesto">Tipo de Puesto</Label>
+          <Input type="text" name="tipoPuesto" id="tipoPuesto" placeholder="Programador WEB"
+          onChange={e => this.setState({ tipoPuesto: e.target.value })}/>
         </FormGroup>
         <FormGroup>
-          <Label for="tipo-empleo">Tipo Empleo</Label>
-          <Input type="text" name="tipoEmpleo" id="tipoEmpleo" placeholder="Programador" 
-          onChange={e => this.setState({ tipoEmpleo: e.target.value })}/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="sueldo">Sueldo</Label>
-          <Input type="number" name="sueldo" id="sueldo" placeholder="23000" 
-          onChange={e => this.setState({ sueldo: e.target.value })}/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="cantidadPlazas">Cantidad de Plazas</Label>
-          <Input type="number" name="cantidadPlazas" id="cantidadPlazas" placeholder="1" 
-          onChange={e => this.setState({ cantidadPlazas: e.target.value })}/>
+          <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+            <DropdownToggle caret>
+              {this.state.selectedName}
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem value='0' onClick={this.selectDropdown}>Escoger puesto padre</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem value='1' onClick={this.selectDropdown}>Programador</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem value='2' onClick={this.selectDropdown}>Administrador</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </FormGroup>
         <Button>Submit</Button>
       </Form>

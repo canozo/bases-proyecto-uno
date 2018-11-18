@@ -24,14 +24,14 @@ class SolicitarEmpleo extends Component {
     this.state = {
       dropdownOpen: false,
       selectedName: 'Escoger Persona',
-      selectedValue: ''
+      selectedValue: '',
     };
   }
 
   toggleDropdown() {
-      this.setState({
-        dropdownOpen: !this.state.dropdownOpen
-      });
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
   }
 
   selectDropdown(event) {
