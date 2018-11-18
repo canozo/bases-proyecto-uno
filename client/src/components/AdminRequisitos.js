@@ -55,6 +55,8 @@ class AdminRequisitos extends Component {
   }
   
   obtenerFormularios() {
+    // TODO agregar grado de estudios
+    // TODO agregar carrera de estudios
     // devuelve los formularios dependiendo de que radio button esta seleccionado
     if (this.state.tipoRequisito === 'Sanitarios') {
       return (
@@ -93,8 +95,9 @@ class AdminRequisitos extends Component {
       return (
         <div>
           <FormGroup>
+            {/* Si saco algun certificado */}
             <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
-            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="ICONIC" 
+            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="Certificados"
             onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>
@@ -104,8 +107,9 @@ class AdminRequisitos extends Component {
       return (
         <div>
           <FormGroup>
+            {/* Cuantos anios trabajo y donde */}
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
-            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Agile Solutions" 
+            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Experiencia laboral"
             onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
         </div>

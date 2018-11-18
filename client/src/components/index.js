@@ -15,7 +15,6 @@ import { Route, Link, Switch } from 'react-router-dom';
 import ItemNavegacion from './ItemNavegacion';
 import Home from './Home';
 import Seleccion from './Seleccion';
-import SolicitarPuesto from './SolicitarPuesto';
 import SolicitarEmpleo from './SolicitarEmpleo';
 import AdminPuestos from './AdminPuestos';
 import AdminEmpleos from './AdminEmpleos';
@@ -95,15 +94,15 @@ class App extends React.Component {
         <Divider />
         <List>
           {/* Navegacion para acciones de empresas solicitantes */}
-          <Link to='/solicitarpuesto'>
-            <ItemNavegacion
-              text='Solicitar puesto'
-              icon_name='mail'
-            />
-          </Link>
           <Link to='/adminempresas'>
             <ItemNavegacion
               text='Administrar empresas'
+              icon_name='mail'
+            />
+          </Link>
+          <Link to='/solicitarempleo'>
+            <ItemNavegacion
+              text='Solicitar empleo'
               icon_name='mail'
             />
           </Link>
@@ -111,12 +110,7 @@ class App extends React.Component {
         <Divider />
         <List>
           {/* Navegacion para acciones de personas solicitantes */}
-          <Link to='/solicitarempleo'>
-            <ItemNavegacion
-              text='Solicitar empleo'
-              icon_name='mail'
-            />
-          </Link>
+          {/* TODO puede ser de empresas */}
           <Link to='/adminpuestos'>
             <ItemNavegacion
               text='Administrar puestos'
@@ -201,7 +195,6 @@ class App extends React.Component {
             {/* Switch de Direcciones */}
             <Route path="/" exact component={Home} />
             <Route path="/seleccion" exact component={Seleccion} />
-            <Route path="/solicitarpuesto" exact component={SolicitarPuesto} />
             <Route path="/solicitarempleo" exact component={SolicitarEmpleo} />
             <Route path="/adminpuestos" exact component={AdminPuestos} />
             <Route path="/adminempleos" exact component={AdminEmpleos} />

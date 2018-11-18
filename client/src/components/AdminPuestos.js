@@ -13,6 +13,10 @@ const styles = {
   },
 };
 
+
+// TODO en administrar puestos manejar el tipo de puesto y el puesto padre
+// TODO mover esto a solicitar puestos (para empresas)
+// TODO en solicitar puestos agregar un campo de SI/NO donde pregunta si la especializacion es obligatoria o versatil
 class AdminPuestos extends Component {
   constructor(props) {
     super(props);
@@ -24,8 +28,9 @@ class AdminPuestos extends Component {
     };
     this.submitState = this.submitState.bind(this);
   }
+
   submitState(event){
-    alert(JSON.stringify(this.state, null, '  '));
+    alert(JSON.stringify(this.state, null, ''));
     event.preventDefault();
     fetch('/adminpuestos', {
       method: 'put',
@@ -50,6 +55,18 @@ class AdminPuestos extends Component {
   render() {
     return (
       <Form onSubmit={this.submitState}>
+      {/* TODO Requisitos personales: La edad, casado/soltero, sexo */}
+      {/* TODO Puede ser que por lo siguiente no se pueda hacer automatico: */}
+      {/* TODO Agregar tipo de puesto (jefe, gerente, etc) */}
+      {/* TODO Checkbox en duro -> Condiciones de empleo, agregar un nivel de prioridad (Ninguno, deseable, obligatorio) para cada una de las siguientes:
+          Saber manejar,
+          Hablar Ingles,
+          Saber usar office,
+          Hacer marketing (llamadas),
+          Reparar autos,
+          Trabaje bajo presion,
+          Conocer de primeros auxilios,
+      */}
         <FormGroup>
           <Label for="LugarEmpleo">Lugar de Empleo</Label>
           <Input type="text" name="LugarEmpleo" id="LugarEmpleo" placeholder="BAC Credomatic" 

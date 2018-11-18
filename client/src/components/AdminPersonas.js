@@ -179,6 +179,7 @@ class AdminPersonas extends Component {
             <CustomInput onChange={this.checkearLaborales}  type="checkbox" id="req-laborales-3" label="Requisito 3" />
           </div>
         </FormGroup>
+        {/* TODO agregar anios de experiencia */}
         <Button>Submit</Button>
       </Form>
     );
