@@ -169,8 +169,13 @@ class AdminPersonas extends Component {
     this.agregarAcademicos()
   }
   restarStateAcademicos(event){
-    this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
-    this.agregarAcademicos()
+    if(this.state.numeroAcademicos>0){
+      this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
+      this.agregarAcademicos()
+    }else{
+      
+    }
+      
   }
 
   render() {
