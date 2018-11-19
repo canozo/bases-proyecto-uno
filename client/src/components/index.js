@@ -13,10 +13,10 @@ import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Link, Switch } from 'react-router-dom';
 import ItemNavegacion from './ItemNavegacion';
-import Home from './Home';
+import Home from './agencia/Home';
 import Seleccion from './agencia/Seleccion';
-import SolicitarEmpleo from './empresa/SolicitarEmpleo';
-import SolicitarPuestos from './persona/SolicitarPuestos';
+import SolicitarEmpleo from './persona/SolicitarEmpleo';
+import SolicitarPuestos from './empresa/SolicitarPuestos';
 import AdminPuestos from './agencia/AdminPuestos';
 import AdminPersonas from './persona/AdminPersonas';
 import AdminEmpresas from './empresa/AdminEmpresas';
@@ -75,9 +75,15 @@ class App extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
-        <Divider />
+        {/* <Divider /> */}
         <List>
           {/* Navegacion para acciones de agencia */}
+          <Divider />
+          <ItemNavegacion
+            text='Agencias'
+            icon_name='none'
+            button_mode='false'
+          />
           <Link to='/'>
             <ItemNavegacion
               text='Home'
@@ -90,19 +96,30 @@ class App extends React.Component {
               icon_name='mail'
             />
           </Link>
-        </List>
-        <Divider />
-        <List>
-          {/* Navegacion para acciones de empresas solicitantes */}
-          <Link to='/adminempresas'>
+          <Link to='/adminpuestos'>
             <ItemNavegacion
-              text='Administrar empresas'
+              text='Administrar puestos'
               icon_name='mail'
             />
           </Link>
-          <Link to='/solicitarempleo'>
+          <Link to='/adminrequisitos'>
             <ItemNavegacion
-              text='Solicitar empleo'
+              text='Administrar requisitos'
+              icon_name='mail'
+            />
+          </Link>
+        </List>
+        <List>
+          {/* Navegacion para acciones de empresas solicitantes */}
+          <Divider />
+          <ItemNavegacion
+            text='Empresas'
+            icon_name='none'
+            button_mode='false'
+          />
+          <Link to='/adminempresas'>
+            <ItemNavegacion
+              text='Administrar empresas'
               icon_name='mail'
             />
           </Link>
@@ -113,25 +130,23 @@ class App extends React.Component {
             />
           </Link>
         </List>
-        <Divider />
         <List>
           {/* Navegacion para acciones de personas solicitantes */}
-          {/* TODO puede ser de empresas */}
-          <Link to='/adminpuestos'>
-            <ItemNavegacion
-              text='Administrar puestos'
-              icon_name='mail'
-            />
-          </Link>
+          <Divider />
+          <ItemNavegacion
+            text='Personas'
+            icon_name='none'
+            button_mode='false'
+          />
           <Link to='/adminpersonas'>
             <ItemNavegacion
               text='Administrar personas'
               icon_name='mail'
             />
           </Link>
-          <Link to='/adminrequisitos'>
+          <Link to='/solicitarempleo'>
             <ItemNavegacion
-              text='Administrar requisitos'
+              text='Solicitar empleo'
               icon_name='mail'
             />
           </Link>

@@ -55,8 +55,6 @@ class AdminRequisitos extends Component {
   }
   
   obtenerFormularios() {
-    // TODO agregar grado de estudios 
-    // TODO agregar carrera de estudios
     // devuelve los formularios dependiendo de que radio button esta seleccionado
     if (this.state.tipoRequisito === 'Sanitarios') {
       return (

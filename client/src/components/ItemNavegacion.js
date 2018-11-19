@@ -49,25 +49,41 @@ class ItemNavegacion extends React.Component {
 
     this.state = {
       text: props.text,
-      icon_name: props.icon_name
+      icon_name: props.icon_name,
+      buttom_mode: props.buttom_mode === 'true',
     };
   }
 
   getIcon() {
     if (this.state.icon_name === 'mail') {
       return <MailIcon />;
-    } else {
-      return <InboxIcon />;
     }
+
+    if (this.state.icon_name === 'none') {
+      return <div />;
+    }
+
+    return <InboxIcon />;
   }
 
   render() {
-    return (
-      <ListItem button key={this.state.text}>
-        <ListItemIcon>{this.getIcon()}</ListItemIcon>
-        <ListItemText primary={this.state.text} />
-      </ListItem>
-    );
+    const { button_mode } = this.state;
+
+    if (button_mode) {
+      return (
+        <ListItem button key={this.state.text}>
+          <ListItemIcon>{this.getIcon()}</ListItemIcon>
+          <ListItemText primary={this.state.text} />
+        </ListItem>
+      );
+    } else {
+      return (
+        <ListItem key={this.state.text}>
+          <ListItemIcon>{this.getIcon()}</ListItemIcon>
+          <ListItemText primary={this.state.text} />
+        </ListItem>
+      );
+    }
   }
 }
 
