@@ -89,7 +89,7 @@ class AdminPuestos extends Component {
             </DropdownMenu>
           </Dropdown>
         </FormGroup>
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }

@@ -221,7 +221,7 @@ class SolicitarPuestos extends Component {
             <option value='4'>Junior</option>
           </Select>
         </FormControl>
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }

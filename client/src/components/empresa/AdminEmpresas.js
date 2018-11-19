@@ -79,7 +79,7 @@ class AdminEmpresas extends Component {
           <Input type="text" name="cfi" id="cfi" placeholder="CFI" 
           onChange={e => this.setState({ cfi: e.target.value })}/>
         </FormGroup>
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }

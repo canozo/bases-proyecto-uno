@@ -403,7 +403,7 @@ class AdminPersonas extends Component {
           </Button>{" "}
           <FormGroup>{this.agregarAcademicos()}</FormGroup>
         </FormGroup>
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }

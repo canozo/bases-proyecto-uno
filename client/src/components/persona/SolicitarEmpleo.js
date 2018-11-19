@@ -66,7 +66,7 @@ class SolicitarEmpleo extends Component {
             <CustomInput type="checkbox" id="Cinco" label="Cinco" />
           </div>
         </FormGroup>
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }

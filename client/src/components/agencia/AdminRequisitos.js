@@ -206,7 +206,7 @@ class AdminRequisitos extends Component {
 
         {this.obtenerFormularios()}
 
-        <Button>Submit</Button>
+        <Button>Guardar</Button>
       </Form>
     );
   }
