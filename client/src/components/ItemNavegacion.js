@@ -6,6 +6,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import WorkIcon from '@material-ui/icons/Work';
 
 const drawerWidth = 240;
 
@@ -57,6 +61,22 @@ class ItemNavegacion extends React.Component {
   getIcon() {
     if (this.state.icon_name === 'mail') {
       return <MailIcon />;
+    }
+
+    if (this.state.icon_name === 'announcement') {
+      return <AnnouncementIcon />;
+    }
+
+    if (this.state.icon_name === 'check') {
+      return <CheckCircleIcon />;
+    }
+
+    if (this.state.icon_name === 'assign') {
+      return <AssignmentIcon />;
+    }
+
+    if (this.state.icon_name === 'work') {
+      return <WorkIcon />;
     }
 
     if (this.state.icon_name === 'none') {

@@ -87,25 +87,25 @@ class App extends React.Component {
           <Link to='/'>
             <ItemNavegacion
               text='Home'
-              icon_name='mail'
+              icon_name='announcement'
             />
           </Link>
           <Link to='/seleccion'>
             <ItemNavegacion
               text='Seleccion'
-              icon_name='mail'
+              icon_name='check'
             />
           </Link>
           <Link to='/adminpuestos'>
             <ItemNavegacion
               text='Administrar puestos'
-              icon_name='mail'
+              icon_name='assign'
             />
           </Link>
           <Link to='/adminrequisitos'>
             <ItemNavegacion
               text='Administrar requisitos'
-              icon_name='mail'
+              icon_name='assign'
             />
           </Link>
         </List>
@@ -120,13 +120,13 @@ class App extends React.Component {
           <Link to='/adminempresas'>
             <ItemNavegacion
               text='Administrar empresas'
-              icon_name='mail'
+              icon_name='assign'
             />
           </Link>
           <Link to='/solicitarpuestos'>
             <ItemNavegacion
               text='Solicitar Puestos'
-              icon_name='mail'
+              icon_name='work'
             />
           </Link>
         </List>
@@ -141,13 +141,13 @@ class App extends React.Component {
           <Link to='/adminpersonas'>
             <ItemNavegacion
               text='Administrar personas'
-              icon_name='mail'
+              icon_name='assign person'
             />
           </Link>
           <Link to='/solicitarempleo'>
             <ItemNavegacion
               text='Solicitar empleo'
-              icon_name='mail'
+              icon_name='work'
             />
           </Link>
         </List>
