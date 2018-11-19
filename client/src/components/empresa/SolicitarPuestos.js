@@ -101,7 +101,6 @@ class SolicitarPuestos extends Component {
   }
 
   submitState(event){
-    alert(JSON.stringify(this.state, null, ''));
     event.preventDefault();
     fetch('/SolicitarPuestos', {
       method: 'put',

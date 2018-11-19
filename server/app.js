@@ -6,6 +6,7 @@ var logger = require('morgan');
 var redis = require('redis');
 
 var indexRouter = require('./routes/index');
+var puestosRouter = require('./routes/puestos');
 var requisitosRouter = require('./routes/requisitos');
 
 var app = express();
@@ -28,6 +29,7 @@ client.on('connect', () => {
 
 app.use('/', indexRouter);
 app.use('/requisitos', requisitosRouter);
+app.use('/puestos', puestosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

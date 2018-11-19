@@ -23,12 +23,33 @@ class AdminPuestos extends Component {
     this.selectDropdown = this.selectDropdown.bind(this);
 
     this.state = {
+      puestos: [],
       tipoPuesto: '',
-      puestoPadre: '',
       dropdownOpen: false,
-      selectedName: 'Escoger puesto padre',
+      selectedName: 'Ninguno',
       selectedValue: '0',
     };
+  }
+
+  componentDidMount() {
+    // obtener todos los puestos del servidor
+    fetch('/puestos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          puestos: res || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
 
   toggleDropdown() {
@@ -45,16 +66,19 @@ class AdminPuestos extends Component {
   }
 
   submitState(event){
-    alert(JSON.stringify(this.state, null, ''));
     event.preventDefault();
-    fetch('/adminpuestos', {
+    console.log('insertando', this.state);
+    fetch('/puestos', {
       method: 'put',
       headers : {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       // informacion a enviar
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({
+        puesto: this.state.tipoPuesto,
+        idPuestoPadre: this.state.selectedValue,
+      }),
     })
       .then(res => res.json())
       .then(res => {
@@ -68,6 +92,8 @@ class AdminPuestos extends Component {
   }
 
   render() {
+    const { puestos } = this.state;
+
     return (
       <Form onSubmit={this.submitState}>
         <FormGroup>
@@ -81,11 +107,15 @@ class AdminPuestos extends Component {
               {this.state.selectedName}
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem value='0' onClick={this.selectDropdown}>Escoger puesto padre</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem value='1' onClick={this.selectDropdown}>Programador</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem value='2' onClick={this.selectDropdown}>Administrador</DropdownItem>
+              <DropdownItem key='0' value='0' onClick={this.selectDropdown}>Ninguno</DropdownItem>
+
+              {/* Generar los items con los puestos obtenidos de la base de datos */}
+              {puestos.map(({ name, value }) => (
+                <DropdownItem key={value} value={value} onClick={this.selectDropdown}>
+                  {name}
+                </DropdownItem>
+              ))}
+
             </DropdownMenu>
           </Dropdown>
         </FormGroup>

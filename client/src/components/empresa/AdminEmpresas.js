@@ -29,7 +29,7 @@ class AdminEmpresas extends Component {
   }
 
   submitState(event){
-    alert(JSON.stringify(this.state, null, '  '));
+    (JSON.stringify(this.state, null, '  '));
     event.preventDefault();
     fetch('/adminempresas', {
       method: 'put',

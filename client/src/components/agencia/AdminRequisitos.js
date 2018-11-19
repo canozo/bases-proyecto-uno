@@ -140,7 +140,6 @@ class AdminRequisitos extends Component {
   }
 
   submitState(event){
-    alert(JSON.stringify(this.state, null, '  '));
     event.preventDefault();
     fetch('/adminrequisitos', {
       method: 'put',
