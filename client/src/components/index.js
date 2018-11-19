@@ -18,7 +18,7 @@ import Seleccion from './agencia/Seleccion';
 import SolicitarEmpleo from './empresa/SolicitarEmpleo';
 import SolicitarPuestos from './persona/SolicitarPuestos';
 import AdminPuestos from './agencia/AdminPuestos';
-import AdminPersonas from './AdminPersonas';
+import AdminPersonas from './persona/AdminPersonas';
 import AdminEmpresas from './empresa/AdminEmpresas';
 import AdminRequisitos from './agencia/AdminRequisitos';
 import 'bootstrap/dist/css/bootstrap.min.css';
