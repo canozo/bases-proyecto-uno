@@ -2,6 +2,15 @@ var express = require('express');
 var util = require('util');
 var router = express.Router();
 
+// TODO en vez de guardar cada puesto por separado podemos
+// tener una tabla de 'padres' donde se guarda el
+// key        => value
+// tipoPuesto => puestoPadre
+
+// o podemos guardar el padre directamente en puestos
+// key        => value
+// tipoPuesto => puestoPadre
+
 router.get('/', function(req, res) {
   // obtener los puestos guardados en el servidor y enviarlos
   // obtener el listado de puestos
