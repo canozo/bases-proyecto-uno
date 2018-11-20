@@ -259,23 +259,39 @@ class AdminPersonas extends Component {
   submitState(event) {
     event.preventDefault();
     console.log(this.state);
-    // fetch("/adminpersonas", {
-    //   method: "put",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   // informacion a enviar
-    //   body: JSON.stringify(this.state)
-    // })
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     // logica de respuesta
-    //     this.setState({
-    //       status: res.status,
-    //       response: res.response
-    //     });
-    //   });
+    fetch("/personas", {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      // informacion a enviar
+      body: JSON.stringify({
+        numID: this.state.numID,
+        nombre: this.state.nombre,
+        telefono: this.state.telefono,
+        email: this.state.email,
+        direccion: this.state.direccion,
+        genero: this.state.genero,
+        fecha_nacimiento: this.state.fecha_nacimiento,
+        estado_civil: this.state.estado_civil,
+        familiares: this.state.familiares,
+        sanitarios: this.state.sanitarios,
+        legales: this.state.legales,
+        laborales: this.state.laborales,
+        profesionales: this.state.profesionales,
+        academicos: this.state.academicos,
+
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+      });
   }
 
   checkearAcademicos(event) {
