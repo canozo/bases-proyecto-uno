@@ -63,8 +63,6 @@ class SolicitarPuestos extends Component {
     super(props);
 
     this.submitState = this.submitState.bind(this);
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.selectDropdown = this.selectDropdown.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
@@ -72,26 +70,14 @@ class SolicitarPuestos extends Component {
       genero: '',
       estadoCivil: '',
       rangoEdad: '',
-      puesto: '',
-      tipoEmpleo: '',
       sueldo: '',
       cantidadPlazas: '',
-      selectedName: 'Requisito de especializacion',
-      selectedValue: '0',
+      condicionManejar: '',
+      condicionIngles: '',
+      condicionOffice: '',
+      condicionPresion: '',
+      condicionAuxilios: '',
     };
-  }
-
-  toggleDropdown() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
-
-  selectDropdown(event) {
-    this.setState({
-      selectedName: event.target.innerText,
-      selectedValue: event.target.value
-    });
   }
 
   handleChange(event) {
@@ -102,23 +88,34 @@ class SolicitarPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
-    fetch('/SolicitarPuestos', {
+    console.log(this.state);
+    fetch('/solicitudes/puestos', {
       method: 'put',
       headers : {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       // informacion a enviar
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({
+        lugar: this.state.lugar,
+        genero: this.state.genero,
+        estadoCivil: this.state.estadoCivil,
+        rangoEdad: this.state.rangoEdad,
+        sueldo: this.state.sueldo,
+        cantidadPlazas: this.state.cantidadPlazas,
+        condicionManejar: this.state.condicionManejar,
+        condicionIngles: this.state.condicionIngles,
+        condicionOffice: this.state.condicionOffice,
+        condicionPresion: this.state.condicionPresion,
+        condicionAuxilios: this.state.condicionAuxilios,
+      }),
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.setState({
-          status: res.status,
-          response: res.response
-        });
         console.log(res);
+      }).catch((err) => {
+        console.log(err);
       });
   }
 
@@ -126,27 +123,19 @@ class SolicitarPuestos extends Component {
     const { classes } = this.props;
     return (
       <Form onSubmit={this.submitState}>
-      {/* TODO Checkbox en duro -> Condiciones de empleo, agregar un nivel de prioridad (Ninguno, deseable, obligatorio) para cada una de las siguientes:
-          Saber manejar,
-          Hablar Ingles,
-          Saber usar office,
-          Hacer marketing (llamadas),
-          Reparar autos,
-          Trabaje bajo presion,
-          Conocer de primeros auxilios, */}
         <FormGroup>
           <Label for="LugarEmpleo">Lugar de Empleo</Label>
-          <Input type="text" name="LugarEmpleo" id="LugarEmpleo" placeholder="BAC Credomatic" 
+          <Input type="text" name="LugarEmpleo" id="LugarEmpleo" value={this.state.lugar} placeholder="BAC Credomatic" 
           onChange={e => this.setState({ lugar: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="sueldo">Sueldo</Label>
-          <Input type="number" name="sueldo" id="sueldo" placeholder="23000" 
+          <Input type="number" name="sueldo" id="sueldo" value={this.state.sueldo} placeholder="23000" 
           onChange={e => this.setState({ sueldo: e.target.value })}/>
         </FormGroup>
         <FormGroup>
           <Label for="cantidadPlazas">Cantidad de Plazas</Label>
-          <Input type="number" name="cantidadPlazas" id="cantidadPlazas" placeholder="1" 
+          <Input type="number" name="cantidadPlazas" id="cantidadPlazas" value={this.state.cantidadPlazas} placeholder="1" 
           onChange={e => this.setState({ cantidadPlazas: e.target.value })}/>
         </FormGroup>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -161,9 +150,9 @@ class SolicitarPuestos extends Component {
             }
           >
             <option value=''/>
-            <option value='0'>Sin preferencia</option>
-            <option value='1'>Masculino</option>
-            <option value='2'>Femenino</option>
+            <option value='Sin preferencia'>Sin preferencia</option>
+            <option value='Masculino'>Masculino</option>
+            <option value='Femenino'>Femenino</option>
           </Select>
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -178,9 +167,9 @@ class SolicitarPuestos extends Component {
             }
           >
             <option value=''/>
-            <option value='0'>Sin preferencia</option>
-            <option value='1'>Casado/a</option>
-            <option value='2'>Soltero/a</option>
+            <option value='Sin preferencia'>Sin preferencia</option>
+            <option value='Casado/a'>Casado/a</option>
+            <option value='Soltero/a'>Soltero/a</option>
           </Select>
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -195,29 +184,96 @@ class SolicitarPuestos extends Component {
             }
           >
             <option value=''/>
-            <option value='0'>Sin preferencia</option>
-            <option value='1'>18-25</option>
-            <option value='2'>25-35</option>
-            <option value='3'>35 en adelante</option>
+            <option value='Sin preferencia'>Sin preferencia</option>
+            <option value='18-25'>18-25</option>
+            <option value='25-35'>25-35</option>
+            <option value='35 en'>35 en adelante</option>
           </Select>
         </FormControl>
+        {/* Inicio de condiciones de empleo */}
         <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.puesto === "" ? <InputLabel>Puesto que se busca</InputLabel> : ""}
+          {this.state.condicionManejar === "" ? <InputLabel>Sabe manejar</InputLabel> : ""}
           <Select
             native
-            value={this.state.puesto}
-            id="puesto"
+            value={this.state.condicionManejar}
+            id="condicionManejar"
             onChange={this.handleChange}
             input={
               <OutlinedInput labelWidth={0} />
             }
           >
             <option value=''/>
-            <option value='0'>Sin Preferencia</option>
-            <option value='1'>Gerente</option>
-            <option value='2'>Administrador</option>
-            <option value='3'>Jefe de Mercadeo</option>
-            <option value='4'>Junior</option>
+            <option value='Ninguno'>Ninguno</option>
+            <option value='Deseable'>Deseable</option>
+            <option value='Obligatorio'>Obligatorio</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionIngles === "" ? <InputLabel>Puede hablar ingles</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionIngles}
+            id="condicionIngles"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Ninguno'>Ninguno</option>
+            <option value='Deseable'>Deseable</option>
+            <option value='Obligatorio'>Obligatorio</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionOffice === "" ? <InputLabel>Sabe usar office</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionOffice}
+            id="condicionOffice"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Ninguno'>Ninguno</option>
+            <option value='Deseable'>Deseable</option>
+            <option value='Obligatorio'>Obligatorio</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionPresion === "" ? <InputLabel>Trabaja bajo presion</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionPresion}
+            id="condicionPresion"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Ninguno'>Ninguno</option>
+            <option value='Deseable'>Deseable</option>
+            <option value='Obligatorio'>Obligatorio</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionAuxilios === "" ? <InputLabel>Conoce de primeros auxilios</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionAuxilios}
+            id="condicionAuxilios"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Ninguno'>Ninguno</option>
+            <option value='Deseable'>Deseable</option>
+            <option value='Obligatorio'>Obligatorio</option>
           </Select>
         </FormControl>
         <Button>Guardar</Button>

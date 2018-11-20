@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var puestosRouter = require('./routes/puestos');
 var requisitosRouter = require('./routes/requisitos');
 var empresasRouter = require('./routes/empresas');
+var solicitudesRouter = require('./routes/solicitudes');
 
 var app = express();
 
@@ -24,14 +25,43 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // cliente de redis
 client = redis.createClient();
+llaves = {
+  solPuestos: 0,
+  solEmpleos: 0,
+};
+
 client.on('connect', () => {
   console.log('Conectado a Redis.');
+  // ver el maximo de solicitudes de empleo:
+  client.hgetall('puestos', function(err, obj) {
+    let size = 0;
+    if (!obj) {
+      size = 0;
+    } else {
+      for (let key in obj)
+        size += 1;
+    }
+    llaves.solEmpleos = size;
+  });
+
+  // ver el maximo de solicitudes de puestos:
+  client.hgetall('solicitudes puesto', function(err, obj) {
+    let size = 0;
+    if (!obj) {
+      size = 0;
+    } else {
+      for (let key in obj)
+        size += 1;
+    }
+    llaves.solPuestos = size;
+  });
 });
 
 app.use('/', indexRouter);
 app.use('/requisitos', requisitosRouter);
 app.use('/puestos', puestosRouter);
 app.use('/empresas', empresasRouter);
+app.use('/solicitudes', solicitudesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
