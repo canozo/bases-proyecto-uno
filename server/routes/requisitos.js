@@ -11,8 +11,8 @@ router.put('/sanitarios', function(req, res) {
   ], function(err, reply) {
       console.log(reply);
   });
-
 });
+
 router.get('/sanitarios', function(req, res) {
   client.hgetall('sanitarios', function(err, obj) {
     if (!err) {
@@ -133,4 +133,5 @@ router.get('/carreraestudio', function(req, res) {
     }
   });
 });
+
 module.exports = router;
