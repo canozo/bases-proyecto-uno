@@ -9,7 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
@@ -46,31 +45,180 @@ class AdminRequisitos extends Component {
     this.state = {
       requisitos: [],
       tipoRequisito: 'Sanitarios',
-      nombreSanitario:'',
-      nombreLegales:'',
-      nombreInstitucionAcademica:'',
-      nombreProfesionales:'',
-      nombreLaborales:'',
-      nombreGradoEstudio:'',
-      nombreCarreraEstudio:'',
+      nombreSanitario: '',
+      nombreLegales: '',
+      nombreInstitucionAcademica: '',
+      nombreProfesionales: '',
+      nombreLaborales: '',
+      nombreGradoEstudio: '',
+      nombreCarreraEstudio: '',
     };
   }
 
-  handleEliminar(value) {
-    // console.log(value);
-    // fetch(`/puestos/${value}`, {
-    //   method: 'delete',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     // logica de respuesta
-    //     this.cargarPuestos();
-    //     console.log(res);
-    //   });
+  componentDidMount() {
+    // cargar todos los requisitos
+    // sanitarios
+    fetch('/requisitos/sanitarios', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Sanitario' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // legales
+    fetch('/requisitos/legales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Legales' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // profesionales
+    fetch('/requisitos/profesionales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Profesionales' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // laborales
+    fetch('/requisitos/laborales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Laborales' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // instituciones academicas
+    fetch('/requisitos/institucionacademica', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Instituciones Academicas' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // grado de estudio
+    fetch('/requisitos/gradoestudio', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Grado de estudio' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    // carreras de estudio
+    fetch('/requisitos/carreraestudio', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Carrera de estudio' });
+
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
+  handleEliminar(tipo, value) {
+    fetch(`/puestos/${tipo}/${value}`, {
+      method: 'delete',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.cargarPuestos();
+        console.log(res);
+      });
   }
 
   radioChange (event) {
@@ -190,11 +338,10 @@ class AdminRequisitos extends Component {
     }
   }
 
-  submitState(event){
+  submitState(event) {
     event.preventDefault();
-    // TODO limpiar text fields
     console.log('insertando', this.state);
-    if(this.state.tipoRequisito==="Sanitarios"){
+    if (this.state.tipoRequisito === "Sanitarios") {
       fetch('/requisitos/sanitarios', {
         method: 'put',
         headers : {
@@ -206,19 +353,20 @@ class AdminRequisitos extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          this.setState = ({
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Legales"){
+
+    } else if (this.state.tipoRequisito === "Legales") {
       fetch('/requisitos/legales', {
         method: 'put',
         headers : {
@@ -232,20 +380,20 @@ class AdminRequisitos extends Component {
         .then(res => {
           // logica de respuesta
           console.log(res);
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Institucion Academica"){
+
+    } else if (this.state.tipoRequisito === "Institucion Academica") {
       fetch('/requisitos/institucionacademica', {
         method: 'put',
         headers : {
@@ -258,21 +406,21 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
           console.log(res);
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Profesionales"){
+
+    } else if (this.state.tipoRequisito === "Profesionales") {
       fetch('/requisitos/profesionales', {
         method: 'put',
         headers : {
@@ -285,21 +433,21 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
           console.log(res);
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Laborales"){
+
+    } else if (this.state.tipoRequisito === "Laborales") {
       fetch('/requisitos/laborales', {
         method: 'put',
         headers : {
@@ -312,21 +460,21 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
-          });  
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
+          });
           console.log(res);
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Grado de Estudio"){
+
+    } else if (this.state.tipoRequisito === "Grado de Estudio") {
       fetch('/requisitos/gradoestudio', {
         method: 'put',
         headers : {
@@ -339,21 +487,21 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
           console.log(res);
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
-    }else if(this.state.tipoRequisito==="Carrera de Estudio"){
+
+    } else if (this.state.tipoRequisito === "Carrera de Estudio") {
       fetch('/requisitos/carreraestudio', {
         method: 'put',
         headers : {
@@ -366,22 +514,20 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          this.setState = ({
-            tipoRequisito: 'Sanitarios',
-            nombreSanitario:'',
-            nombreLegales:'',
-            nombreInstitucionAcademica:'',
-            nombreProfesionales:'',
-            nombreLaborales:'',
-            nombreGradoEstudio:'',
-            nombreCarreraEstudio:'',
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
           });
           console.log(res);
         }).catch((err) => {
-          console.log("<error");
+          console.log(err);
         });
     }
-    
   }
 
   render() {
@@ -435,7 +581,6 @@ class AdminRequisitos extends Component {
           <Button>Guardar</Button>
           </Form>
 
-          {/* TODO Listado de requisitos */}
           <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
@@ -446,18 +591,17 @@ class AdminRequisitos extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {requisitos.map(({ name, value }) => (
+              {requisitos.map(({ name, value, tipo }) => (
                 <TableRow key={value}>
+                  <TableCell component="th" scope="row">
+                    {tipo}
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {name}
                   </TableCell>
                   <TableCell numeric>
-                    <IconButton aria-label="Edit" value={value}
-                      onClick={() => {this.handleEditar(value);}}>
-                        <EditIcon />
-                    </IconButton>
                     <IconButton aria-label="Delete" value={value}
-                      onClick={() => {this.handleEliminar(value);}}>
+                      onClick={() => {this.handleEliminar(tipo, value);}}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>

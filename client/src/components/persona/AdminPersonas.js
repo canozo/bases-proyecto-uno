@@ -46,13 +46,13 @@ class AdminPersonas extends Component {
       academicos: {},
       numeroAcademicos: 1,
       instituciones: [],
-      carrerasEstudio:[],
-      gradosAcademicos:[], 
-      opcLegales:[], 
-      opcSanitarios:[],
-      opcFamiliares:[],
-      opcProfesionales:[],
-      opcLaborales:[]
+      carrerasEstudio: [],
+      gradosAcademicos: [], 
+      opcLegales: [], 
+      opcSanitarios: [],
+      opcFamiliares: [],
+      opcProfesionales: [],
+      opcLaborales: []
     };
   }
 

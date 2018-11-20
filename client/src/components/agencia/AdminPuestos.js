@@ -67,7 +67,7 @@ class AdminPuestos extends Component {
         // logica de respuesta
         console.log(res);
 
-        // XXX ver como cargar padres
+        // TODO ver como cargar padres
         let puestos = [];
         for (let key in res)
           puestos.push({ name: key, value: key });

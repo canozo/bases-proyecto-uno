@@ -10,6 +10,11 @@ router.put('/sanitarios', function(req, res) {
     nombreSanitario, nombreSanitario,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 });
 
@@ -29,6 +34,11 @@ router.put('/legales', function(req, res) {
     nombreLegales, nombreLegales,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
@@ -47,6 +57,11 @@ router.put('/institucionacademica', function(req, res) {
     nombreInstitucionAcademica, nombreInstitucionAcademica,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
@@ -66,6 +81,11 @@ router.put('/profesionales', function(req, res) {
     nombreProfesionales, nombreProfesionales,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
@@ -85,6 +105,11 @@ router.put('/laborales', function(req, res) {
     nombreLaborales, nombreLaborales,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
@@ -103,6 +128,11 @@ router.put('/gradoestudio', function(req, res) {
     nombreGradoEstudio, nombreGradoEstudio,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
@@ -122,6 +152,11 @@ router.put('/carreraestudio', function(req, res) {
     nombreCarreraEstudio, nombreCarreraEstudio,
   ], function(err, reply) {
       console.log(reply);
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
   });
 
 });
