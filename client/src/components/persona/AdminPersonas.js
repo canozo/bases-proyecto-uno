@@ -45,8 +45,115 @@ class AdminPersonas extends Component {
       profesionales: {},
       academicos: {},
       numeroAcademicos: 1,
-      instituciones: []
+      instituciones: [],
+      carrerasEstudio:[],
+      gradosAcademicos:[], 
+      opcLegales:[], 
+      opcSanitarios:[],
+      opcFamiliares:[],
+      opcProfesionales:[],
+      opcLaborales:[]
     };
+  }
+  getProfesionales(){
+    fetch('/requisitos/profesionales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let opcProfesionales = [];
+        for (let key in res)
+          opcProfesionales.push({ name: key, value: key});
+
+          this.setState({
+            opcProfesionales: opcProfesionales || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getFamiliares(){
+    fetch('/personas', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let opcFamiliares = [];
+        for (let key in res)
+          opcFamiliares.push({ name: key, value: key});
+
+          this.setState({
+            opcFamiliares: opcFamiliares || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getLaborales(){
+    fetch('/requisitos/laborales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let opcLaborales = [];
+        for (let key in res)
+          opcLaborales.push({ name: key, value: key});
+
+          this.setState({
+            opcLaborales: opcLaborales || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getSanitarios(){
+    fetch('/requisitos/sanitarios', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let opcSanitarios = [];
+        for (let key in res)
+          opcSanitarios.push({ name: key, value: key});
+
+          this.setState({
+            opcSanitarios: opcSanitarios || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
   getInstituciones(){
     fetch('/requisitos/institucionAcademica', {
@@ -63,8 +170,86 @@ class AdminPersonas extends Component {
 
         let instituciones = [];
 
+        for (let key in res)
+          instituciones.push({ name: key, value: key});
+
           this.setState({
           instituciones: instituciones || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getCarrera(){
+    fetch('/requisitos/carreraEstudio', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let carrerasEstudio = [];
+        for (let key in res)
+        carrerasEstudio.push({ name: key, value: key});
+
+          this.setState({
+            carrerasEstudio: carrerasEstudio || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getGrados(){
+    fetch('/requisitos/gradoEstudio', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let gradosAcademicos = [];
+        for (let key in res)
+        gradosAcademicos.push({ name: key, value: key});
+
+          this.setState({
+            gradosAcademicos: gradosAcademicos || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+  getLegales(){
+    fetch('/requisitos/legales', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let legales = [];
+        for (let key in res)
+        legales.push({ name: key, value: key});
+
+          this.setState({
+            opcLegales: legales || [],
         });
       })
         .catch((error) => {
@@ -75,23 +260,39 @@ class AdminPersonas extends Component {
   submitState(event) {
     event.preventDefault();
     console.log(this.state);
-    // fetch("/adminpersonas", {
-    //   method: "put",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   // informacion a enviar
-    //   body: JSON.stringify(this.state)
-    // })
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     // logica de respuesta
-    //     this.setState({
-    //       status: res.status,
-    //       response: res.response
-    //     });
-    //   });
+    fetch("/personas", {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      // informacion a enviar
+      body: JSON.stringify({
+        numID: this.state.numID,
+        nombre: this.state.nombre,
+        telefono: this.state.telefono,
+        email: this.state.email,
+        direccion: this.state.direccion,
+        genero: this.state.genero,
+        fecha_nacimiento: this.state.fecha_nacimiento,
+        estado_civil: this.state.estado_civil,
+        familiares: this.state.familiares,
+        sanitarios: this.state.sanitarios,
+        legales: this.state.legales,
+        laborales: this.state.laborales,
+        profesionales: this.state.profesionales,
+        academicos: this.state.academicos,
+
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.setState({
+          status: res.status,
+          response: res.response
+        });
+      });
   }
 
   checkearAcademicos(event) {
@@ -129,8 +330,19 @@ class AdminPersonas extends Component {
     legales[event.target.id] = event.target.checked;
     this.setState({ legales: legales });
   }
+  componentDidMount() {
+    this.getInstituciones();
+    this.getCarrera();
+    this.getGrados();
+    this.getLegales();
+    this.getSanitarios();
+    this.getProfesionales();
+    this.getLaborales();
+  }
+
 
   agregarAcademicos(event) {
+    const { instituciones, carrerasEstudio, gradosAcademicos } = this.state;
     let componentes = [];
     for(let i = 0; i < this.state.numeroAcademicos; i++){
       componentes.push(
@@ -141,15 +353,15 @@ class AdminPersonas extends Component {
                 type="select"
                 onChange={e =>
                   this.setState({
-                    estado_civil: e.target.value
+                   componentes: [i, e.target.value]
                   })
                 }
               >
-
-
-                <option value="Soltero" id="Soltero">
-                  Soltero
+               {instituciones.map(({value }) => (
+                <option key={value} value={value}>
+                  {value}
                 </option>
+              ))}
               </Input>
             </div>
             <div>
@@ -158,13 +370,15 @@ class AdminPersonas extends Component {
                 type="select"
                 onChange={e =>
                   this.setState({
-                    estado_civil: e.target.value
+                    componentes: [i, e.target.value]
                   })
                 }
               >
-                <option value="Soltero" id="Soltero">
-                  Soltero
+                {carrerasEstudio.map(({value }) => (
+                <option key={value} value={value}>
+                  {value}
                 </option>
+              ))}
               </Input>
             </div>
             <div>
@@ -173,13 +387,15 @@ class AdminPersonas extends Component {
                 type="select"
                 onChange={e =>
                   this.setState({
-                    estado_civil: e.target.value
+                    componentes: [i, e.target.value]
                   })
                 }
               >
-                <option value="Soltero" id="Soltero">
-                  Soltero
+                {gradosAcademicos.map(({value }) => (
+                <option key={value} value={value}>
+                  {value}
                 </option>
+              ))}
               </Input>
             </div>
         </FormGroup>
@@ -207,7 +423,9 @@ class AdminPersonas extends Component {
   }
 
   render() {
+    const { opcLegales, opcFamiliares, opcLaborales, opcProfesionales, opcSanitarios } = this.state;
     return (
+      
       <Form onSubmit={this.submitState}>
         <FormGroup>
           <Label for="nombre-completo">Nombre Completo</Label>
@@ -313,110 +531,63 @@ class AdminPersonas extends Component {
               id="familiar-1"
               label="Familiar 1"
             />
-            <CustomInput
-              onChange={this.checkearFamilia}
-              type="checkbox"
-              id="familiar-2"
-              label="Familiar 2"
-            />
-            <CustomInput
-              onChange={this.checkearFamilia}
-              type="checkbox"
-              id="familiar-3"
-              label="Familiar 3"
-            />
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>
           <div id="requisitos-sanitarios">
-            <CustomInput
-              onChange={this.checkearSanitarios}
-              type="checkbox"
-              id="req-sanitario-1"
-              label="Requisito 1"
-            />
-            <CustomInput
-              onChange={this.checkearSanitarios}
-              type="checkbox"
-              id="req-sanitario-2"
-              label="Requisito 2"
-            />
-            <CustomInput
-              onChange={this.checkearSanitarios}
-              type="checkbox"
-              id="req-sanitario-3"
-              label="Requisito 3"
-            />
+          {opcSanitarios.map(({value }) => (
+                <CustomInput
+                  onChange={this.checkearSanitarios}
+                  type="checkbox"
+                  id={value}
+                  label={value}
+                  key = {value}
+                />
+                ))}
+            
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-legal">Requisitos Legales</Label>
           <div id="requisitos-legal">
-            <CustomInput
-              onChange={this.checkearLegales}
-              type="checkbox"
-              id="req-legal-1"
-              label="Requisito 1"
-            />
-            <CustomInput
-              onChange={this.checkearLegales}
-              type="checkbox"
-              id="req-legal-2"
-              label="Requisito 2"
-            />
-            <CustomInput
-              onChange={this.checkearLegales}
-              type="checkbox"
-              id="req-legal-3"
-              label="Requisito 3"
-            />
+          {opcLegales.map(({value }) => (
+                <CustomInput
+                  onChange={this.checkearLegales}
+                  type="checkbox"
+                  id={value}
+                  label={value}
+                  key = {value}
+                />
+                ))}
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-profesionales">Requisitos Profesionales</Label>
           <div id="requisitos-profesionales">
-            <CustomInput
-              onChange={this.checkearProfesionales}
-              type="checkbox"
-              id="req-profesionales-1"
-              label="Requisito 1"
-            />
-            <CustomInput
-              onChange={this.checkearProfesionales}
-              type="checkbox"
-              id="req-profesionales-2"
-              label="Requisito 2"
-            />
-            <CustomInput
-              onChange={this.checkearProfesionales}
-              type="checkbox"
-              id="req-profesionales-3"
-              label="Requisito 3"
-            />
+          {opcProfesionales.map(({value }) => (
+                <CustomInput
+                  onChange={this.checkearProfesionales}
+                  type="checkbox"
+                  id={value}
+                  label={value}
+                  key = {value}
+                />
+                ))}
           </div>
         </FormGroup>
         <FormGroup>
           <Label for="requisitos-laborales">Requisitos Laborales</Label>
           <div id="requisitos-laborales">
-            <CustomInput
-              onChange={this.checkearLaborales}
-              type="checkbox"
-              id="req-laborales-1"
-              label="Requisito 1"
-            />
-            <CustomInput
-              onChange={this.checkearLaborales}
-              type="checkbox"
-              id="req-laborales-2"
-              label="Requisito 2"
-            />
-            <CustomInput
-              onChange={this.checkearLaborales}
-              type="checkbox"
-              id="req-laborales-3"
-              label="Requisito 3"
-            />
+          {opcLaborales.map(({value }) => (
+                <CustomInput
+                  onChange={this.checkearLaborales}
+                  type="checkbox"
+                  id={value}
+                  label={value}
+                  key = {value}
+                />
+                ))}
           </div>
         </FormGroup>
         <FormGroup>
