@@ -148,6 +148,7 @@ class AdminRequisitos extends Component {
 
   submitState(event){
     event.preventDefault();
+    console.log('insertando', this.state);
     if(this.state.tipoRequisito==="Sanitarios"){
       fetch('/requisitos/sanitarios', {
         method: 'put',

@@ -13,16 +13,6 @@ router.put('/sanitarios', function(req, res) {
 
 });
 
-router.put('/sanitarios', function(req, res) {
-  const nombreSanitario = req.body.nombreSanitario;
-  
-  client.hmset('sanitarios', [
-    "nombre", nombreSanitario,
-  ], function(err, reply) {
-      console.log(reply);
-  });
-
-});
 
 router.put('/legales', function(req, res) {
   const nombreLegales = req.body.nombreLegales;
