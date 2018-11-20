@@ -62,8 +62,6 @@ class AdminPersonas extends Component {
         console.log(res);
 
         let instituciones = [];
-        for (let key in res)
-          puestos.push({ name: key, value: key});
 
           this.setState({
           instituciones: instituciones || [],
@@ -139,9 +137,6 @@ class AdminPersonas extends Component {
         <FormGroup key={i}>
           <div>
               <label>Instituto Academico</label>
-             { instituciones.map(({key, value})
-
-             )}
               <Input
                 type="select"
                 onChange={e =>
