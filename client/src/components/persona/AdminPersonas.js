@@ -44,8 +44,34 @@ class AdminPersonas extends Component {
       laborales: {},
       profesionales: {},
       academicos: {},
-      numeroAcademicos: 1
+      numeroAcademicos: 1,
+      instituciones: []
     };
+  }
+  getInstituciones(){
+    fetch('/requisitos/institucionAcademica', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let instituciones = [];
+        for (let key in res)
+          puestos.push({ name: key, value: key});
+
+          this.setState({
+          instituciones: instituciones || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
 
   submitState(event) {
@@ -113,6 +139,9 @@ class AdminPersonas extends Component {
         <FormGroup key={i}>
           <div>
               <label>Instituto Academico</label>
+             { instituciones.map(({key, value})
+
+             )}
               <Input
                 type="select"
                 onChange={e =>
@@ -121,6 +150,8 @@ class AdminPersonas extends Component {
                   })
                 }
               >
+
+
                 <option value="Soltero" id="Soltero">
                   Soltero
                 </option>
