@@ -2,8 +2,6 @@ var express = require('express');
 var util = require('util');
 var router = express.Router();
 
-
-
 router.put('/', function(req, res) {
   // guardar la informacion obtenida en redis
   console.log("servidor");

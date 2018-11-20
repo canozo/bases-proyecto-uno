@@ -68,7 +68,8 @@ class AdminRequisitos extends Component {
         <div>
           <FormGroup>
             <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
-            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH" 
+            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH"
+            value = {this.state.nombreSanitario} 
             onChange={e => this.setState({ nombreSanitario: e.target.value })}/>
           </FormGroup>
         </div>
@@ -80,6 +81,7 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nombre-legales">Nombre Legales</Label>
             <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" 
+            value = {this.state.nombreLegales}
             onChange={e => this.setState({ nombreLegales: e.target.value })}/>
           </FormGroup>
         </div>
@@ -91,6 +93,7 @@ class AdminRequisitos extends Component {
           <FormGroup>
             <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
             <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" 
+            value = {this.state.nombreInstitucionAcademica}
             onChange={e => this.setState({ nombreInstitucionAcademica: e.target.value })}/>
           </FormGroup>
         </div>
@@ -103,6 +106,7 @@ class AdminRequisitos extends Component {
             {/* Si saco algun certificado */}
             <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
             <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="Certificados"
+            value = {this.state.nombreProfesionales}
             onChange={e => this.setState({ nombreProfesionales: e.target.value })}/>
           </FormGroup>
         </div>
@@ -115,6 +119,7 @@ class AdminRequisitos extends Component {
             {/* Cuantos anios trabajo y donde */}
             <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
             <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Experiencia laboral"
+            value = {this.state.nombreLaborales}
             onChange={e => this.setState({ nombreLaborales: e.target.value })}/>
           </FormGroup>
         </div>
@@ -127,6 +132,7 @@ class AdminRequisitos extends Component {
             {/* Que titulo universitario obtuvo */}
             <Label for="grado-estudio">Tipo de grado de estudio</Label>
             <Input type="text" name="grado-estudio" id="grado-estudio" placeholder="Ingeniería/Licenciatura/Técnico"
+            value = {this.state.nombreGradoEstudio}
             onChange={e => this.setState({ nombreGradoEstudio: e.target.value })}/>
           </FormGroup>
         </div>
@@ -139,6 +145,7 @@ class AdminRequisitos extends Component {
             {/* nombre de la carrera cursada */}
             <Label for="carrera-estudio">Tipo de carrera de estudio</Label>
             <Input type="text" name="carrera-estudio" id="carrera-estudio" placeholder="Medicina"
+            value = {this.state.nombreCarreraEstudio}
             onChange={e => this.setState({ nombreCarreraEstudio: e.target.value })}/>
           </FormGroup>
         </div>
@@ -161,8 +168,16 @@ class AdminRequisitos extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          // logica de respuesta
-          console.log(res);
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
         }).catch((err) => {
           console.log("<error");
         });
@@ -180,6 +195,16 @@ class AdminRequisitos extends Component {
         .then(res => {
           // logica de respuesta
           console.log(res);
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
         }).catch((err) => {
           console.log("<error");
         });
@@ -196,6 +221,16 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
           console.log(res);
         }).catch((err) => {
           console.log("<error");
@@ -213,6 +248,16 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
           console.log(res);
         }).catch((err) => {
           console.log("<error");
@@ -230,6 +275,16 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });  
           console.log(res);
         }).catch((err) => {
           console.log("<error");
@@ -247,6 +302,16 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
           console.log(res);
         }).catch((err) => {
           console.log("<error");
@@ -264,11 +329,22 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
+          this.setState = ({
+            tipoRequisito: 'Sanitarios',
+            nombreSanitario:'',
+            nombreLegales:'',
+            nombreInstitucionAcademica:'',
+            nombreProfesionales:'',
+            nombreLaborales:'',
+            nombreGradoEstudio:'',
+            nombreCarreraEstudio:'',
+          });
           console.log(res);
         }).catch((err) => {
           console.log("<error");
         });
     }
+    
   }
 
   render() {
