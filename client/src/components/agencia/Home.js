@@ -16,12 +16,12 @@ const items = [
     caption: 'Slide 1'
   },
   {
-    src: 'http://www.asocide.org/wp-content/uploads/2016/12/Oferta-de-empleo-ASOCIDE-MADRID-enero2017.jpg',
+    src: 'https://www.msj.go.cr/MSJ/Servicios/Anuncios%20%20Int%20de%20Empleo/Administrador-a-%20ATM.jpg',
     altText: 'Slide 2',
     caption: 'Slide 2'
   },
   {
-    src: 'https://www.bfa.gob.sv/wp-content/uploads/2015/06/1.jpg',
+    src: 'https://www.msj.go.cr/MSJ/Servicios/Anuncios%20%20Int%20de%20Empleo/Contad@r%20CPI.jpg',
     altText: 'Slide 3',
     caption: 'Slide 3'
   }
@@ -106,12 +106,12 @@ class Home extends Component {
   render() {
     return (
       <div>
-    <h1>Heading <Badge color="secondary">New</Badge></h1>
+        Home
       </div>
     );
   }
-}
 */
+}
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired
