@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import { Button, Form, FormGroup, Label, Input, CustomInput } from "reactstrap";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
 const styles = {
   card: {
@@ -9,7 +9,7 @@ const styles = {
   },
   media: {
     height: 0,
-    paddingTop: "56.25%"
+    paddingTop: '56.25%'
   }
 };
 
@@ -47,8 +47,8 @@ class AdminPersonas extends Component {
       numeroAcademicos: 1,
       instituciones: [],
       carrerasEstudio: [],
-      gradosAcademicos: [], 
-      opcLegales: [], 
+      gradosAcademicos: [],
+      opcLegales: [],
       opcSanitarios: [],
       opcFamiliares: [],
       opcProfesionales: [],
@@ -97,7 +97,7 @@ class AdminPersonas extends Component {
 
         let opcFamiliares = [];
         for (let key in res)
-          opcFamiliares.push({ name: key, value: key});
+          opcFamiliares.push({ id: key, nombre: res[key] });
 
           this.setState({
             opcFamiliares: opcFamiliares || [],
@@ -268,11 +268,11 @@ class AdminPersonas extends Component {
   submitState(event) {
     event.preventDefault();
     console.log(this.state);
-    fetch("/personas", {
-      method: "put",
+    fetch('/personas', {
+      method: 'put',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       // informacion a enviar
       body: JSON.stringify({
@@ -290,17 +290,16 @@ class AdminPersonas extends Component {
         laborales: this.state.laborales,
         profesionales: this.state.profesionales,
         academicos: this.state.academicos,
-
       })
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.setState({
-          status: res.status,
-          response: res.response
+        this.getFamiliares();
+      })
+        .catch((err) => {
+          console.log(err);
         });
-      });
   }
 
   checkearAcademicos(event) {
@@ -347,18 +346,19 @@ class AdminPersonas extends Component {
     this.getSanitarios();
     this.getProfesionales();
     this.getLaborales();
+    this.getFamiliares();
   }
 
   agregarAcademicos(event) {
     const { instituciones, carrerasEstudio, gradosAcademicos } = this.state;
     let componentes = [];
-    for(let i = 0; i < this.state.numeroAcademicos; i++){
+    for(let i = 0; i < this.state.numeroAcademicos; i++) {
       componentes.push(
         <FormGroup key={i}>
           <div>
               <label>Instituto Academico</label>
               <Input
-                type="select"
+                type='select'
                 onChange={e =>
                   this.setState({
                    componentes: [i, e.target.value]
@@ -375,7 +375,7 @@ class AdminPersonas extends Component {
             <div>
               <label>Carrera</label>
               <Input
-                type="select"
+                type='select'
                 onChange={e =>
                   this.setState({
                     componentes: [i, e.target.value]
@@ -392,7 +392,7 @@ class AdminPersonas extends Component {
             <div>
               <label>Grado</label>
               <Input
-                type="select"
+                type='select'
                 onChange={e =>
                   this.setState({
                     componentes: [i, e.target.value]
@@ -415,16 +415,16 @@ class AdminPersonas extends Component {
       return <div>No hay componentes</div>
   }
 
-  agregarStateAcademicos(event){
+  agregarStateAcademicos(event) {
     this.setState({numeroAcademicos: this.state.numeroAcademicos + 1});
     this.agregarAcademicos()
   }
 
-  restarStateAcademicos(event){
-    if(this.state.numeroAcademicos > 0){
+  restarStateAcademicos(event) {
+    if (this.state.numeroAcademicos > 0) {
       this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
       this.agregarAcademicos()
-    }else{
+    } else {
 
     }
 
@@ -432,59 +432,60 @@ class AdminPersonas extends Component {
 
   render() {
     const { opcLegales, opcFamiliares, opcLaborales, opcProfesionales, opcSanitarios } = this.state;
+
     return (
-      
       <Form onSubmit={this.submitState}>
         <FormGroup>
-          <Label for="nombre-completo">Nombre Completo</Label>
+          <Label for='nombre-completo'>Nombre Completo</Label>
           <Input
-            type="text"
-            name="nombre-completo"
-            id="nombre-completo"
-            placeholder="Juan Mauricio"
+            type='text'
+            name='nombre-completo'
+            id='nombre-completo'
+            placeholder='Juan Mauricio'
             onChange={e => this.setState({ nombre: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="num-identidad">Numero de Identidad</Label>
+          <Label for='num-identidad'>Numero de Identidad</Label>
           <Input
-            type="text"
-            name="num-identidad"
-            id="num-identidad"
-            placeholder="0801-1990-00000"
+            type='text'
+            name='num-identidad'
+            id='num-identidad'
+            placeholder='0801-1990-00000'
             onChange={e => this.setState({ numID: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="telefono">Telefono</Label>
+          <Label for='telefono'>Telefono</Label>
           <Input
-            type="text"
-            name="telefono"
-            id="telefono"
-            placeholder="50422000000"
+            type='text'
+            name='telefono'
+            id='telefono'
+            placeholder='50422000000'
             onChange={e => this.setState({ telefono: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="email">Correo electronico</Label>
+          <Label for='email'>Correo electronico</Label>
           <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="ejemplo@gmail.com"
+            type='email'
+            name='email'
+            id='email'
+            placeholder='ejemplo@gmail.com'
             onChange={e => this.setState({ email: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
           <Label>Genero</Label>
           <Input
-            type="select"
+            type='select'
             onChange={e => this.setState({ genero: e.target.value })}
           >
-            <option name="Masculino" id="Masculino">
+            <option value='' />
+            <option name='Masculino' id='Masculino'>
               Masculino
             </option>
-            <option name="Femenino" id="Femenino">
+            <option name='Femenino' id='Femenino'>
               Femenino
             </option>
           </Input>
@@ -492,62 +493,66 @@ class AdminPersonas extends Component {
         <FormGroup>
           <Label>Estado Civil</Label>
           <Input
-            type="select"
+            type='select'
             onChange={e =>
               this.setState({
                 estado_civil: e.target.value
               })
             }
           >
-            <option value="Soltero" id="Soltero">
+            <option value='' />
+            <option value='Soltero' id='Soltero'>
               Soltero
             </option>
-            <option value="Casado" id="Casado">
+            <option value='Casado' id='Casado'>
               Casado
             </option>
-            <option value="Viudo" id="Viudo">
+            <option value='Viudo' id='Viudo'>
               Viudo
             </option>
           </Input>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleDate">Fecha de Nacimiento</Label>
+          <Label for='exampleDate'>Fecha de Nacimiento</Label>
           <Input
-            type="date"
-            name="date"
-            id="fecha_nacimiento"
-            placeholder="MM-DD-YYYY"
+            type='date'
+            name='date'
+            id='fecha_nacimiento'
+            placeholder='MM-DD-YYYY'
             onChange={e => this.setState({ fecha_nacimiento: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="direccion">Direccion</Label>
+          <Label for='direccion'>Direccion</Label>
           <Input
-            type="text"
-            name="direccion"
-            id="direccion"
-            placeholder="Col. Miramomtes 3ra ave"
+            type='text'
+            name='direccion'
+            id='direccion'
+            placeholder='Col. Miramomtes 3ra ave'
             onChange={e => this.setState({ direccion: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="familiares">Familiares del empleado</Label>
-          <div id="familiares">
-            <CustomInput
-              onChange={this.checkearFamilia}
-              type="checkbox"
-              id="familiar-1"
-              label="Familiar 1"
-            />
+          <Label for='familiares'>Familiares del empleado</Label>
+          <div id='familiares'>
+            {opcFamiliares.map(({ id, nombre }) => (
+              <CustomInput
+                key={id}
+                onChange={this.checkearFamilia}
+                type='checkbox'
+                id={id}
+                label={nombre}
+              />
+            ))}
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="requisitos-sanitarios">Requisitos Sanitarios</Label>
-          <div id="requisitos-sanitarios">
+          <Label for='requisitos-sanitarios'>Requisitos Sanitarios</Label>
+          <div id='requisitos-sanitarios'>
           {opcSanitarios.map(({value }) => (
                 <CustomInput
                   onChange={this.checkearSanitarios}
-                  type="checkbox"
+                  type='checkbox'
                   id={value}
                   label={value}
                   key = {value}
@@ -557,12 +562,12 @@ class AdminPersonas extends Component {
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="requisitos-legal">Requisitos Legales</Label>
-          <div id="requisitos-legal">
+          <Label for='requisitos-legal'>Requisitos Legales</Label>
+          <div id='requisitos-legal'>
           {opcLegales.map(({value }) => (
                 <CustomInput
                   onChange={this.checkearLegales}
-                  type="checkbox"
+                  type='checkbox'
                   id={value}
                   label={value}
                   key = {value}
@@ -571,12 +576,12 @@ class AdminPersonas extends Component {
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="requisitos-profesionales">Requisitos Profesionales</Label>
-          <div id="requisitos-profesionales">
+          <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
+          <div id='requisitos-profesionales'>
           {opcProfesionales.map(({value }) => (
                 <CustomInput
                   onChange={this.checkearProfesionales}
-                  type="checkbox"
+                  type='checkbox'
                   id={value}
                   label={value}
                   key = {value}
@@ -585,12 +590,12 @@ class AdminPersonas extends Component {
           </div>
         </FormGroup>
         <FormGroup>
-          <Label for="requisitos-laborales">Requisitos Laborales</Label>
-          <div id="requisitos-laborales">
+          <Label for='requisitos-laborales'>Requisitos Laborales</Label>
+          <div id='requisitos-laborales'>
           {opcLaborales.map(({value }) => (
                 <CustomInput
                   onChange={this.checkearLaborales}
-                  type="checkbox"
+                  type='checkbox'
                   id={value}
                   label={value}
                   key = {value}
@@ -599,13 +604,13 @@ class AdminPersonas extends Component {
           </div>
         </FormGroup>
         <FormGroup>
-          <h5 htmlFor="requisitos-academicos">Requisitos Academicos </h5>
-          <Button size="sm" type="button" outline color="primary" onClick={this.restarStateAcademicos}>
+          <h5 htmlFor='requisitos-academicos'>Requisitos Academicos </h5>
+          <Button size='sm' type='button' outline color='primary' onClick={this.restarStateAcademicos}>
             -
-          </Button>{" "}
-          <Button size="sm" type="button" outline color="primary" onClick={this.agregarStateAcademicos}>
+          </Button>{' '}
+          <Button size='sm' type='button' outline color='primary' onClick={this.agregarStateAcademicos}>
             +
-          </Button>{" "}
+          </Button>{' '}
           <FormGroup>{this.agregarAcademicos()}</FormGroup>
         </FormGroup>
         <Button>Guardar</Button>

@@ -591,12 +591,12 @@ class AdminRequisitos extends Component {
             </FormGroup>
           </FormGroup>
 
-          {this.obtenerFormularios()}
+        {this.obtenerFormularios()}
 
-          <Button>Guardar</Button>
-          </Form>
+        <Button>Guardar</Button>
+        </Form>
 
-          <Paper className={classes.root}>
+        <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
