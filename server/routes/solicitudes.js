@@ -62,27 +62,33 @@ router.put('/puestos', function(req, res) {
   }
 
   if (!error) {
+    // agregar la llave a la tabla general
+    client.hmset('solicitudes puesto', [
+      llaves.solPuestos, `solicitud puesto ${llaves.solPuestos}`,
+    ], function(err, reply) {
+        console.log(reply);
+    });
 
+    // agregar la llave con toda la info
+    client.hmset(`solicitud puesto ${llaves.solPuestos}`, [
+      'lugar', lugar,
+      'genero', genero,
+      'estadoCivil', estadoCivil,
+      'rangoEdad', rangoEdad,
+      'sueldo', sueldo,
+      'cantidadPlazas', cantidadPlazas,
+      'condicionManejar', condicionManejar,
+      'condicionIngles', condicionIngles,
+      'condicionOffice', condicionOffice,
+      'condicionPresion', condicionPresion,
+      'condicionAuxilios', condicionAuxilios,
+    ], function(err, reply) {
+        console.log(reply);
+    });
+
+    // aumentar el valor de la llave
+    llaves.solPuestos += 1;
   }
-
-  console.log(llaves);
-
-  // // agregar el puesto a la lista de puestos
-  // client.hmset('puestos', [
-  //   puesto, puesto,
-  // ], function(err, reply) {
-  //     console.log(reply);
-  // });
-
-  // // agregar el nuevo puesto
-  // client.hmset(puesto, [
-  //   'puestoPadre', puestoPadre,
-  // ], function(err, reply) {
-  //   console.log(reply);
-  // });
-
-  // // enviar respuesta
-  // res.json({ error: false });
 });
 
 module.exports = router;

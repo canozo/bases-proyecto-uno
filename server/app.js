@@ -27,14 +27,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // cliente de redis
 client = redis.createClient();
 llaves = {
-  solPuestos: 0,
-  solEmpleos: 0,
+  solPuestos: 1,
+  solEmpleos: 1,
 };
 
 client.on('connect', () => {
   console.log('Conectado a Redis.');
   // ver el maximo de solicitudes de empleo:
-  client.hgetall('puestos', function(err, obj) {
+  client.hgetall('solicitudes empleo', function(err, obj) {
     let size = 0;
     if (!obj) {
       size = 0;
