@@ -40,18 +40,19 @@ router.get('/legales', function(req, res) {
   });
 });
 
-router.put('/institucionAcademica', function(req, res) {
+router.put('/institucionacademica', function(req, res) {
   const nombreInstitucionAcademica = req.body.nombre;
-  
-  client.hmset('institucionAcademica', [
+
+  client.hmset('institucionacademica', [
     nombreInstitucionAcademica, nombreInstitucionAcademica,
   ], function(err, reply) {
       console.log(reply);
   });
 
 });
-router.get('/institucionAcademica', function(req, res) {
-  client.hgetall('institucionAcademica', function(err, obj) {
+
+router.get('/institucionacademica', function(req, res) {
+  client.hgetall('institucionacademica', function(err, obj) {
     if (!err) {
       res.json(obj);
     }
@@ -68,6 +69,7 @@ router.put('/profesionales', function(req, res) {
   });
 
 });
+
 router.get('/profesionales', function(req, res) {
   client.hgetall('profesionales', function(err, obj) {
     if (!err) {
@@ -78,7 +80,7 @@ router.get('/profesionales', function(req, res) {
 
 router.put('/laborales', function(req, res) {
   const nombreLaborales = req.body.nombre;
-  
+
   client.hmset('laborales', [
     nombreLaborales, nombreLaborales,
   ], function(err, reply) {
@@ -94,36 +96,38 @@ router.get('/laborales', function(req, res) {
   });
 });
 
-router.put('/gradoEstudio', function(req, res) {
+router.put('/gradoestudio', function(req, res) {
   const nombreGradoEstudio = req.body.nombre;
-  
-  client.hmset('gradoEstudio', [
+
+  client.hmset('gradoestudio', [
     nombreGradoEstudio, nombreGradoEstudio,
   ], function(err, reply) {
       console.log(reply);
   });
 
 });
-router.get('/gradoEstudio', function(req, res) {
-  client.hgetall('gradoEstudio', function(err, obj) {
+
+router.get('/gradoestudio', function(req, res) {
+  client.hgetall('gradoestudio', function(err, obj) {
     if (!err) {
       res.json(obj);
     }
   });
 });
 
-router.put('/carreraEstudio', function(req, res) {
+router.put('/carreraestudio', function(req, res) {
   const nombreCarreraEstudio = req.body.nombre;
   
-  client.hmset('carreraEstudio', [
+  client.hmset('carreraestudio', [
     nombreCarreraEstudio, nombreCarreraEstudio,
   ], function(err, reply) {
       console.log(reply);
   });
 
 });
-router.get('/carreraEstudio', function(req, res) {
-  client.hgetall('carreraEstudio', function(err, obj) {
+
+router.get('/carreraestudio', function(req, res) {
+  client.hgetall('carreraestudio', function(err, obj) {
     if (!err) {
       res.json(obj);
     }

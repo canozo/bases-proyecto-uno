@@ -155,6 +155,7 @@ class AdminRequisitos extends Component {
 
   submitState(event){
     event.preventDefault();
+    // TODO limpiar text fields
     console.log('insertando', this.state);
     if(this.state.tipoRequisito==="Sanitarios"){
       fetch('/requisitos/sanitarios', {
@@ -209,7 +210,7 @@ class AdminRequisitos extends Component {
           console.log("<error");
         });
     }else if(this.state.tipoRequisito==="Institucion Academica"){
-      fetch('/requisitos/institucionAcademica', {
+      fetch('/requisitos/institucionacademica', {
         method: 'put',
         headers : {
           'Accept': 'application/json',
@@ -290,7 +291,7 @@ class AdminRequisitos extends Component {
           console.log("<error");
         });
     }else if(this.state.tipoRequisito==="Grado de Estudio"){
-      fetch('/requisitos/gradoEstudio', {
+      fetch('/requisitos/gradoestudio', {
         method: 'put',
         headers : {
           'Accept': 'application/json',
@@ -317,7 +318,7 @@ class AdminRequisitos extends Component {
           console.log("<error");
         });
     }else if(this.state.tipoRequisito==="Carrera de Estudio"){
-      fetch('/requisitos/carreraEstudio', {
+      fetch('/requisitos/carreraestudio', {
         method: 'put',
         headers : {
           'Accept': 'application/json',

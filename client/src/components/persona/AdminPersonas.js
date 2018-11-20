@@ -30,14 +30,14 @@ class AdminPersonas extends Component {
     this.agregarAcademicos = this.agregarAcademicos.bind(this);
  
     this.state = {
-      nombre: "",
-      numID: "",
-      telefono: "",
-      email: "",
-      direccion: "",
-      genero: "",
-      fecha_nacimiento: "",
-      estado_civil: "",
+      nombre: '',
+      numID: '',
+      telefono: '',
+      email: '',
+      direccion: '',
+      genero: '',
+      fecha_nacimiento: '',
+      estado_civil: '',
       familiares: {},
       sanitarios: {},
       legales: {},
@@ -55,10 +55,11 @@ class AdminPersonas extends Component {
       opcLaborales:[]
     };
   }
-  getProfesionales(){
+
+  getProfesionales() {
     fetch('/requisitos/profesionales', {
       method: 'get',
-      headers : {
+      headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
@@ -80,7 +81,8 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getFamiliares(){
+
+  getFamiliares() {
     fetch('/personas', {
       method: 'get',
       headers : {
@@ -105,7 +107,8 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getLaborales(){
+
+  getLaborales() {
     fetch('/requisitos/laborales', {
       method: 'get',
       headers : {
@@ -130,7 +133,8 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getSanitarios(){
+
+  getSanitarios() {
     fetch('/requisitos/sanitarios', {
       method: 'get',
       headers : {
@@ -155,8 +159,9 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getInstituciones(){
-    fetch('/requisitos/institucionAcademica', {
+
+  getInstituciones() {
+    fetch('/requisitos/institucionacademica', {
       method: 'get',
       headers : {
         'Accept': 'application/json',
@@ -181,8 +186,9 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getCarrera(){
-    fetch('/requisitos/carreraEstudio', {
+
+  getCarrera() {
+    fetch('/requisitos/carreraestudio', {
       method: 'get',
       headers : {
         'Accept': 'application/json',
@@ -206,8 +212,9 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getGrados(){
-    fetch('/requisitos/gradoEstudio', {
+
+  getGrados() {
+    fetch('/requisitos/gradoestudio', {
       method: 'get',
       headers : {
         'Accept': 'application/json',
@@ -231,7 +238,8 @@ class AdminPersonas extends Component {
         console.log(error);
       });
   }
-  getLegales(){
+
+  getLegales() {
     fetch('/requisitos/legales', {
       method: 'get',
       headers : {
@@ -330,6 +338,7 @@ class AdminPersonas extends Component {
     legales[event.target.id] = event.target.checked;
     this.setState({ legales: legales });
   }
+
   componentDidMount() {
     this.getInstituciones();
     this.getCarrera();
@@ -339,7 +348,6 @@ class AdminPersonas extends Component {
     this.getProfesionales();
     this.getLaborales();
   }
-
 
   agregarAcademicos(event) {
     const { instituciones, carrerasEstudio, gradosAcademicos } = this.state;
@@ -408,12 +416,12 @@ class AdminPersonas extends Component {
   }
 
   agregarStateAcademicos(event){
-    this.setState({numeroAcademicos : this.state.numeroAcademicos +1});
+    this.setState({numeroAcademicos: this.state.numeroAcademicos + 1});
     this.agregarAcademicos()
   }
 
   restarStateAcademicos(event){
-    if(this.state.numeroAcademicos>0){
+    if(this.state.numeroAcademicos > 0){
       this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
       this.agregarAcademicos()
     }else{
