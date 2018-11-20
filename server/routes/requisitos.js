@@ -2,6 +2,14 @@ var express = require('express');
 var util = require('util');
 var router = express.Router();
 
+router.delete('/:tabla/:deletethis', function(req, res) {
+  const tabla = req.params.tabla;
+  const deletethis = req.params.deletethis;
+
+  client.hdel(tabla, deletethis);
+  res.json({ error: false });
+});
+
 router.put('/sanitarios', function(req, res) {
   console.log(req.body);
   const nombreSanitario = req.body.nombre;
@@ -25,7 +33,6 @@ router.get('/sanitarios', function(req, res) {
     }
   });
 });
-
 
 router.put('/legales', function(req, res) {
   const nombreLegales = req.body.nombre;

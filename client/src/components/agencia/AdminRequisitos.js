@@ -40,6 +40,7 @@ class AdminRequisitos extends Component {
     this.obtenerFormularios = this.obtenerFormularios.bind(this);
     this.verficiarCalificacion = this.verficiarCalificacion.bind(this);
     this.submitState = this.submitState.bind(this);
+    this.cargarRequisitos = this.cargarRequisitos.bind(this);
     this.handleEliminar = this.handleEliminar.bind(this);
 
     this.state = {
@@ -55,8 +56,10 @@ class AdminRequisitos extends Component {
     };
   }
 
-  componentDidMount() {
-    // cargar todos los requisitos
+  cargarRequisitos() {
+    // limpar el state:
+    this.setState({ requisitos: [] });
+
     // sanitarios
     fetch('/requisitos/sanitarios', {
       method: 'get',
@@ -69,7 +72,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Sanitario' });
+          requisitos.push({ name: key, value: key, tipo: 'Sanitario', url: 'sanitarios' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -90,7 +93,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Legales' });
+          requisitos.push({ name: key, value: key, tipo: 'Legales', url: 'legales' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -111,7 +114,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Profesionales' });
+          requisitos.push({ name: key, value: key, tipo: 'Profesionales', url: 'profesionales' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -132,7 +135,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Laborales' });
+          requisitos.push({ name: key, value: key, tipo: 'Laborales', url: 'laborales' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -153,7 +156,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Instituciones Academicas' });
+          requisitos.push({ name: key, value: key, tipo: 'Instituciones Academicas', url: 'institucionacademica' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -174,7 +177,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Grado de estudio' });
+          requisitos.push({ name: key, value: key, tipo: 'Grado de estudio', url: 'gradoestudio' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -195,7 +198,7 @@ class AdminRequisitos extends Component {
       .then(res => {
         let requisitos = [];
         for (let key in res)
-          requisitos.push({ name: key, value: key, tipo: 'Carrera de estudio' });
+          requisitos.push({ name: key, value: key, tipo: 'Carrera de estudio', url: 'carreraestudio' });
 
         this.setState({
           requisitos: [...this.state.requisitos, ...requisitos],
@@ -205,8 +208,13 @@ class AdminRequisitos extends Component {
       });
   }
 
+  componentDidMount() {
+    // cargar todos los requisitos
+    this.cargarRequisitos();
+  }
+
   handleEliminar(tipo, value) {
-    fetch(`/puestos/${tipo}/${value}`, {
+    fetch(`/requisitos/${tipo}/${value}`, {
       method: 'delete',
       headers: {
         'Accept': 'application/json',
@@ -216,7 +224,7 @@ class AdminRequisitos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.cargarPuestos();
+        this.cargarRequisitos();
         console.log(res);
       });
   }
@@ -362,6 +370,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
         }).catch((err) => {
           console.log(err);
         });
@@ -389,6 +398,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
         }).catch((err) => {
           console.log(err);
         });
@@ -415,6 +425,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -442,6 +453,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -469,6 +481,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -496,6 +509,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -523,6 +537,7 @@ class AdminRequisitos extends Component {
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
           });
+          this.cargarRequisitos();
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -591,7 +606,7 @@ class AdminRequisitos extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {requisitos.map(({ name, value, tipo }) => (
+              {requisitos.map(({ name, value, tipo, url }) => (
                 <TableRow key={value}>
                   <TableCell component="th" scope="row">
                     {tipo}
@@ -601,7 +616,7 @@ class AdminRequisitos extends Component {
                   </TableCell>
                   <TableCell numeric>
                     <IconButton aria-label="Delete" value={value}
-                      onClick={() => {this.handleEliminar(tipo, value);}}>
+                      onClick={() => {this.handleEliminar(url, value);}}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
