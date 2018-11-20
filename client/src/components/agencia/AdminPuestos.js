@@ -21,6 +21,7 @@ class AdminPuestos extends Component {
     this.submitState = this.submitState.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.selectDropdown = this.selectDropdown.bind(this);
+    this.cargarPuestos = this.cargarPuestos.bind(this);
 
     this.state = {
       puestos: [],
@@ -31,7 +32,7 @@ class AdminPuestos extends Component {
     };
   }
 
-  componentDidMount() {
+  cargarPuestos() {
     // obtener todos los puestos del servidor
     fetch('/puestos', {
       method: 'get',
@@ -43,13 +44,23 @@ class AdminPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.setState({
-          puestos: res || [],
+        console.log(res);
+
+        let puestos = [];
+        for (let key in res)
+          puestos.push({ name: key, value: key});
+
+          this.setState({
+          puestos: puestos || [],
         });
       })
         .catch((error) => {
         console.log(error);
       });
+  }
+
+  componentDidMount() {
+    this.cargarPuestos();
   }
 
   toggleDropdown() {
@@ -77,15 +88,17 @@ class AdminPuestos extends Component {
       // informacion a enviar
       body: JSON.stringify({
         puesto: this.state.tipoPuesto,
-        idPuestoPadre: this.state.selectedValue,
+        puestoPadre: this.state.selectedName,
       }),
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
+        console.log('entra aqui');
+        this.cargarPuestos();
         this.setState({
-          status: res.status,
-          response: res.response
+          tipoPuesto: '',
+          selectedValue: '0',
         });
         console.log(res);
       });
@@ -98,7 +111,7 @@ class AdminPuestos extends Component {
       <Form onSubmit={this.submitState}>
         <FormGroup>
           <Label for="tipoPuesto">Tipo de Puesto</Label>
-          <Input type="text" name="tipoPuesto" id="tipoPuesto" placeholder="Programador WEB"
+          <Input type="text" name="tipoPuesto" id="tipoPuesto" value={this.state.tipoPuesto} placeholder="Programador WEB"
           onChange={e => this.setState({ tipoPuesto: e.target.value })}/>
         </FormGroup>
         <FormGroup>

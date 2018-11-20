@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+// redis: el ID en la base de datos es el nombre de la empresa
+
 const styles = {
   card: {
     maxWidth: 345,
