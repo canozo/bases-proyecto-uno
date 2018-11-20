@@ -27,7 +27,7 @@ client.hgetall(llave, function(err, obj) {
 });
 
 // para eliminar
-client.delete(llave);
+client.del(llave);
 
 // para modificar, lo mismo que insertar
 client.hmset(llave, [
