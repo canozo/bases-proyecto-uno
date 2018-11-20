@@ -25,9 +25,16 @@ class AdminRequisitos extends Component {
 
     this.state = {
       tipoRequisito: 'Sanitarios',
-      nombre:''
+      nombreSanitario:'',
+      nombreLegales:'',
+      nombreInstitucionAcademica:'',
+      nombreProfesionales:'',
+      nombreLaborales:'',
+      nombreGradoEstudio:'',
+      nombreCarreraEstudio:'',
     };
   }
+
 
   radioChange (event) {
     this.setState({ tipoRequisito: event.target.id });
@@ -141,24 +148,126 @@ class AdminRequisitos extends Component {
 
   submitState(event){
     event.preventDefault();
-    fetch('/adminrequisitos', {
-      method: 'put',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      // informacion a enviar
-      body: JSON.stringify(this.state),
-    })
-      .then(res => res.json())
-      .then(res => {
-        // logica de respuesta
-        this.setState({
-          status: res.status,
-          response: res.response
+    if(this.state.tipoRequisito==="Sanitarios"){
+      fetch('/requisitos/sanitarios', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreSanitario}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
         });
-        console.log(res);
-      });
+    }else if(this.state.tipoRequisito==="Legales"){
+      fetch('/requisitos/legales', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreLegales}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }else if(this.state.tipoRequisito==="Institucion Academica"){
+      fetch('/requisitos/institucionAcademica', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreInstitucionAcademica}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }else if(this.state.tipoRequisito==="Profesionales"){
+      fetch('/requisitos/profesionales', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreProfesionales}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }else if(this.state.tipoRequisito==="Laborales"){
+      fetch('/requisitos/laborales', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreLaborales}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }else if(this.state.tipoRequisito==="Grado de Estudio"){
+      fetch('/requisitos/gradoEstudio', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreGradoEstudio}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }else if(this.state.tipoRequisito==="Carrera de Estudio"){
+      fetch('/requisitos/carreraEstudio', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreCarreraEstudio}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          console.log(res);
+        }).catch((err) => {
+          console.log("<error");
+        });
+    }
   }
 
   render() {
