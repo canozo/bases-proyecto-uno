@@ -29,7 +29,6 @@ router.delete('/:nombreEmpresa', function(req, res) {
 
 router.put('/', function(req, res) {
   // guardar la informacion obtenida en redis
-  console.log("servidor");
     const nombre = req.body.nombre;
     const direccion = req.body.direccion;
     const director = req.body.director;
@@ -43,13 +42,11 @@ router.put('/', function(req, res) {
     'rubro', rubro,
     'cfi', cfi,
   ], function(err, reply) {
-      console.log(reply);
   });
 
   client.hmset('empresas', [
       nombre, nombre
   ], function(err, reply) {
-      console.log(reply);
   });
 
   // enviar respuesta

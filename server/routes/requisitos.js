@@ -11,13 +11,11 @@ router.delete('/:tabla/:deletethis', function(req, res) {
 });
 
 router.put('/sanitarios', function(req, res) {
-  console.log(req.body);
   const nombreSanitario = req.body.nombre;
   
   client.hmset('sanitarios', [
     nombreSanitario, nombreSanitario,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -40,7 +38,6 @@ router.put('/legales', function(req, res) {
   client.hmset('legales', [
     nombreLegales, nombreLegales,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -63,7 +60,6 @@ router.put('/institucionacademica', function(req, res) {
   client.hmset('institucionacademica', [
     nombreInstitucionAcademica, nombreInstitucionAcademica,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -87,7 +83,6 @@ router.put('/profesionales', function(req, res) {
   client.hmset('profesionales', [
     nombreProfesionales, nombreProfesionales,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -111,7 +106,6 @@ router.put('/laborales', function(req, res) {
   client.hmset('laborales', [
     nombreLaborales, nombreLaborales,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -134,7 +128,6 @@ router.put('/gradoestudio', function(req, res) {
   client.hmset('gradoestudio', [
     nombreGradoEstudio, nombreGradoEstudio,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -158,7 +151,6 @@ router.put('/carreraestudio', function(req, res) {
   client.hmset('carreraestudio', [
     nombreCarreraEstudio, nombreCarreraEstudio,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {

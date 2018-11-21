@@ -46,7 +46,7 @@ router.put('/', function(req, res) {
 
   let academicosArr = [];
   let pos = 0;
-  console.log(academicos);
+
   for (let key in academicos) {
     if (academicos[key] === 'Ninguno')
       break;

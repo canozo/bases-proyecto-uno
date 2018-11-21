@@ -78,7 +78,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // legales
@@ -99,7 +98,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // profesionales
@@ -120,7 +118,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // laborales
@@ -141,7 +138,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // instituciones academicas
@@ -162,7 +158,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // grado de estudio
@@ -183,7 +178,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
 
     // carreras de estudio
@@ -204,7 +198,6 @@ class AdminRequisitos extends Component {
           requisitos: [...this.state.requisitos, ...requisitos],
         });
       }).catch((err) => {
-        console.log(err);
       });
   }
 
@@ -225,7 +218,6 @@ class AdminRequisitos extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarRequisitos();
-        console.log(res);
       });
   }
 
@@ -348,7 +340,6 @@ class AdminRequisitos extends Component {
 
   submitState(event) {
     event.preventDefault();
-    console.log('insertando', this.state);
     if (this.state.tipoRequisito === "Sanitarios") {
       fetch('/requisitos/sanitarios', {
         method: 'put',
@@ -372,7 +363,6 @@ class AdminRequisitos extends Component {
           });
           this.cargarRequisitos();
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Legales") {
@@ -388,7 +378,6 @@ class AdminRequisitos extends Component {
         .then(res => res.json())
         .then(res => {
           // logica de respuesta
-          console.log(res);
           this.setState({
             nombreSanitario: '',
             nombreLegales: '',
@@ -400,7 +389,6 @@ class AdminRequisitos extends Component {
           });
           this.cargarRequisitos();
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Institucion Academica") {
@@ -426,9 +414,7 @@ class AdminRequisitos extends Component {
             nombreCarreraEstudio: '',
           });
           this.cargarRequisitos();
-          console.log(res);
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Profesionales") {
@@ -454,9 +440,7 @@ class AdminRequisitos extends Component {
             nombreCarreraEstudio: '',
           });
           this.cargarRequisitos();
-          console.log(res);
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Laborales") {
@@ -482,9 +466,7 @@ class AdminRequisitos extends Component {
             nombreCarreraEstudio: '',
           });
           this.cargarRequisitos();
-          console.log(res);
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Grado de Estudio") {
@@ -510,9 +492,7 @@ class AdminRequisitos extends Component {
             nombreCarreraEstudio: '',
           });
           this.cargarRequisitos();
-          console.log(res);
         }).catch((err) => {
-          console.log(err);
         });
 
     } else if (this.state.tipoRequisito === "Carrera de Estudio") {
@@ -538,9 +518,7 @@ class AdminRequisitos extends Component {
             nombreCarreraEstudio: '',
           });
           this.cargarRequisitos();
-          console.log(res);
         }).catch((err) => {
-          console.log(err);
         });
     }
   }

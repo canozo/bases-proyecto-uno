@@ -68,7 +68,6 @@ class AdminEmpresas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
         let empresas = [];
         for (let key in res)
           empresas.push({ nombre: key });
@@ -90,7 +89,6 @@ class AdminEmpresas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         this.setState({
           nombre: value,
@@ -102,7 +100,6 @@ class AdminEmpresas extends Component {
         this.cargarEmpresas();
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -118,16 +115,13 @@ class AdminEmpresas extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarEmpresas();
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 
   submitState(event){
     event.preventDefault();
-    console.log('insertando', this.state);
     fetch('/empresas', {
       method: 'put',
       headers : {
@@ -146,7 +140,6 @@ class AdminEmpresas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log('entra aqui');
         this.setState({
           nombre:'',
           direccion:'',
@@ -155,7 +148,6 @@ class AdminEmpresas extends Component {
           cfi:''
         });
         this.cargarEmpresas();
-        console.log(res);
       });
   }
 

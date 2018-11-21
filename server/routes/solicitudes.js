@@ -66,7 +66,6 @@ router.put('/puestos', function(req, res) {
     client.hmset('solicitudes puesto', [
       llaves.solPuestos, `solicitud puesto ${llaves.solPuestos}`,
     ], function(err, reply) {
-        console.log(reply);
     });
 
     // agregar la llave con toda la info
@@ -83,7 +82,6 @@ router.put('/puestos', function(req, res) {
       'condicionPresion', condicionPresion,
       'condicionAuxilios', condicionAuxilios,
     ], function(err, reply) {
-        console.log(reply);
     });
 
     // aumentar el valor de la llave

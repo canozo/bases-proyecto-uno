@@ -111,7 +111,6 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let personas = [];
         for (let key in res)
@@ -122,7 +121,6 @@ class SolicitarEmpleo extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -137,7 +135,6 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let puestos = [];
         for (let key in res)
@@ -148,7 +145,6 @@ class SolicitarEmpleo extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -161,7 +157,6 @@ class SolicitarEmpleo extends Component {
   }
 
   handleEditar(value) {
-    console.log(value);
     fetch(`/empleos/${value}`, {
       method: 'get',
       headers: {
@@ -172,7 +167,6 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         this.setState({
           tipoEmpleo: value,
@@ -181,12 +175,10 @@ class SolicitarEmpleo extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
   handleEliminar(value) {
-    console.log(value);
     fetch(`/empleo/${value}`, {
       method: 'delete',
       headers: {
@@ -197,7 +189,6 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
       });
   }
 
@@ -216,8 +207,6 @@ class SolicitarEmpleo extends Component {
 
   submitState(event){
     event.preventDefault();
-    console.log(this.state)
-    // console.log('insertando', this.state);
     // fetch('/empleos', {
     //   method: 'put',
     //   headers : {
@@ -237,7 +226,6 @@ class SolicitarEmpleo extends Component {
     //       tipoEmpleo: '',
     //       selectedValue: '0',
     //     });
-    //     console.log(res);
     //   });
   }
   handleChange(event) {

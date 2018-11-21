@@ -11,13 +11,11 @@ router.delete('/:tabla/:deletethis', function(req, res) {
 });
 
 router.put('/uno', function(req, res) {
-  console.log(req.body);
   const nombreUno = req.body.nombre;
   
   client.hmset('uno', [
     nombreUno, nombreUno,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -40,7 +38,6 @@ router.put('/dos', function(req, res) {
   client.hmset('dos', [
     nombreDos, nombreDos,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -63,7 +60,6 @@ router.put('/tres', function(req, res) {
   client.hmset('tres', [
     nombreTres, nombreTres,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -87,7 +83,6 @@ router.put('/cuatro', function(req, res) {
   client.hmset('cuatro', [
     nombreCuatro, nombreCuatro,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {
@@ -111,7 +106,6 @@ router.put('/cinco', function(req, res) {
   client.hmset('cinco', [
     nombreCinco, nombreCinco,
   ], function(err, reply) {
-      console.log(reply);
       if (!err) {
         res.json({ error: false });
       } else {

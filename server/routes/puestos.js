@@ -16,11 +16,7 @@ router.put('/', function(req, res) {
   const puestoPadre = req.body.puestoPadre;
 
   // agregar el puesto a la lista de puestos
-  client.hmset('puestos', [
-    puesto, puestoPadre,
-  ], function(err, reply) {
-      console.log(reply);
-  });
+  client.hmset('puestos', [puesto, puestoPadre]);
 
   // enviar respuesta
   res.json({ error: false });

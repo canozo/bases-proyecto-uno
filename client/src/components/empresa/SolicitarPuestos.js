@@ -98,7 +98,6 @@ class SolicitarPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let empresas = [];
         for (let key in res)
@@ -109,13 +108,11 @@ class SolicitarPuestos extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
   submitState(event){
     event.preventDefault();
-    console.log(this.state);
     fetch('/solicitudes/puestos', {
       method: 'put',
       headers : {
@@ -140,9 +137,7 @@ class SolicitarPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
       }).catch((err) => {
-        console.log(err);
       });
   }
   componentDidMount(){

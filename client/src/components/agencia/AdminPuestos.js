@@ -65,7 +65,6 @@ class AdminPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         // TODO ver como cargar padres
         let puestos = [];
@@ -77,7 +76,6 @@ class AdminPuestos extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -86,7 +84,6 @@ class AdminPuestos extends Component {
   }
 
   handleEditar(value) {
-    console.log(value);
     fetch(`/puestos/${value}`, {
       method: 'get',
       headers: {
@@ -97,7 +94,6 @@ class AdminPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         this.setState({
           tipoPuesto: value,
@@ -106,12 +102,10 @@ class AdminPuestos extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
   handleEliminar(value) {
-    console.log(value);
     fetch(`/puestos/${value}`, {
       method: 'delete',
       headers: {
@@ -123,7 +117,6 @@ class AdminPuestos extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarPuestos();
-        console.log(res);
       });
   }
 
@@ -142,7 +135,6 @@ class AdminPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
-    console.log('insertando', this.state);
     fetch('/puestos', {
       method: 'put',
       headers : {
@@ -158,13 +150,11 @@ class AdminPuestos extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log('entra aqui');
         this.cargarPuestos();
         this.setState({
           tipoPuesto: '',
           selectedValue: '0',
         });
-        console.log(res);
       });
   }
 
