@@ -46,6 +46,7 @@ router.put('/legales', function(req, res) {
   });
 
 });
+
 router.get('/legales', function(req, res) {
   client.hgetall('legales', function(err, obj) {
     if (!err) {
@@ -114,6 +115,7 @@ router.put('/laborales', function(req, res) {
   });
 
 });
+
 router.get('/laborales', function(req, res) {
   client.hgetall('laborales', function(err, obj) {
     if (!err) {
@@ -162,6 +164,52 @@ router.put('/carreraestudio', function(req, res) {
 
 router.get('/carreraestudio', function(req, res) {
   client.hgetall('carreraestudio', function(err, obj) {
+    if (!err) {
+      res.json(obj);
+    }
+  });
+});
+
+router.put('/condiciones', function(req, res) {
+  const nombreCondiciones = req.body.nombre;
+  
+  client.hmset('condiciones', [
+    nombreCondiciones, nombreCondiciones,
+  ], function(err, reply) {
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
+  });
+
+});
+
+router.get('/condiciones', function(req, res) {
+  client.hgetall('condiciones', function(err, obj) {
+    if (!err) {
+      res.json(obj);
+    }
+  });
+});
+
+router.put('/deseos', function(req, res) {
+  const nombreDeseos = req.body.nombre;
+  
+  client.hmset('deseos', [
+    nombreDeseos, nombreDeseos,
+  ], function(err, reply) {
+      if (!err) {
+        res.json({ error: false });
+      } else {
+        res.json({ error: true });
+      }
+  });
+
+});
+
+router.get('/deseos', function(req, res) {
+  client.hgetall('deseos', function(err, obj) {
     if (!err) {
       res.json(obj);
     }

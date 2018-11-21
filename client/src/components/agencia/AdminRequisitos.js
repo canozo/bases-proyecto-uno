@@ -11,9 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
-// TODO agregar condiciones/limitaciones
-// TODO agregar deseos
-
 const styles = theme => ({
   card: {
     maxWidth: 345,
@@ -53,6 +50,8 @@ class AdminRequisitos extends Component {
       nombreLegales: '',
       nombreInstitucionAcademica: '',
       nombreProfesionales: '',
+      nombreCondiciones: '',
+      nombreDeseos: '',
       nombreLaborales: '',
       nombreGradoEstudio: '',
       nombreCarreraEstudio: '',
@@ -202,6 +201,44 @@ class AdminRequisitos extends Component {
         });
       }).catch((err) => {
       });
+
+    // condiciones
+    fetch('/requisitos/condiciones', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Condiciones', url: 'condiciones' });
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+      });
+
+    // deseos
+    fetch('/requisitos/deseos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        let requisitos = [];
+        for (let key in res)
+          requisitos.push({ name: key, value: key, tipo: 'Deseos', url: 'deseos' });
+        this.setState({
+          requisitos: [...this.state.requisitos, ...requisitos],
+        });
+      }).catch((err) => {
+      });
   }
 
   componentDidMount() {
@@ -253,97 +290,105 @@ class AdminRequisitos extends Component {
     // devuelve los formularios dependiendo de que radio button esta seleccionado
     if (this.state.tipoRequisito === 'Sanitarios') {
       return (
-        <div>
-          <FormGroup>
-            <Label for="nombre-sanitario">Nombre de Requisito sanitario</Label>
-            <Input type="text" name="nombre-sanitario" id="nombre-sanitario" placeholder="Prueba de VIH"
-            value={this.state.nombreSanitario} 
-            onChange={e => this.setState({ nombreSanitario: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          <Label for='nombre-sanitario'>Nombre de Requisito sanitario</Label>
+          <Input type='text' name='nombre-sanitario' id='nombre-sanitario' placeholder='Prueba de VIH'
+          value={this.state.nombreSanitario} 
+          onChange={e => this.setState({ nombreSanitario: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Legales') {
       return (
-        <div>
-          <FormGroup>
-            <Label for="nombre-legales">Nombre Legales</Label>
-            <Input type="text" name="nombre-legales" id="nombre-legales" placeholder="Servicio Militar" 
-            value={this.state.nombreLegales}
-            onChange={e => this.setState({ nombreLegales: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          <Label for='nombre-legales'>Nombre Legales</Label>
+          <Input type='text' name='nombre-legales' id='nombre-legales' placeholder='Servicio Militar' 
+          value={this.state.nombreLegales}
+          onChange={e => this.setState({ nombreLegales: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Institucion Academica') {
       return (
-        <div>
-          <FormGroup>
-            <Label for="nomInstAcade">Nombre Institucion Academicá</Label>
-            <Input type="text" name="nomInstAcade" id="nomInstAcade" placeholder="UNITEC" 
-            value={this.state.nombreInstitucionAcademica}
-            onChange={e => this.setState({ nombreInstitucionAcademica: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          <Label for='nomInstAcade'>Nombre Institucion Academicá</Label>
+          <Input type='text' name='nomInstAcade' id='nomInstAcade' placeholder='UNITEC' 
+          value={this.state.nombreInstitucionAcademica}
+          onChange={e => this.setState({ nombreInstitucionAcademica: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Profesionales') {
       return (
-        <div>
-          <FormGroup>
-            {/* Si saco algun certificado */}
-            <Label for="nombre-profe">Nombre Institucion Profesionales</Label>
-            <Input type="text" name="nombre-profe" id="nombre-profe" placeholder="Certificados"
-            value={this.state.nombreProfesionales}
-            onChange={e => this.setState({ nombreProfesionales: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          {/* Si saco algun certificado */}
+          <Label for='nombre-profe'>Nombre Institucion Profesionales</Label>
+          <Input type='text' name='nombre-profe' id='nombre-profe' placeholder='Certificados'
+          value={this.state.nombreProfesionales}
+          onChange={e => this.setState({ nombreProfesionales: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Laborales') {
       return (
-        <div>
-          <FormGroup>
-            {/* Cuantos anios trabajo y donde */}
-            <Label for="nombre-laboral">Nombre Institucion Laboral</Label>
-            <Input type="text" name="nombre-laboral" id="nombre-laboral" placeholder="Experiencia laboral"
-            value={this.state.nombreLaborales}
-            onChange={e => this.setState({ nombreLaborales: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          {/* Cuantos anios trabajo y donde */}
+          <Label for='nombre-laboral'>Nombre Institucion Laboral</Label>
+          <Input type='text' name='nombre-laboral' id='nombre-laboral' placeholder='Experiencia laboral'
+          value={this.state.nombreLaborales}
+          onChange={e => this.setState({ nombreLaborales: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Grado de Estudio') {
       return (
-        <div>
-          <FormGroup>
-            {/* Que titulo universitario obtuvo */}
-            <Label for="grado-estudio">Tipo de grado de estudio</Label>
-            <Input type="text" name="grado-estudio" id="grado-estudio" placeholder="Ingeniería/Licenciatura/Técnico"
-            value={this.state.nombreGradoEstudio}
-            onChange={e => this.setState({ nombreGradoEstudio: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          {/* Que titulo universitario obtuvo */}
+          <Label for='grado-estudio'>Tipo de grado de estudio</Label>
+          <Input type='text' name='grado-estudio' id='grado-estudio' placeholder='Ingeniería/Licenciatura/Técnico'
+          value={this.state.nombreGradoEstudio}
+          onChange={e => this.setState({ nombreGradoEstudio: e.target.value })}/>
+        </FormGroup>
       );
 
     } else if (this.state.tipoRequisito === 'Carrera de Estudio') {
       return (
-        <div>
-          <FormGroup>
-            {/* nombre de la carrera cursada */}
-            <Label for="carrera-estudio">Tipo de carrera de estudio</Label>
-            <Input type="text" name="carrera-estudio" id="carrera-estudio" placeholder="Medicina"
-            value={this.state.nombreCarreraEstudio}
-            onChange={e => this.setState({ nombreCarreraEstudio: e.target.value })}/>
-          </FormGroup>
-        </div>
+        <FormGroup>
+          {/* nombre de la carrera cursada */}
+          <Label for='carrera-estudio'>Tipo de carrera de estudio</Label>
+          <Input type='text' name='carrera-estudio' id='carrera-estudio' placeholder='Medicina'
+          value={this.state.nombreCarreraEstudio}
+          onChange={e => this.setState({ nombreCarreraEstudio: e.target.value })}/>
+        </FormGroup>
+      );
+
+    } else if (this.state.tipoRequisito === 'Condiciones') {
+      return (
+        <FormGroup>
+          {/* tipo de limitaciones */}
+          <Label for='condiciones'>Tipo de condiciones</Label>
+          <Input type='text' name='condiciones' id='condiciones' placeholder='Saber manejar'
+          value={this.state.nombreCondiciones}
+          onChange={e => this.setState({ nombreCondiciones: e.target.value })}/>
+        </FormGroup>
+      );
+
+    } else if (this.state.tipoRequisito === 'Deseos') {
+      return (
+        <FormGroup>
+          {/* tipo de deseos */}
+          <Label for='deseos'>Tipo de deseos</Label>
+          <Input type='text' name='deseos' id='deseos' placeholder='Almuerzo de 1 hora'
+          value={this.state.nombreDeseos}
+          onChange={e => this.setState({ nombreDeseos: e.target.value })}/>
+        </FormGroup>
       );
     }
   }
 
   submitState(event) {
     event.preventDefault();
-    if (this.state.tipoRequisito === "Sanitarios") {
+    if (this.state.tipoRequisito === 'Sanitarios') {
       fetch('/requisitos/sanitarios', {
         method: 'put',
         headers : {
@@ -351,7 +396,7 @@ class AdminRequisitos extends Component {
           'Content-Type': 'application/json'
         },
         // informacion a enviar
-        body: JSON.stringify({nombre:this.state.nombreSanitario}),
+        body: JSON.stringify({ nombre: this.state.nombreSanitario }),
       })
         .then(res => res.json())
         .then(res => {
@@ -360,6 +405,8 @@ class AdminRequisitos extends Component {
             nombreLegales: '',
             nombreInstitucionAcademica: '',
             nombreProfesionales: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
             nombreCarreraEstudio: '',
@@ -368,7 +415,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Legales") {
+    } else if (this.state.tipoRequisito === 'Legales') {
       fetch('/requisitos/legales', {
         method: 'put',
         headers : {
@@ -385,6 +432,8 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -394,7 +443,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Institucion Academica") {
+    } else if (this.state.tipoRequisito === 'Institucion Academica') {
       fetch('/requisitos/institucionacademica', {
         method: 'put',
         headers : {
@@ -411,6 +460,8 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -420,7 +471,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Profesionales") {
+    } else if (this.state.tipoRequisito === 'Profesionales') {
       fetch('/requisitos/profesionales', {
         method: 'put',
         headers : {
@@ -437,6 +488,8 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -446,7 +499,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Laborales") {
+    } else if (this.state.tipoRequisito === 'Laborales') {
       fetch('/requisitos/laborales', {
         method: 'put',
         headers : {
@@ -463,6 +516,8 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -472,7 +527,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Grado de Estudio") {
+    } else if (this.state.tipoRequisito === 'Grado de Estudio') {
       fetch('/requisitos/gradoestudio', {
         method: 'put',
         headers : {
@@ -489,6 +544,8 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -498,7 +555,7 @@ class AdminRequisitos extends Component {
         }).catch((err) => {
         });
 
-    } else if (this.state.tipoRequisito === "Carrera de Estudio") {
+    } else if (this.state.tipoRequisito === 'Carrera de Estudio') {
       fetch('/requisitos/carreraestudio', {
         method: 'put',
         headers : {
@@ -515,6 +572,64 @@ class AdminRequisitos extends Component {
             nombreSanitario: '',
             nombreLegales: '',
             nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
+          });
+          this.cargarRequisitos();
+        }).catch((err) => {
+        });
+
+    } else if (this.state.tipoRequisito === 'Condiciones') {
+      fetch('/requisitos/condiciones', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({nombre:this.state.nombreCondiciones}),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
+            nombreProfesionales: '',
+            nombreLaborales: '',
+            nombreGradoEstudio: '',
+            nombreCarreraEstudio: '',
+          });
+          this.cargarRequisitos();
+        }).catch((err) => {
+        });
+
+    } else if (this.state.tipoRequisito === 'Deseos') {
+      fetch('/requisitos/deseos', {
+        method: 'put',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        // informacion a enviar
+        body: JSON.stringify({ nombre: this.state.nombreDeseos }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          // logica de respuesta
+          this.setState({
+            nombreSanitario: '',
+            nombreLegales: '',
+            nombreInstitucionAcademica: '',
+            nombreCondiciones: '',
+            nombreDeseos: '',
             nombreProfesionales: '',
             nombreLaborales: '',
             nombreGradoEstudio: '',
@@ -533,41 +648,51 @@ class AdminRequisitos extends Component {
     return (
       <div>
         <Form onSubmit={this.submitState}>
-          <FormGroup tag="fieldset">
+          <FormGroup tag='fieldset'>
             <legend>Tipo Requisito</legend>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Sanitarios' />Sanitarios
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Sanitarios' />Sanitarios
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Legales'/>Legales
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Legales'/>Legales
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Institucion Academica'/>Institucion Academica
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Institucion Academica'/>Institucion Academica
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Profesionales'/>Profesionales
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Profesionales'/>Profesionales
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id= 'Laborales'/>Laborales
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id= 'Laborales'/>Laborales
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Grado de Estudio'/>Grado de Estudio
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Grado de Estudio'/>Grado de Estudio
               </Label>
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="radio" onChange={this.radioChange} name="tipoR" id='Carrera de Estudio'/>Carrera de Estudio
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Carrera de Estudio'/>Carrera de Estudio
+              </Label>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Condiciones'/>Tipos de condiciones
+              </Label>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type='radio' onChange={this.radioChange} name='tipoR' id='Deseos'/>Tipos de deseos
               </Label>
             </FormGroup>
           </FormGroup>
@@ -589,14 +714,14 @@ class AdminRequisitos extends Component {
             <TableBody>
               {requisitos.map(({ name, value, tipo, url }) => (
                 <TableRow key={value}>
-                  <TableCell component="th" scope="row">
+                  <TableCell component='th' scope='row'>
                     {tipo}
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component='th' scope='row'>
                     {name}
                   </TableCell>
                   <TableCell numeric>
-                    <IconButton aria-label="Delete" value={value}
+                    <IconButton aria-label='Delete' value={value}
                       onClick={() => {this.handleEliminar(url, value);}}>
                       <DeleteIcon />
                     </IconButton>
