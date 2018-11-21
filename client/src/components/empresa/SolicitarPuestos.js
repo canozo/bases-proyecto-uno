@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-// TODO agregar nombre del puesto
-// TODO agregar tipo del puesto (jefe, gerente)
 
 const styles = theme => ({
   card: {
@@ -67,20 +60,25 @@ class SolicitarPuestos extends Component {
 
     this.submitState = this.submitState.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.cargarPuestos = this.cargarPuestos.bind(this);
+    this.handleChangeCondiciones = this.handleChangeCondiciones.bind(this);
+    this.handleChangeDeseos = this.handleChangeDeseos.bind(this);
 
     this.state = {
       lugar: '',
+      cargo: '',
+      nombrePuesto: '',
       genero: '',
       estadoCivil: '',
       rangoEdad: '',
       sueldo: '',
       cantidadPlazas: '',
-      condicionManejar: '',
-      condicionIngles: '',
-      condicionOffice: '',
-      condicionPresion: '',
-      condicionAuxilios: '',
+      condicionesRes: {},
+      deseosRes: {},
       empresas: [],
+      condiciones: [],
+      deseos: [],
+      puestos: [],
     };
   }
 
@@ -88,6 +86,95 @@ class SolicitarPuestos extends Component {
     this.setState({
       [event.target.id]: event.target.value,
     });
+  }
+
+  handleChangeCondiciones(event) {
+    let condicionesNuevo = this.state.condicionesRes;
+    condicionesNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      condicionesRes: condicionesNuevo,
+    });
+  }
+
+  handleChangeDeseos(event) {
+    let deseosNuevo = this.state.deseosRes;
+    deseosNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      academicos: deseosNuevo,
+    });
+  }
+
+  cargarPuestos() {
+    // obtener todos los puestos del servidor
+    fetch('/puestos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+
+        let puestos = [];
+        for (let key in res)
+          puestos.push({ name: key, value: key });
+
+        this.setState({
+          puestos: puestos || [],
+        });
+      })
+        .catch((error) => {
+      });
+  }
+
+  cargarCondiciones() {
+    fetch('/requisitos/condiciones', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        let condiciones = [];
+        for (let key in res)
+          condiciones.push({ value: key });
+
+        this.setState({
+          condiciones: condiciones || [],
+        });
+      })
+        .catch((error) => {
+      });
+  }
+
+  cargarDeseos() {
+    fetch('requisitos/deseos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        let deseos = [];
+        for (let key in res)
+          deseos.push({ value: key });
+
+        this.setState({
+          deseos: deseos || [],
+        });
+      })
+        .catch((error) => {
+      });
   }
 
   getEmpresas(){
@@ -116,6 +203,7 @@ class SolicitarPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
+    console.log(this.state);
     fetch('/solicitudes/puestos', {
       method: 'put',
       headers : {
@@ -130,11 +218,6 @@ class SolicitarPuestos extends Component {
         rangoEdad: this.state.rangoEdad,
         sueldo: this.state.sueldo,
         cantidadPlazas: this.state.cantidadPlazas,
-        condicionManejar: this.state.condicionManejar,
-        condicionIngles: this.state.condicionIngles,
-        condicionOffice: this.state.condicionOffice,
-        condicionPresion: this.state.condicionPresion,
-        condicionAuxilios: this.state.condicionAuxilios,
       }),
     })
       .then(res => res.json())
@@ -145,21 +228,28 @@ class SolicitarPuestos extends Component {
   }
   componentDidMount(){
     this.getEmpresas();
-
+    this.cargarCondiciones();
+    this.cargarDeseos();
+    this.cargarPuestos();
   }
 
   render() {
-    const { classes,  } = this.props;
-    const { empresas } = this.state;
+    const { empresas, condiciones, deseos, puestos } = this.state;
+
     return (
       <Form onSubmit={this.submitState}>
         <FormGroup>
-          <Label for="LugarEmpleo">Lugar de Empleo</Label>
+          <FormGroup>
+            <Label for='nombrePuesto'>Nombre del puesto</Label>
+            <Input type='text' name='nombrePuesto' id='nombrePuedo' value={this.state.nombrePuesto} placeholder='Gerente de Ventas'
+            onChange={e => this.setState({ nombrePuesto: e.target.value })}/>
+          </FormGroup>
+          <Label for='LugarEmpleo'>Lugar de Empleo</Label>
           <Input
                 type='select'
                 onChange={e => this.setState({ lugar: e.target.value })}
               >
-               {empresas.map(({value }) => (
+               {empresas.map(({ value }) => (
                 <option key={value} value={value}>
                   {value}
                 </option>
@@ -167,153 +257,79 @@ class SolicitarPuestos extends Component {
               </Input>
         </FormGroup>
         <FormGroup>
-          <Label for="sueldo">Sueldo</Label>
-          <Input type="number" name="sueldo" id="sueldo" value={this.state.sueldo} placeholder="23000" 
+          <Label for='sueldo'>Sueldo</Label>
+          <Input type='number' name='sueldo' id='sueldo' value={this.state.sueldo} placeholder='23000'
           onChange={e => this.setState({ sueldo: e.target.value })}/>
         </FormGroup>
         <FormGroup>
-          <Label for="cantidadPlazas">Cantidad de Plazas</Label>
-          <Input type="number" name="cantidadPlazas" id="cantidadPlazas" value={this.state.cantidadPlazas} placeholder="1" 
+          <Label for='cantidadPlazas'>Cantidad de Plazas</Label>
+          <Input type='number' name='cantidadPlazas' id='cantidadPlazas' value={this.state.cantidadPlazas} placeholder='1'
           onChange={e => this.setState({ cantidadPlazas: e.target.value })}/>
         </FormGroup>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.genero === "" ? <InputLabel>Genero</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.genero}
-            id="genero"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
+
+        <FormGroup>
+          <Label>Puesto:</Label>
+            <Input
+              type='select'
+              id='nombrePuesto'
+              value={this.state.nombrePuesto}
+              onChange={this.handleChange}>
+              <option value=''/>
+              {puestos.map(({ value }) => (
+                <option key={value} value={value}>{value}</option>
+              ))}
+            </Input>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Cargo del puesto:</Label>
+          <Input
+            type='select'
+            id='cargo'
+            value={this.state.cargo}
+            onChange={this.handleChange}>
             <option value=''/>
-            <option value='Sin preferencia'>Sin preferencia</option>
-            <option value='Masculino'>Masculino</option>
-            <option value='Femenino'>Femenino</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.estadoCivil === "" ? <InputLabel>Estado Civil</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.estadoCivil}
-            id="estadoCivil"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Sin preferencia'>Sin preferencia</option>
-            <option value='Casado/a'>Casado/a</option>
-            <option value='Soltero/a'>Soltero/a</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.rangoEdad === "" ? <InputLabel>Rango de Edad</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.rangoEdad}
-            id="rangoEdad"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Sin preferencia'>Sin preferencia</option>
-            <option value='18-25'>18-25</option>
-            <option value='25-35'>25-35</option>
-            <option value='35 en'>35 en adelante</option>
-          </Select>
-        </FormControl>
-        {/* Inicio de condiciones de empleo */}
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionManejar === "" ? <InputLabel>Sabe manejar</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.condicionManejar}
-            id="condicionManejar"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Ninguno'>Ninguno</option>
-            <option value='Deseable'>Deseable</option>
-            <option value='Obligatorio'>Obligatorio</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionIngles === "" ? <InputLabel>Puede hablar ingles</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.condicionIngles}
-            id="condicionIngles"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Ninguno'>Ninguno</option>
-            <option value='Deseable'>Deseable</option>
-            <option value='Obligatorio'>Obligatorio</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionOffice === "" ? <InputLabel>Sabe usar office</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.condicionOffice}
-            id="condicionOffice"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Ninguno'>Ninguno</option>
-            <option value='Deseable'>Deseable</option>
-            <option value='Obligatorio'>Obligatorio</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionPresion === "" ? <InputLabel>Trabaja bajo presion</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.condicionPresion}
-            id="condicionPresion"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Ninguno'>Ninguno</option>
-            <option value='Deseable'>Deseable</option>
-            <option value='Obligatorio'>Obligatorio</option>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionAuxilios === "" ? <InputLabel>Conoce de primeros auxilios</InputLabel> : ""}
-          <Select
-            native
-            value={this.state.condicionAuxilios}
-            id="condicionAuxilios"
-            onChange={this.handleChange}
-            input={
-              <OutlinedInput labelWidth={0} />
-            }
-          >
-            <option value=''/>
-            <option value='Ninguno'>Ninguno</option>
-            <option value='Deseable'>Deseable</option>
-            <option value='Obligatorio'>Obligatorio</option>
-          </Select>
-        </FormControl>
+            <option value='Jefe'>Jefe</option>
+            <option value='Gerente'>Gerente</option>
+            <option value='Empleado'>Empleado</option>
+          </Input>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Condiciones:</Label>
+          {condiciones.map(({ value }) => (
+            <FormGroup key={value}>
+              <Label>{value}</Label>
+              <Input
+                type='select'
+                id={value}
+                value={this.state.condicionesRes[value]}
+                onChange={this.handleChangeCondiciones}>
+                <option value=''/>
+                <option value='Ninguno'>Ninguno</option>
+                <option value='Obligatorio'>Obligatorio</option>
+              </Input>
+            </FormGroup>
+          ))}
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Deseos que puede cumplir:</Label>
+          {deseos.map(({ value }) => (
+            <FormGroup key={value}>
+              <Label>{value}</Label>
+              <Input
+                type='select'
+                id={value}
+                value={this.state.deseosRes[value]}
+                onChange={this.handleChangeDeseos}>
+                <option value=''/>
+                <option value='Si ofrece'>No ofrece</option>
+                <option value='No ofrece'>Si ofrece</option>
+              </Input>
+            </FormGroup>
+          ))}
+        </FormGroup>
         <Button>Guardar</Button>
       </Form>
     );

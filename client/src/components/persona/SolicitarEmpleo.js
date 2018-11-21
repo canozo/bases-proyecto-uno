@@ -64,6 +64,8 @@ const styles = theme => ({
 });
 
 // TODO una persona empleada puede solicitar empleo
+// TODO generar form condiciones automaticamente
+// TODO generar form deseos automaticamente
 
 class SolicitarEmpleo extends Component {
   constructor(props) {
