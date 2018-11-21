@@ -74,6 +74,9 @@ class SolicitarEmpleo extends Component {
     this.cargarPersonas = this.cargarPersonas.bind(this);
     this.cargarPuestos = this.cargarPuestos.bind(this);
     this.checkearPuestos = this.checkearPuestos.bind(this);
+    this.handleChange =  this.handleChange.bind(this);
+    this.submitState =  this.submitState.bind(this);
+
 
     this.state = {
       dropdownOpen: false,
@@ -213,35 +216,41 @@ class SolicitarEmpleo extends Component {
 
   submitState(event){
     event.preventDefault();
-    console.log('insertando', this.state);
-    fetch('/empleos', {
-      method: 'put',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      // informacion a enviar
-      body: JSON.stringify({
-        empleo: this.state.tipoEmpleo,
-        empleoPadre: this.state.selectedName,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        // logica de respuesta
-        this.setState({
-          tipoEmpleo: '',
-          selectedValue: '0',
-        });
-        console.log(res);
-      });
+    console.log(this.state)
+    // console.log('insertando', this.state);
+    // fetch('/empleos', {
+    //   method: 'put',
+    //   headers : {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   // informacion a enviar
+    //   body: JSON.stringify({
+    //     empleo: this.state.tipoEmpleo,
+    //     empleoPadre: this.state.selectedName,
+    //   }),
+    // })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     // logica de respuesta
+    //     this.setState({
+    //       tipoEmpleo: '',
+    //       selectedValue: '0',
+    //     });
+    //     console.log(res);
+    //   });
+  }
+  handleChange(event) {
+    this.setState({
+      [event.target.id]: event.target.value,
+    });
   }
 
   render() {
     const { classes } = this.props;
     const {personas, puestos} = this.state;
     return (
-      <Form>
+      <Form onSubmit={this.submitState}>
         <FormGroup>
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
             <DropdownToggle caret>
@@ -299,6 +308,7 @@ class SolicitarEmpleo extends Component {
             <option value='No'>No</option>
           </Select>
         </FormControl>
+        
         <FormControl variant="outlined" className={classes.formControl}>
           {this.state.condicionOffice === "" ? <InputLabel>Sabe usar office</InputLabel> : ""}
           <Select
