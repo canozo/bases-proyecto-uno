@@ -54,6 +54,7 @@ router.get('/:puesto', function(req, res) {
   });
 });
 
+// TODO error cuando se borra el unico elemento
 router.delete('/:puesto', function(req, res) {
   // eliminar un puesto como llave y de la tabla de puestos
   const puesto = req.params.puesto;
