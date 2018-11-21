@@ -134,8 +134,40 @@ class AdminPersonas extends Component {
         // logica de respuesta
         console.log(res);
 
+        let familiaresArr = res.familiares;
+        let sanitariosArr = res.sanitarios;
+        let legalesArr = res.legales;
+        let laboralesArr = res.laborales;
+        let profesionalesArr = res.profesionales;
+
+        let familiaresMap = {};
+        let sanitariosMap = {};
+        let legalesMap = {};
+        let laboralesMap = {};
+        let profesionalesMap = {};
+
+        for (let i = 0; i < familiaresMap.length; i++) {
+          familiaresMap[familiaresArr[i]] = true;
+        }
+
+        for (let i = 0; i < sanitariosMap.length; i++) {
+          sanitariosMap[sanitariosArr[i]] = true;
+        }
+
+        for (let i = 0; i < legalesMap.length; i++) {
+          legalesMap[legalesArr[i]] = true;
+        }
+
+        for (let i = 0; i < laboralesMap.length; i++) {
+          laboralesMap[laboralesArr[i]] = true;
+        }
+
+        for (let i = 0; i < profesionalesMap.length; i++) {
+          profesionalesMap[profesionalesArr[i]] = true;
+        }
+
         this.setState({
-          numID: res.numID,
+          numID: id,
           nombre: res.nombre,
           telefono: res.telefono,
           email: res.email,
@@ -143,14 +175,16 @@ class AdminPersonas extends Component {
           genero: res.genero,
           fecha_nacimiento: res.fecha_nacimiento,
           estado_civil: res.estado_civil,
-          familiares: res.familiares,
-          sanitarios: res.sanitarios,
-          legales: res.legales,
-          laborales: res.laborales,
-          profesionales: res.profesionales,
-          academicos: res.academicos,
-          numAcadm: res.numAcadm,
+          familiares: familiaresMap,
+          sanitarios: sanitariosMap,
+          legales: legalesMap,
+          laborales: laboralesMap,
+          profesionales: profesionalesMap,
+          academicos: res.academicos || {},
+          numAcadm: Number(res.numAcadm),
         });
+
+        console.log(this.state);
       })
         .catch((error) => {
         console.log(error);
@@ -277,7 +311,7 @@ class AdminPersonas extends Component {
 
         let carrerasEstudio = [];
         for (let key in res)
-        carrerasEstudio.push({ name: key, value: key});
+          carrerasEstudio.push({ name: key, value: key});
 
           this.setState({
             carrerasEstudio: carrerasEstudio || [],
@@ -329,7 +363,7 @@ class AdminPersonas extends Component {
 
         let legales = [];
         for (let key in res)
-        legales.push({ name: key, value: key});
+          legales.push({ name: key, value: key});
 
           this.setState({
             opcLegales: legales || [],
@@ -372,6 +406,25 @@ class AdminPersonas extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarPersonas();
+        console.log(this.state);
+
+        this.setState({
+          numID: '',
+          nombre: '',
+          telefono: '',
+          email: '',
+          direccion: '',
+          genero: '',
+          fecha_nacimiento: '',
+          estado_civil: '',
+          familiares: {},
+          sanitarios: {},
+          legales: {},
+          laborales: {},
+          profesionales: {},
+          academicos: {},
+          numAcadm: 1,
+        });
       })
         .catch((err) => {
           console.log(err);
@@ -432,7 +485,7 @@ class AdminPersonas extends Component {
     const { instituciones, carrerasEstudio, gradosAcademicos } = this.state;
 
     let componentes = [];
-    for(let i = 0; i < this.state.numeroAcademicos; i++) {
+    for(let i = 0; i< this.state.numeroAcademicos; i++) {
       componentes.push(
         <FormGroup key={i}>
           <label>Instituto Academico</label>
@@ -509,6 +562,7 @@ class AdminPersonas extends Component {
               type='text'
               name='nombre-completo'
               id='nombre-completo'
+              value={this.state.nombre}
               placeholder='Juan Mauricio'
               onChange={e => this.setState({ nombre: e.target.value })}
             />
@@ -519,7 +573,8 @@ class AdminPersonas extends Component {
               type='text'
               name='num-identidad'
               id='num-identidad'
-              placeholder='0801-1990-00000'
+              value={this.state.numID}
+              placeholder='0000-0000-00000'
               onChange={e => this.setState({ numID: e.target.value })}
             />
           </FormGroup>
@@ -529,7 +584,8 @@ class AdminPersonas extends Component {
               type='text'
               name='telefono'
               id='telefono'
-              placeholder='50422000000'
+              value={this.state.telefono}
+              placeholder='22000000'
               onChange={e => this.setState({ telefono: e.target.value })}
             />
           </FormGroup>
@@ -539,6 +595,7 @@ class AdminPersonas extends Component {
               type='email'
               name='email'
               id='email'
+              value={this.state.email}
               placeholder='ejemplo@gmail.com'
               onChange={e => this.setState({ email: e.target.value })}
             />
@@ -547,6 +604,7 @@ class AdminPersonas extends Component {
             <Label>Genero</Label>
             <Input
               type='select'
+              value={this.state.genero}
               onChange={e => this.setState({ genero: e.target.value })}
             >
               <option value='' />
@@ -562,6 +620,7 @@ class AdminPersonas extends Component {
             <Label>Estado Civil</Label>
             <Input
               type='select'
+              value={this.state.estado_civil}
               onChange={e =>
                 this.setState({
                   estado_civil: e.target.value
@@ -586,6 +645,7 @@ class AdminPersonas extends Component {
               type='date'
               name='date'
               id='fecha_nacimiento'
+              value={this.state.fecha_nacimiento}
               placeholder='MM-DD-YYYY'
               onChange={e => this.setState({ fecha_nacimiento: e.target.value })}
             />
@@ -596,6 +656,7 @@ class AdminPersonas extends Component {
               type='text'
               name='direccion'
               id='direccion'
+              value={this.state.direccion}
               placeholder='Col. Miramomtes 3ra ave'
               onChange={e => this.setState({ direccion: e.target.value })}
             />
@@ -626,7 +687,6 @@ class AdminPersonas extends Component {
                     key = {value}
                   />
                   ))}
-              
             </div>
           </FormGroup>
           <FormGroup>
@@ -652,7 +712,7 @@ class AdminPersonas extends Component {
                     type='checkbox'
                     id={value}
                     label={value}
-                    key = {value}
+                    key={value}
                   />
                   ))}
             </div>
