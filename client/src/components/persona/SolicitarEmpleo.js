@@ -69,6 +69,7 @@ class SolicitarEmpleo extends Component {
     this.selectDropdown = this.selectDropdown.bind(this);
     this.cargarPersonas = this.cargarPersonas.bind(this);
     this.cargarPuestos = this.cargarPuestos.bind(this);
+    this.checkearPuestos = this.checkearPuestos.bind(this);
 
     this.state = {
       dropdownOpen: false,
@@ -79,18 +80,73 @@ class SolicitarEmpleo extends Component {
       condicionOffice: '',
       condicionPresion: '',
       condicionAuxilios: '',
+      personas:[],
+      puestos:[],
+      checkPuestos: {}
     };
   }
 
-  cargarPersonas() {
+  checkearPuestos(event) {
+    var checkPuestos = this.state.checkPuestos;
+    checkPuestos[event.target.id] = event.target.checked;
+    this.setState({ checkPuestos: checkPuestos });
+  }
 
+  cargarPersonas() {
+    fetch('/personas', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let personas = [];
+        for (let key in res)
+          personas.push({ id: key, nombre: res[key] });
+
+          this.setState({
+            personas: personas || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
 
   cargarPuestos() {
+    fetch('/puestos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
 
+        let puestos = [];
+        for (let key in res)
+          puestos.push({ id: key, value:key });
+
+          this.setState({
+            puestos: puestos || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
+    this.cargarPersonas();
+    this.cargarPuestos();
   }
 
   handleEditar(value) {
@@ -175,6 +231,7 @@ class SolicitarEmpleo extends Component {
 
   render() {
     const { classes } = this.props;
+    const {personas, puestos} = this.state;
     return (
       <Form>
         <FormGroup>
@@ -183,20 +240,19 @@ class SolicitarEmpleo extends Component {
               {this.state.selectedName}
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem value='1' onClick={this.selectDropdown}>Opcion 1</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem value='2' onClick={this.selectDropdown}>Opcion 2</DropdownItem>
+            {personas.map(({id, nombre}) =>(
+                <DropdownItem value='1'  onClick={this.selectDropdown} id={id}>{nombre}</DropdownItem>
+
+              ))}
             </DropdownMenu>
           </Dropdown>
         </FormGroup>
         <FormGroup>
           <Label for="puestos">Puestos</Label>
           <div id="puestos">
-            <CustomInput type="checkbox" id="Uno" label="Uno" />
-            <CustomInput type="checkbox" id="Dos" label="Dos" />
-            <CustomInput type="checkbox" id="Tres" label="Tres" />
-            <CustomInput type="checkbox" id="Cuatro" label="Cuatro" />
-            <CustomInput type="checkbox" id="Cinco" label="Cinco" />
+          {puestos.map(({id, value}) =>(
+              <CustomInput type="checkbox" id={id} label={value} />
+              ))}
           </div>
         </FormGroup>
         <FormControl variant="outlined" className={classes.formControl}>
