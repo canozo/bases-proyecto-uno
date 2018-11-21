@@ -19,7 +19,7 @@ const styles = theme => ({
   title: {
     paddingTop: '20px',
     paddingBottom: '10px',
-    paddingLeft: '20px',
+    paddingLeft: '10px',
   },
   button: {
     margin: theme.spacing.unit,
@@ -29,6 +29,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
+    display: 'flex',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
@@ -43,6 +44,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   formControl: {
+    display: 'flex',
     margin: theme.spacing.unit,
     width: '100%',
   },
@@ -50,11 +52,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   root_table: {
+    display: 'flex',
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
+    display: 'flex',
     minWidth: 700,
   },
 });
@@ -82,7 +86,8 @@ class SolicitarEmpleo extends Component {
       condicionAuxilios: '',
       personas:[],
       puestos:[],
-      checkPuestos: {}
+      checkPuestos: {},
+      labelWidth : 0,
     };
   }
 
@@ -147,6 +152,9 @@ class SolicitarEmpleo extends Component {
   componentDidMount() {
     this.cargarPersonas();
     this.cargarPuestos();
+    // this.setState({
+    //   labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+    // });
   }
 
   handleEditar(value) {
@@ -263,7 +271,11 @@ class SolicitarEmpleo extends Component {
             id="condicionManejar"
             onChange={this.handleChange}
             input={
-              <OutlinedInput labelWidth={0} />
+              <OutlinedInput
+                name="age"
+                labelWidth={this.state.labelWidth}
+                id="outlined-age-native-simple"
+              />
             }
           >
             <option value=''/>
@@ -304,7 +316,7 @@ class SolicitarEmpleo extends Component {
           </Select>
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
-          {this.state.condicionPresion === "" ? <InputLabel>Trabaja bajo presion</InputLabel> : ""}
+          {this.state.condicionPresion === "" ? <InputLabel htmlFor="age-simple">Trabaja bajo presion</InputLabel> : ""}
           <Select
             native
             value={this.state.condicionPresion}
