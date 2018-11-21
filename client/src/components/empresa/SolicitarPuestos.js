@@ -77,6 +77,7 @@ class SolicitarPuestos extends Component {
       condicionOffice: '',
       condicionPresion: '',
       condicionAuxilios: '',
+      empresas: [],
     };
   }
 
@@ -84,6 +85,31 @@ class SolicitarPuestos extends Component {
     this.setState({
       [event.target.id]: event.target.value,
     });
+  }
+  getEmpresas(){
+    fetch('/empresas', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        let empresas = [];
+        for (let key in res)
+          empresas.push({ name: key, value: key});
+
+          this.setState({
+            empresas: empresas || [],
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
   }
 
   submitState(event){
@@ -118,15 +144,28 @@ class SolicitarPuestos extends Component {
         console.log(err);
       });
   }
+  componentDidMount(){
+    this.getEmpresas();
+
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes,  } = this.props;
+    const { empresas } = this.state;
     return (
       <Form onSubmit={this.submitState}>
         <FormGroup>
           <Label for="LugarEmpleo">Lugar de Empleo</Label>
-          <Input type="text" name="LugarEmpleo" id="LugarEmpleo" value={this.state.lugar} placeholder="BAC Credomatic" 
-          onChange={e => this.setState({ lugar: e.target.value })}/>
+          <Input
+                type='select'
+                onChange={e => this.setState({ lugar: e.target.value })}
+              >
+               {empresas.map(({value }) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+              </Input>
         </FormGroup>
         <FormGroup>
           <Label for="sueldo">Sueldo</Label>
