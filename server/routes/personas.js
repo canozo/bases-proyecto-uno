@@ -46,49 +46,46 @@ router.put('/', function(req, res) {
 
   let academicosArr = [];
   let pos = 0;
-  let error = false;
+  console.log(academicos);
   for (let key in academicos) {
-    if (academicos[key] === 'Ninguno') {
-      error = true;
+    if (academicos[key] === 'Ninguno')
       break;
-    }
+
     academicosArr[pos] = key;
     pos += 1;
     academicosArr[pos] = academicos[key];
     pos += 1;
   }
 
-  if (!error) {
-    // agregar la persona a la lista de personas
-    client.hmset(numID, [
-      'direccion', direccion,
-      'nombre', nombre,
-      'telefono', Number(telefono),
-      'email', email,
-      'direccion', direccion,
-      'genero', genero,
-      'fecha_nacimiento', fecha_nacimiento,
-      'estado_civil', estado_civil,
-      'familiares', Object.keys(familiares).toString(),
-      'sanitarios', Object.keys(sanitarios).toString(),
-      'legales', Object.keys(legales).toString(),
-      'laborales', Object.keys(laborales).toString(),
-      'profesionales', Object.keys(profesionales).toString(),
-      'num_academicos', numAcadm,
-    ], function(err, reply) {
-    });
+  // agregar la persona a la lista de personas
+  client.hmset(numID, [
+    'direccion', direccion,
+    'nombre', nombre,
+    'telefono', Number(telefono),
+    'email', email,
+    'direccion', direccion,
+    'genero', genero,
+    'fecha_nacimiento', fecha_nacimiento,
+    'estado_civil', estado_civil,
+    'familiares', Object.keys(familiares).toString(),
+    'sanitarios', Object.keys(sanitarios).toString(),
+    'legales', Object.keys(legales).toString(),
+    'laborales', Object.keys(laborales).toString(),
+    'profesionales', Object.keys(profesionales).toString(),
+    'num_academicos', numAcadm,
+  ], function(err, reply) {
+  });
 
+  // tabla de personas
+  client.hmset('personas', [numID, nombre]);
+
+  if (academicosArr.length > 0) {
     // setear la informacion academica
     client.hmset(numID, academicosArr);
-
-    // tabla de personas
-    client.hmset('personas', [numID, nombre]);
-
-    // enviar respuesta
-    res.json({ error: false });
-  } else {
-    res.json({ error: true });
   }
+
+  // enviar respuesta
+  res.json({ error: false });
 });
 
 module.exports = router;

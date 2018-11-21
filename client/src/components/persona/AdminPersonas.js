@@ -640,159 +640,81 @@ class AdminPersonas extends Component {
           <FormGroup>
             <Label for='familiares'>Familiares del empleado</Label>
             <div id='familiares'>
-              {personas.map(({ id, nombre }) => {
-              if (this.state.familiares[id]) {
-                return (
-                  <CustomInput
-                    key={id}
-                    onChange={this.checkearFamilia}
-                    value={this.state.familiares[id]}
-                    type='checkbox'
-                    checked
-                    id={id}
-                    label={nombre}
-                  />
-                );
-              } else {
-                return (
-                  <CustomInput
-                    key={id}
-                    onChange={this.checkearFamilia}
-                    value={this.state.familiares[id]}
-                    type='checkbox'
-                    id={id}
-                    label={nombre}
-                  />
-                );
-              }
-            })}
+              {personas.map(({ id, nombre }) => (
+                <CustomInput
+                  onChange={this.checkearFamilia}
+                  value={this.state.familiares[id]}
+                  checked={this.state.familiares[id] === true}
+                  type='checkbox'
+                  id={id}
+                  label={nombre}
+                  key={id}
+                />
+                ))}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-sanitarios'>Requisitos Sanitarios</Label>
             <div id='requisitos-sanitarios'>
-            {opcSanitarios.map(({value }) => {
-              if (this.state.sanitarios[value]) {
-                console.log(this.state.sanitarios);
-                return (
-                  <CustomInput
-                    onChange={this.checkearSanitarios}
-                    value={this.state.sanitarios[value]}
-                    // defaultChecked={this.state.sanitarios[value]}
-                    type='checkbox'
-                    checked
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              } else {
-                return (
-                  <CustomInput
-                    onChange={this.checkearSanitarios}
-                    value={this.state.sanitarios[value]}
-                    // defaultChecked={this.state.sanitarios[value]}
-                    type='checkbox'
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              }
-            })}
+              {opcSanitarios.map(({ value }) => (
+                <CustomInput
+                  onChange={this.checkearSanitarios}
+                  value={this.state.sanitarios[value]}
+                  checked={this.state.sanitarios[value] === true}
+                  type='checkbox'
+                  id={value}
+                  label={value}
+                  key={value}
+                />
+                ))}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-legal'>Requisitos Legales</Label>
             <div id='requisitos-legal'>
-            {opcLegales.map(({value }) => {
-              if (this.state.legales[value]) {
-                return (
-                  <CustomInput
-                    onChange={this.checkearLegales}
-                    value={this.state.legales[value]}
-                    type='checkbox'
-                    checked
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              } else {
-                return (
-                  <CustomInput
-                    onChange={this.checkearLegales}
-                    value={this.state.legales[value]}
-                    type='checkbox'
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              }
-            })}
+              {opcLegales.map(({value }) => (
+                <CustomInput
+                  onChange={this.checkearLegales}
+                  value={this.state.legales[value]}
+                  checked={this.state.legales[value] === true}
+                  type='checkbox'
+                  id={value}
+                  label={value}
+                  key={value}
+                />
+                ))}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
             <div id='requisitos-profesionales'>
-            {opcProfesionales.map(({ value }) => {
-              if (this.state.profesionales[value]) {
-                return (
-                  <CustomInput
-                    onChange={this.checkearProfesionales}
-                    value={this.state.profesionales[value]}
-                    type='checkbox'
-                    checked
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              } else {
-                return (
-                  <CustomInput
-                    onChange={this.checkearProfesionales}
-                    value={this.state.profesionales[value]}
-                    type='checkbox'
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              }
-            })}
+              {opcProfesionales.map(({ value }) => (
+                <CustomInput
+                  onChange={this.checkearProfesionales}
+                  value={this.state.profesionales[value]}
+                  checked={this.state.profesionales[value] === true}
+                  type='checkbox'
+                  id={value}
+                  label={value}
+                  key={value}
+                />
+                ))}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-laborales'>Requisitos Laborales</Label>
             <div id='requisitos-laborales'>
-            {opcLaborales.map(({value }) => {
-              if (this.state.laborales[value]) {
-                return (
-                  <CustomInput
-                    onChange={this.checkearLaborales}
-                    value={this.state.laborales[value]}
-                    type='checkbox'
-                    checked
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              } else {
-                return (
-                  <CustomInput
-                    onChange={this.checkearLaborales}
-                    value={this.state.laborales[value]}
-                    type='checkbox'
-                    id={value}
-                    label={value}
-                    key={value}
-                  />
-                );
-              }
-            })}
+              {opcLaborales.map(({ value }) => (
+                <CustomInput
+                  onChange={this.checkearLaborales}
+                  value={this.state.laborales[value]}
+                  checked={this.state.laborales[value] === true}
+                  type='checkbox'
+                  id={value}
+                  label={value}
+                  key={value}
+                />
+                ))}
             </div>
           </FormGroup>
           <FormGroup>
