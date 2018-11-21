@@ -57,6 +57,7 @@ router.put('/', function(req, res) {
     pos += 1;
   }
 
+  // en empleo se guarda la empresa donde trabaja
   // agregar la persona a la lista de personas
   client.hmset(numID, [
     'direccion', direccion,
@@ -73,6 +74,7 @@ router.put('/', function(req, res) {
     'laborales', Object.keys(laborales).toString(),
     'profesionales', Object.keys(profesionales).toString(),
     'num_academicos', numAcadm,
+    'empleo', '',
   ], function(err, reply) {
   });
 

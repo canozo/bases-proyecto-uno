@@ -64,6 +64,7 @@ const styles = theme => ({
 });
 
 // TODO agregar text area de deseos de la persona
+// TODO una persona empleada puede solicitar empleo
 
 class SolicitarEmpleo extends Component {
   constructor(props) {

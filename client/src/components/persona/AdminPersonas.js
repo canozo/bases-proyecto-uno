@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -636,7 +636,6 @@ class AdminPersonas extends Component {
               onChange={e => this.setState({ direccion: e.target.value })}
             />
           </FormGroup>
-          {/* TODO arreglar como guardar el valor de los checkbox en el state */}
           <FormGroup>
             <Label for='familiares'>Familiares del empleado</Label>
             <div id='familiares'>
@@ -753,10 +752,10 @@ class AdminPersonas extends Component {
                     onClick={() => {this.handleEditar(id);}}>
                       <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="Delete" value={id}
+                  {/* <IconButton aria-label="Delete" value={id}
                     onClick={() => {this.handleEliminar(id);}}>
                     <DeleteIcon />
-                  </IconButton>
+                  </IconButton> */}
                 </TableCell>
               </TableRow>
             ))}

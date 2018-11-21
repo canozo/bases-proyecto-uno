@@ -11,6 +11,9 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
+// TODO agregar condiciones/limitaciones
+// TODO agregar deseos
+
 const styles = theme => ({
   card: {
     maxWidth: 345,
