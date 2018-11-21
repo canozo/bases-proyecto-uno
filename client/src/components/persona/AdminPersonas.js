@@ -88,7 +88,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let opcProfesionales = [];
         for (let key in res)
@@ -99,12 +98,10 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
   handleEliminar(id) {
-    console.log(id);
     fetch(`/personas/${id}`, {
       method: 'delete',
       headers: {
@@ -116,12 +113,10 @@ class AdminPersonas extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarPersonas();
-        console.log(res);
       });
   }
 
   handleEditar(id) {
-    console.log(id);
     fetch(`/personas/${id}`, {
       method: 'get',
       headers: {
@@ -132,13 +127,12 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
-        let familiaresArr = res.familiares;
-        let sanitariosArr = res.sanitarios;
-        let legalesArr = res.legales;
-        let laboralesArr = res.laborales;
-        let profesionalesArr = res.profesionales;
+        let familiaresArr = res.familiares.split(',');
+        let sanitariosArr = res.sanitarios.split(',');
+        let legalesArr = res.legales.split(',');
+        let laboralesArr = res.laborales.split(',');
+        let profesionalesArr = res.profesionales.split(',');
 
         let familiaresMap = {};
         let sanitariosMap = {};
@@ -146,23 +140,23 @@ class AdminPersonas extends Component {
         let laboralesMap = {};
         let profesionalesMap = {};
 
-        for (let i = 0; i < familiaresMap.length; i++) {
+        for (let i = 0; i < familiaresArr.length; i++) {
           familiaresMap[familiaresArr[i]] = true;
         }
 
-        for (let i = 0; i < sanitariosMap.length; i++) {
+        for (let i = 0; i < sanitariosArr.length; i++) {
           sanitariosMap[sanitariosArr[i]] = true;
         }
 
-        for (let i = 0; i < legalesMap.length; i++) {
+        for (let i = 0; i < legalesArr.length; i++) {
           legalesMap[legalesArr[i]] = true;
         }
 
-        for (let i = 0; i < laboralesMap.length; i++) {
+        for (let i = 0; i < laboralesArr.length; i++) {
           laboralesMap[laboralesArr[i]] = true;
         }
 
-        for (let i = 0; i < profesionalesMap.length; i++) {
+        for (let i = 0; i < profesionalesArr.length; i++) {
           profesionalesMap[profesionalesArr[i]] = true;
         }
 
@@ -184,10 +178,8 @@ class AdminPersonas extends Component {
           numAcadm: Number(res.numAcadm),
         });
 
-        console.log(this.state);
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -202,7 +194,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let personas = [];
         for (let key in res)
@@ -213,7 +204,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -228,7 +218,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let opcLaborales = [];
         for (let key in res)
@@ -239,7 +228,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -254,7 +242,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let opcSanitarios = [];
         for (let key in res)
@@ -265,7 +252,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -280,7 +266,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let instituciones = [];
 
@@ -292,7 +277,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -307,7 +291,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let carrerasEstudio = [];
         for (let key in res)
@@ -318,7 +301,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -333,7 +315,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let gradosAcademicos = [];
         for (let key in res)
@@ -344,7 +325,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -359,7 +339,6 @@ class AdminPersonas extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log(res);
 
         let legales = [];
         for (let key in res)
@@ -370,13 +349,11 @@ class AdminPersonas extends Component {
         });
       })
         .catch((error) => {
-        console.log(error);
       });
   }
 
   submitState(event) {
     event.preventDefault();
-    console.log(this.state);
     fetch('/personas', {
       method: 'put',
       headers: {
@@ -406,7 +383,6 @@ class AdminPersonas extends Component {
       .then(res => {
         // logica de respuesta
         this.cargarPersonas();
-        console.log(this.state);
 
         this.setState({
           numID: '',
@@ -427,7 +403,6 @@ class AdminPersonas extends Component {
         });
       })
         .catch((err) => {
-          console.log(err);
         });
   }
 
@@ -661,74 +636,163 @@ class AdminPersonas extends Component {
               onChange={e => this.setState({ direccion: e.target.value })}
             />
           </FormGroup>
+          {/* TODO arreglar como guardar el valor de los checkbox en el state */}
           <FormGroup>
             <Label for='familiares'>Familiares del empleado</Label>
             <div id='familiares'>
-              {personas.map(({ id, nombre }) => (
-                <CustomInput
-                  key={id}
-                  onChange={this.checkearFamilia}
-                  type='checkbox'
-                  id={id}
-                  label={nombre}
-                />
-              ))}
+              {personas.map(({ id, nombre }) => {
+              if (this.state.familiares[id]) {
+                return (
+                  <CustomInput
+                    key={id}
+                    onChange={this.checkearFamilia}
+                    value={this.state.familiares[id]}
+                    type='checkbox'
+                    checked
+                    id={id}
+                    label={nombre}
+                  />
+                );
+              } else {
+                return (
+                  <CustomInput
+                    key={id}
+                    onChange={this.checkearFamilia}
+                    value={this.state.familiares[id]}
+                    type='checkbox'
+                    id={id}
+                    label={nombre}
+                  />
+                );
+              }
+            })}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-sanitarios'>Requisitos Sanitarios</Label>
             <div id='requisitos-sanitarios'>
-            {opcSanitarios.map(({value }) => (
+            {opcSanitarios.map(({value }) => {
+              if (this.state.sanitarios[value]) {
+                console.log(this.state.sanitarios);
+                return (
                   <CustomInput
                     onChange={this.checkearSanitarios}
+                    value={this.state.sanitarios[value]}
+                    // defaultChecked={this.state.sanitarios[value]}
                     type='checkbox'
+                    checked
                     id={value}
                     label={value}
-                    key = {value}
+                    key={value}
                   />
-                  ))}
-            </div>
-          </FormGroup>
-          <FormGroup>
-            <Label for='requisitos-legal'>Requisitos Legales</Label>
-            <div id='requisitos-legal'>
-            {opcLegales.map(({value }) => (
+                );
+              } else {
+                return (
                   <CustomInput
-                    onChange={this.checkearLegales}
-                    type='checkbox'
-                    id={value}
-                    label={value}
-                    key = {value}
-                  />
-                  ))}
-            </div>
-          </FormGroup>
-          <FormGroup>
-            <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
-            <div id='requisitos-profesionales'>
-            {opcProfesionales.map(({value }) => (
-                  <CustomInput
-                    onChange={this.checkearProfesionales}
+                    onChange={this.checkearSanitarios}
+                    value={this.state.sanitarios[value]}
+                    // defaultChecked={this.state.sanitarios[value]}
                     type='checkbox'
                     id={value}
                     label={value}
                     key={value}
                   />
-                  ))}
+                );
+              }
+            })}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-legal'>Requisitos Legales</Label>
+            <div id='requisitos-legal'>
+            {opcLegales.map(({value }) => {
+              if (this.state.legales[value]) {
+                return (
+                  <CustomInput
+                    onChange={this.checkearLegales}
+                    value={this.state.legales[value]}
+                    type='checkbox'
+                    checked
+                    id={value}
+                    label={value}
+                    key={value}
+                  />
+                );
+              } else {
+                return (
+                  <CustomInput
+                    onChange={this.checkearLegales}
+                    value={this.state.legales[value]}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key={value}
+                  />
+                );
+              }
+            })}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
+            <div id='requisitos-profesionales'>
+            {opcProfesionales.map(({ value }) => {
+              if (this.state.profesionales[value]) {
+                return (
+                  <CustomInput
+                    onChange={this.checkearProfesionales}
+                    value={this.state.profesionales[value]}
+                    type='checkbox'
+                    checked
+                    id={value}
+                    label={value}
+                    key={value}
+                  />
+                );
+              } else {
+                return (
+                  <CustomInput
+                    onChange={this.checkearProfesionales}
+                    value={this.state.profesionales[value]}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key={value}
+                  />
+                );
+              }
+            })}
             </div>
           </FormGroup>
           <FormGroup>
             <Label for='requisitos-laborales'>Requisitos Laborales</Label>
             <div id='requisitos-laborales'>
-            {opcLaborales.map(({value }) => (
+            {opcLaborales.map(({value }) => {
+              if (this.state.laborales[value]) {
+                return (
                   <CustomInput
                     onChange={this.checkearLaborales}
+                    value={this.state.laborales[value]}
+                    type='checkbox'
+                    checked
+                    id={value}
+                    label={value}
+                    key={value}
+                  />
+                );
+              } else {
+                return (
+                  <CustomInput
+                    onChange={this.checkearLaborales}
+                    value={this.state.laborales[value]}
                     type='checkbox'
                     id={value}
                     label={value}
-                    key = {value}
+                    key={value}
                   />
-                  ))}
+                );
+              }
+            })}
             </div>
           </FormGroup>
           <FormGroup>
