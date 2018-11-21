@@ -1,5 +1,5 @@
-var express  = require('express');
-var util  = require('util');
+var express = require('express');
+var util = require('util');
 var router = express.Router();
 
 router.get('/', function(req, res) {
@@ -12,9 +12,22 @@ router.get('/', function(req, res) {
   });
 });
 
+router.delete('/:id', function(req, res) {
+  const numID = req.params.id;
+  client.del(numID);
+  client.hdel('personas', numID);
+  res.json({ error: false });
+});
+
+router.get('/:id', function(req, res) {
+  const numID = req.params.id;
+  client.hgetall(numID, function(err, obj) {
+    res.json(obj);
+  });
+});
+
 router.put('/', function(req, res) {
   // guardar la informacion obtenida en redis
-  console.log("servidor");
   const numID = req.body.numID;
   const nombre = req.body.nombre;
   const telefono = req.body.telefono;
@@ -29,37 +42,53 @@ router.put('/', function(req, res) {
   const laborales = req.body.laborales;
   const profesionales = req.body.profesionales;
   const academicos = req.body.academicos;
+  const numAcadm = req.body.numAcadm;
 
-  // TODO no se guardan los requisitos academicos
+  let academicosArr = [];
+  let pos = 0;
+  let error = false;
+  for (let key in academicos) {
+    if (academicos[key] === 'Ninguno') {
+      error = true;
+      break;
+    }
+    academicosArr[pos] = key;
+    pos += 1;
+    academicosArr[pos] = academicos[key];
+    pos += 1;
+  }
 
-  // agregar la persona a la lista de personas
-  client.hmset(numID, [
-    'direccion', direccion,
-    'nombre', nombre,
-    'telefono', telefono,
-    'email', email,
-    'direccion', direccion,
-    'genero', genero,
-    'fecha_nacimiento', fecha_nacimiento,
-    'estado_civil', estado_civil,
-    'familiares', Object.keys(familiares),
-    'sanitarios', Object.keys(sanitarios),
-    'legales', Object.keys(legales),
-    'laborales', Object.keys(laborales),
-    'profesionales', Object.keys(profesionales),
-    'academicos', Object.keys(academicos),
-  ], function(err, reply) {
-    console.log(reply);
-  });
+  if (!error) {
+    // agregar la persona a la lista de personas
+    client.hmset(numID, [
+      'direccion', direccion,
+      'nombre', nombre,
+      'telefono', Number(telefono),
+      'email', email,
+      'direccion', direccion,
+      'genero', genero,
+      'fecha_nacimiento', fecha_nacimiento,
+      'estado_civil', estado_civil,
+      'familiares', Object.keys(familiares).toString(),
+      'sanitarios', Object.keys(sanitarios).toString(),
+      'legales', Object.keys(legales).toString(),
+      'laborales', Object.keys(laborales).toString(),
+      'profesionales', Object.keys(profesionales).toString(),
+      'num_academicos', numAcadm,
+    ], function(err, reply) {
+    });
 
-  client.hmset('personas', [
-    numID, nombre
-  ], function(err, reply) {
-    console.log(reply);
-  });
+    // setear la informacion academica
+    client.hmset(numID, academicosArr);
 
-  // enviar respuesta
-  res.json({ error: false });
+    // tabla de personas
+    client.hmset('personas', [numID, nombre]);
+
+    // enviar respuesta
+    res.json({ error: false });
+  } else {
+    res.json({ error: true });
+  }
 });
 
 module.exports = router;

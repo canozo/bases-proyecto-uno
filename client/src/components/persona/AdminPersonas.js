@@ -2,33 +2,54 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
-const styles = {
+const styles = theme => ({
   card: {
-    maxWidth: 345
+    maxWidth: 345,
   },
   media: {
     height: 0,
-    paddingTop: '56.25%'
-  }
-};
+    paddingTop: '56.25%',
+  },
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+});
 
 class AdminPersonas extends Component {
   constructor(props) {
     super(props);
 
+    this.props = props;
+
     this.submitState = this.submitState.bind(this);
     this.checkearFamilia = this.checkearFamilia.bind(this);
     this.checkearSanitarios = this.checkearSanitarios.bind(this);
     this.checkearLegales = this.checkearLegales.bind(this);
-    this.checkearAcademicos = this.checkearAcademicos.bind(this);
     this.checkearLaborales = this.checkearLaborales.bind(this);
     this.checkearProfesionales = this.checkearProfesionales.bind(this);
     this.agregarAcademicos = this.agregarAcademicos.bind(this);
     this.agregarStateAcademicos = this.agregarStateAcademicos.bind(this);
     this.restarStateAcademicos = this.restarStateAcademicos.bind(this);
     this.agregarAcademicos = this.agregarAcademicos.bind(this);
- 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleEditar = this.handleEditar.bind(this);
+    this.handleEliminar = this.handleEliminar.bind(this);
+
     this.state = {
       nombre: '',
       numID: '',
@@ -50,9 +71,9 @@ class AdminPersonas extends Component {
       gradosAcademicos: [],
       opcLegales: [],
       opcSanitarios: [],
-      opcFamiliares: [],
       opcProfesionales: [],
-      opcLaborales: []
+      opcLaborales: [],
+      personas: [],
     };
   }
 
@@ -82,7 +103,61 @@ class AdminPersonas extends Component {
       });
   }
 
-  getFamiliares() {
+  handleEliminar(id) {
+    console.log(id);
+    fetch(`/personas/${id}`, {
+      method: 'delete',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        this.cargarPersonas();
+        console.log(res);
+      });
+  }
+
+  handleEditar(id) {
+    console.log(id);
+    fetch(`/personas/${id}`, {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        console.log(res);
+
+        this.setState({
+          numID: res.numID,
+          nombre: res.nombre,
+          telefono: res.telefono,
+          email: res.email,
+          direccion: res.direccion,
+          genero: res.genero,
+          fecha_nacimiento: res.fecha_nacimiento,
+          estado_civil: res.estado_civil,
+          familiares: res.familiares,
+          sanitarios: res.sanitarios,
+          legales: res.legales,
+          laborales: res.laborales,
+          profesionales: res.profesionales,
+          academicos: res.academicos,
+          numAcadm: res.numAcadm,
+        });
+      })
+        .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  cargarPersonas() {
     fetch('/personas', {
       method: 'get',
       headers : {
@@ -95,12 +170,12 @@ class AdminPersonas extends Component {
         // logica de respuesta
         console.log(res);
 
-        let opcFamiliares = [];
+        let personas = [];
         for (let key in res)
-          opcFamiliares.push({ id: key, nombre: res[key] });
+          personas.push({ id: key, nombre: res[key] });
 
           this.setState({
-            opcFamiliares: opcFamiliares || [],
+            personas: personas || [],
         });
       })
         .catch((error) => {
@@ -290,22 +365,26 @@ class AdminPersonas extends Component {
         laborales: this.state.laborales,
         profesionales: this.state.profesionales,
         academicos: this.state.academicos,
+        numAcadm: this.state.numeroAcademicos,
       })
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.getFamiliares();
+        this.cargarPersonas();
       })
         .catch((err) => {
           console.log(err);
         });
   }
 
-  checkearAcademicos(event) {
-    var academicos = this.state.academicos;
-    academicos[event.target.id] = event.target.checked;
-    this.setState({ academicos: academicos });
+  handleChange(event) {
+    let academicosNuevo = this.state.academicos;
+    academicosNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      academicos: academicosNuevo,
+    });
   }
 
   checkearProfesionales(event) {
@@ -346,275 +425,299 @@ class AdminPersonas extends Component {
     this.getSanitarios();
     this.getProfesionales();
     this.getLaborales();
-    this.getFamiliares();
+    this.cargarPersonas();
   }
 
-  agregarAcademicos(event) {
+  agregarAcademicos() {
     const { instituciones, carrerasEstudio, gradosAcademicos } = this.state;
+
     let componentes = [];
     for(let i = 0; i < this.state.numeroAcademicos; i++) {
       componentes.push(
         <FormGroup key={i}>
-          <div>
-              <label>Instituto Academico</label>
-              <Input
-                type='select'
-                onChange={e =>
-                  this.setState({
-                   componentes: [i, e.target.value]
-                  })
-                }
-              >
-               {instituciones.map(({value }) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-              </Input>
-            </div>
-            <div>
-              <label>Carrera</label>
-              <Input
-                type='select'
-                onChange={e =>
-                  this.setState({
-                    componentes: [i, e.target.value]
-                  })
-                }
-              >
-                {carrerasEstudio.map(({value }) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-              </Input>
-            </div>
-            <div>
-              <label>Grado</label>
-              <Input
-                type='select'
-                onChange={e =>
-                  this.setState({
-                    componentes: [i, e.target.value]
-                  })
-                }
-              >
-                {gradosAcademicos.map(({value }) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-              </Input>
-            </div>
+          <label>Instituto Academico</label>
+          <Input
+            type='select'
+            id={`institutoacademico${i}`}
+            value={this.state.academicos[`institutoacademico${i}`]}
+            onChange={this.handleChange}>
+            <option value='Ninguno'>Ninguno</option>
+            {instituciones.map(({ value }) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </Input>
+          <label>Carrera</label>
+          <Input
+            type='select'
+            id={`carrera${i}`}
+            value={this.state.academicos[`carreras${i}`]}
+            onChange={this.handleChange}>
+            <option value='Ninguno'>Ninguno</option>
+            {carrerasEstudio.map(({ value }) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </Input>
+          <label>Grado</label>
+          <Input
+          type='select'
+          id={`grado${i}`}
+          value={this.state.academicos[`grado${i}`]}
+          onChange={this.handleChange}>
+            <option value='Ninguno'>Ninguno</option>
+            {gradosAcademicos.map(({ value }) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </Input>
         </FormGroup>
       );
     }
+
     if (componentes)
       return componentes;
-    else 
-      return <div>No hay componentes</div>
+    else
+      return <div>No hay componentes</div>;
   }
 
-  agregarStateAcademicos(event) {
-    this.setState({numeroAcademicos: this.state.numeroAcademicos + 1});
-    this.agregarAcademicos()
+  agregarStateAcademicos() {
+    this.setState({ numeroAcademicos: this.state.numeroAcademicos + 1});
+    this.agregarAcademicos();
   }
 
-  restarStateAcademicos(event) {
+  restarStateAcademicos() {
     if (this.state.numeroAcademicos > 0) {
-      this.setState({numeroAcademicos : this.state.numeroAcademicos -1});
-      this.agregarAcademicos()
-    } else {
-
+      this.setState({ numeroAcademicos : this.state.numeroAcademicos - 1});
+      this.agregarAcademicos();
     }
-
   }
 
   render() {
-    const { opcLegales, opcFamiliares, opcLaborales, opcProfesionales, opcSanitarios } = this.state;
+    const { opcLegales, personas, opcLaborales, opcProfesionales, opcSanitarios } = this.state;
+    const { classes } = this.props;
 
     return (
-      <Form onSubmit={this.submitState}>
-        <FormGroup>
-          <Label for='nombre-completo'>Nombre Completo</Label>
-          <Input
-            type='text'
-            name='nombre-completo'
-            id='nombre-completo'
-            placeholder='Juan Mauricio'
-            onChange={e => this.setState({ nombre: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='num-identidad'>Numero de Identidad</Label>
-          <Input
-            type='text'
-            name='num-identidad'
-            id='num-identidad'
-            placeholder='0801-1990-00000'
-            onChange={e => this.setState({ numID: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='telefono'>Telefono</Label>
-          <Input
-            type='text'
-            name='telefono'
-            id='telefono'
-            placeholder='50422000000'
-            onChange={e => this.setState({ telefono: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='email'>Correo electronico</Label>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            placeholder='ejemplo@gmail.com'
-            onChange={e => this.setState({ email: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Genero</Label>
-          <Input
-            type='select'
-            onChange={e => this.setState({ genero: e.target.value })}
-          >
-            <option value='' />
-            <option name='Masculino' id='Masculino'>
-              Masculino
-            </option>
-            <option name='Femenino' id='Femenino'>
-              Femenino
-            </option>
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label>Estado Civil</Label>
-          <Input
-            type='select'
-            onChange={e =>
-              this.setState({
-                estado_civil: e.target.value
-              })
-            }
-          >
-            <option value='' />
-            <option value='Soltero' id='Soltero'>
-              Soltero
-            </option>
-            <option value='Casado' id='Casado'>
-              Casado
-            </option>
-            <option value='Viudo' id='Viudo'>
-              Viudo
-            </option>
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for='exampleDate'>Fecha de Nacimiento</Label>
-          <Input
-            type='date'
-            name='date'
-            id='fecha_nacimiento'
-            placeholder='MM-DD-YYYY'
-            onChange={e => this.setState({ fecha_nacimiento: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='direccion'>Direccion</Label>
-          <Input
-            type='text'
-            name='direccion'
-            id='direccion'
-            placeholder='Col. Miramomtes 3ra ave'
-            onChange={e => this.setState({ direccion: e.target.value })}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='familiares'>Familiares del empleado</Label>
-          <div id='familiares'>
-            {opcFamiliares.map(({ id, nombre }) => (
-              <CustomInput
-                key={id}
-                onChange={this.checkearFamilia}
-                type='checkbox'
-                id={id}
-                label={nombre}
-              />
+      <div>
+        <Form onSubmit={this.submitState}>
+          <FormGroup>
+            <Label for='nombre-completo'>Nombre Completo</Label>
+            <Input
+              type='text'
+              name='nombre-completo'
+              id='nombre-completo'
+              placeholder='Juan Mauricio'
+              onChange={e => this.setState({ nombre: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='num-identidad'>Numero de Identidad</Label>
+            <Input
+              type='text'
+              name='num-identidad'
+              id='num-identidad'
+              placeholder='0801-1990-00000'
+              onChange={e => this.setState({ numID: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='telefono'>Telefono</Label>
+            <Input
+              type='text'
+              name='telefono'
+              id='telefono'
+              placeholder='50422000000'
+              onChange={e => this.setState({ telefono: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='email'>Correo electronico</Label>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              placeholder='ejemplo@gmail.com'
+              onChange={e => this.setState({ email: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Genero</Label>
+            <Input
+              type='select'
+              onChange={e => this.setState({ genero: e.target.value })}
+            >
+              <option value='' />
+              <option name='Masculino' id='Masculino'>
+                Masculino
+              </option>
+              <option name='Femenino' id='Femenino'>
+                Femenino
+              </option>
+            </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label>Estado Civil</Label>
+            <Input
+              type='select'
+              onChange={e =>
+                this.setState({
+                  estado_civil: e.target.value
+                })
+              }
+            >
+              <option value='' />
+              <option value='Soltero' id='Soltero'>
+                Soltero
+              </option>
+              <option value='Casado' id='Casado'>
+                Casado
+              </option>
+              <option value='Viudo' id='Viudo'>
+                Viudo
+              </option>
+            </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label for='exampleDate'>Fecha de Nacimiento</Label>
+            <Input
+              type='date'
+              name='date'
+              id='fecha_nacimiento'
+              placeholder='MM-DD-YYYY'
+              onChange={e => this.setState({ fecha_nacimiento: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='direccion'>Direccion</Label>
+            <Input
+              type='text'
+              name='direccion'
+              id='direccion'
+              placeholder='Col. Miramomtes 3ra ave'
+              onChange={e => this.setState({ direccion: e.target.value })}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='familiares'>Familiares del empleado</Label>
+            <div id='familiares'>
+              {personas.map(({ id, nombre }) => (
+                <CustomInput
+                  key={id}
+                  onChange={this.checkearFamilia}
+                  type='checkbox'
+                  id={id}
+                  label={nombre}
+                />
+              ))}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-sanitarios'>Requisitos Sanitarios</Label>
+            <div id='requisitos-sanitarios'>
+            {opcSanitarios.map(({value }) => (
+                  <CustomInput
+                    onChange={this.checkearSanitarios}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key = {value}
+                  />
+                  ))}
+              
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-legal'>Requisitos Legales</Label>
+            <div id='requisitos-legal'>
+            {opcLegales.map(({value }) => (
+                  <CustomInput
+                    onChange={this.checkearLegales}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key = {value}
+                  />
+                  ))}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
+            <div id='requisitos-profesionales'>
+            {opcProfesionales.map(({value }) => (
+                  <CustomInput
+                    onChange={this.checkearProfesionales}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key = {value}
+                  />
+                  ))}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label for='requisitos-laborales'>Requisitos Laborales</Label>
+            <div id='requisitos-laborales'>
+            {opcLaborales.map(({value }) => (
+                  <CustomInput
+                    onChange={this.checkearLaborales}
+                    type='checkbox'
+                    id={value}
+                    label={value}
+                    key = {value}
+                  />
+                  ))}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <h5 htmlFor='requisitos-academicos'>Requisitos Academicos </h5>
+            <Button size='sm' type='button' outline color='primary' onClick={this.restarStateAcademicos}>
+              -
+            </Button>{' '}
+            <Button size='sm' type='button' outline color='primary' onClick={this.agregarStateAcademicos}>
+              +
+            </Button>{' '}
+            <FormGroup>{this.agregarAcademicos()}</FormGroup>
+          </FormGroup>
+          <Button>Guardar</Button>
+        </Form>
+
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Persona</TableCell>
+                <TableCell>Identidad</TableCell>
+                <TableCell numeric>Opciones</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {personas.map(({ id, nombre }) => (
+              <TableRow key={id}>
+                <TableCell component="th" scope="row">
+                  {nombre}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {id}
+                </TableCell>
+                <TableCell numeric>
+                  <IconButton aria-label="Edit" value={id}
+                    onClick={() => {this.handleEditar(id);}}>
+                      <EditIcon />
+                  </IconButton>
+                  <IconButton aria-label="Delete" value={id}
+                    onClick={() => {this.handleEliminar(id);}}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             ))}
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Label for='requisitos-sanitarios'>Requisitos Sanitarios</Label>
-          <div id='requisitos-sanitarios'>
-          {opcSanitarios.map(({value }) => (
-                <CustomInput
-                  onChange={this.checkearSanitarios}
-                  type='checkbox'
-                  id={value}
-                  label={value}
-                  key = {value}
-                />
-                ))}
-            
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Label for='requisitos-legal'>Requisitos Legales</Label>
-          <div id='requisitos-legal'>
-          {opcLegales.map(({value }) => (
-                <CustomInput
-                  onChange={this.checkearLegales}
-                  type='checkbox'
-                  id={value}
-                  label={value}
-                  key = {value}
-                />
-                ))}
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Label for='requisitos-profesionales'>Requisitos Profesionales</Label>
-          <div id='requisitos-profesionales'>
-          {opcProfesionales.map(({value }) => (
-                <CustomInput
-                  onChange={this.checkearProfesionales}
-                  type='checkbox'
-                  id={value}
-                  label={value}
-                  key = {value}
-                />
-                ))}
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Label for='requisitos-laborales'>Requisitos Laborales</Label>
-          <div id='requisitos-laborales'>
-          {opcLaborales.map(({value }) => (
-                <CustomInput
-                  onChange={this.checkearLaborales}
-                  type='checkbox'
-                  id={value}
-                  label={value}
-                  key = {value}
-                />
-                ))}
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <h5 htmlFor='requisitos-academicos'>Requisitos Academicos </h5>
-          <Button size='sm' type='button' outline color='primary' onClick={this.restarStateAcademicos}>
-            -
-          </Button>{' '}
-          <Button size='sm' type='button' outline color='primary' onClick={this.agregarStateAcademicos}>
-            +
-          </Button>{' '}
-          <FormGroup>{this.agregarAcademicos()}</FormGroup>
-        </FormGroup>
-        <Button>Guardar</Button>
-      </Form>
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
     );
   }
 }

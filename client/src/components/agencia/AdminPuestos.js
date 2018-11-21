@@ -101,8 +101,8 @@ class AdminPuestos extends Component {
 
         this.setState({
           tipoPuesto: value,
-          selectedName: res.puestoPadre,
-          selectedValue: res.puestoPadre,
+          selectedName: res.padre,
+          selectedValue: res.padre,
         });
       })
         .catch((error) => {
@@ -228,9 +228,9 @@ class AdminPuestos extends Component {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableBody>
+          </Table>
+        </Paper>
       </div>
     );
   }

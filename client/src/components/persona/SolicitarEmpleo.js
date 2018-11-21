@@ -59,6 +59,7 @@ const styles = theme => ({
   },
 });
 
+// TODO agregar text area de deseos de la persona
 
 class SolicitarEmpleo extends Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class SolicitarEmpleo extends Component {
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.selectDropdown = this.selectDropdown.bind(this);
+    this.cargarPersonas = this.cargarPersonas.bind(this);
+    this.cargarPuestos = this.cargarPuestos.bind(this);
 
     this.state = {
       dropdownOpen: false,
@@ -79,146 +82,15 @@ class SolicitarEmpleo extends Component {
     };
   }
 
-  cargarSolicitud() {
-    // limpar el state:
-    this.setState({ empleos: [] });
+  cargarPersonas() {
 
-    // Uno
-    fetch('/empleos/uno', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        let empleos = [];
-        for (let key in res)
-          empleos.push({ name: key, value: key, tipo: 'Uno', url: 'uno' });
-
-        this.setState({
-          empleos: [...this.state.empleos, ...empleos],
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-
-    // Dos
-    fetch('/empleos/dos', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        let empleos = [];
-        for (let key in res)
-        empleos.push({ name: key, value: key, tipo: 'Dos', url: 'dos' });
-
-        this.setState({
-          empleos: [...this.state.empleos, ...empleos],
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-
-    // Tres
-    fetch('/empleos/tres', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        let empleos = [];
-        for (let key in res)
-          empleos.push({ name: key, value: key, tipo: 'Tres', url: 'tres' });
-
-        this.setState({
-          empleos: [...this.state.empleos, ...empleos],
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-
-    // Cuatro
-    fetch('/empleos/cuatro', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        let empleos = [];
-        for (let key in res)
-          empleos.push({ name: key, value: key, tipo: 'Cuatro', url: 'cuatro' });
-
-        this.setState({
-          empleos: [...this.state.empleos, ...empleos],
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
-
-    // Cinco
-    fetch('/empleos/cinco', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        let empleos = [];
-        for (let key in res)
-          empleos.push({ name: key, value: key, tipo: 'Cinco', url: 'cinco' });
-
-        this.setState({
-          empleos: [...this.state.empleos, ...empleos],
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
   }
 
-  cargarEmpleos() {
-    // obtener todos los empleos del servidor
-    fetch('/empleos', {
-      method: 'get',
-      headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        // logica de respuesta
-        console.log(res);
+  cargarPuestos() {
 
-        // TODO ver como cargar padres
-        let empleos = [];
-        for (let key in res)
-        empleos.push({ name: key, value: key });
-
-        this.setState({
-          empleos: empleos || [],
-        });
-      })
-        .catch((error) => {
-        console.log(error);
-      });
   }
 
   componentDidMount() {
-    this.cargarEmpleos();
   }
 
   handleEditar(value) {
@@ -258,12 +130,10 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        this.cargarEmpleos();
         console.log(res);
       });
   }
 
-  
   toggleDropdown() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
@@ -295,8 +165,6 @@ class SolicitarEmpleo extends Component {
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-        console.log('entra aqui');
-        this.cargarEmpleos();
         this.setState({
           tipoEmpleo: '',
           selectedValue: '0',

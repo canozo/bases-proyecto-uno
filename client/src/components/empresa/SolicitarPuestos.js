@@ -86,6 +86,7 @@ class SolicitarPuestos extends Component {
       [event.target.id]: event.target.value,
     });
   }
+
   getEmpresas(){
     fetch('/empresas', {
       method: 'get',

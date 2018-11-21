@@ -12,6 +12,8 @@ const styles = {
   },
 };
 
+// TODO En el proceso de seleccion se puede seleccionar ninguna, una o varias personas
+
 class Seleccion extends Component {
   constructor(props) {
     super(props);
