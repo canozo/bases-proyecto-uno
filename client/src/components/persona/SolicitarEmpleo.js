@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Label, CustomInput } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-const styles = {
+const styles = theme => ({
   card: {
     maxWidth: 345,
   },
@@ -12,7 +16,48 @@ const styles = {
     height: 0,
     paddingTop: '56.25%',
   },
-};
+  title: {
+    paddingTop: '20px',
+    paddingBottom: '10px',
+    paddingLeft: '20px',
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  dense: {
+    marginTop: 16,
+  },
+  menu: {
+    width: 200,
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    width: '100%',
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  root_table: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+});
 
 
 class SolicitarEmpleo extends Component {
@@ -26,6 +71,11 @@ class SolicitarEmpleo extends Component {
       dropdownOpen: false,
       selectedName: 'Escoger Persona',
       selectedValue: '',
+      condicionManejar: '',
+      condicionIngles: '',
+      condicionOffice: '',
+      condicionPresion: '',
+      condicionAuxilios: '',
     };
   }
 
@@ -256,6 +306,7 @@ class SolicitarEmpleo extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <Form>
         <FormGroup>
@@ -280,6 +331,86 @@ class SolicitarEmpleo extends Component {
             <CustomInput type="checkbox" id="Cinco" label="Cinco" />
           </div>
         </FormGroup>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionManejar === "" ? <InputLabel>Sabe manejar</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionManejar}
+            id="condicionManejar"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Si'>Si</option>
+            <option value='No'>No</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionIngles === "" ? <InputLabel>Puede hablar ingles</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionIngles}
+            id="condicionIngles"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Si'>Si</option>
+            <option value='No'>No</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionOffice === "" ? <InputLabel>Sabe usar office</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionOffice}
+            id="condicionOffice"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Si'>Si</option>
+            <option value='No'>No</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionPresion === "" ? <InputLabel>Trabaja bajo presion</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionPresion}
+            id="condicionPresion"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Si'>Si</option>
+            <option value='No'>No</option>
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          {this.state.condicionAuxilios === "" ? <InputLabel>Conoce de primeros auxilios</InputLabel> : ""}
+          <Select
+            native
+            value={this.state.condicionAuxilios}
+            id="condicionAuxilios"
+            onChange={this.handleChange}
+            input={
+              <OutlinedInput labelWidth={0} />
+            }
+          >
+            <option value=''/>
+            <option value='Si'>Si</option>
+            <option value='No'>No</option>
+          </Select>
+        </FormControl>
         <Button>Guardar</Button>
       </Form>
     );
