@@ -73,7 +73,7 @@ class SolicitarEmpleo extends Component {
     this.handleChangeDeseos = this.handleChangeDeseos.bind(this);
 
     this.state = {
-      solicitante: '',
+      idSolicitante: '',
       condicionesRes: {},
       deseosRes: {},
       personas:[],
@@ -210,9 +210,7 @@ class SolicitarEmpleo extends Component {
   }
 
   submitState(event){
-    event.preventDefault();
-
-    console.log(this.state);
+    // event.preventDefault();
 
     fetch('/solicitudes/empleos', {
       method: 'put',
@@ -225,6 +223,7 @@ class SolicitarEmpleo extends Component {
         puestosAplica: this.state.checkPuestos,
         condicionesRes: this.state.condicionesRes,
         deseosRes: this.state.deseosRes,
+        idSolicitante: this.state.idSolicitante
       }),
     })
       .then(res => res.json())
@@ -253,8 +252,8 @@ class SolicitarEmpleo extends Component {
           <Label>Solicitante:</Label>
             <Input
               type='select'
-              id='solicitante'
-              value={this.state.solicitante}
+              id='idSolicitante'
+              value={this.state.idSolicitante}
               onChange={this.handleChange}>
               <option value=''/>
               {personas.map(({ id, nombre }) => (
