@@ -64,7 +64,6 @@ class SolicitarPuestos extends Component {
     this.cargarPuestos = this.cargarPuestos.bind(this);
     this.handleChangeCondiciones = this.handleChangeCondiciones.bind(this);
     this.handleChangeDeseos = this.handleChangeDeseos.bind(this);
-    this.submitState = this.submitState.bind(this);
     this.checkearSanitarios = this.checkearSanitarios.bind(this);
     this.checkearLegales = this.checkearLegales.bind(this);
     this.checkearLaborales = this.checkearLaborales.bind(this);
@@ -122,7 +121,7 @@ class SolicitarPuestos extends Component {
     deseosNuevo[event.target.id] = event.target.value;
 
     this.setState({
-      academicos: deseosNuevo,
+      deseosRes: deseosNuevo,
     });
   }
 
@@ -223,6 +222,7 @@ class SolicitarPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
+
     fetch('/solicitudes/puestos', {
       method: 'put',
       headers : {
@@ -232,7 +232,7 @@ class SolicitarPuestos extends Component {
       // informacion a enviar
       body: JSON.stringify({
         nombrePuesto: this.state.nombrePuesto,
-        cargo :this.state.cargo,
+        cargo: this.state.cargo,
         lugar: this.state.lugar,
         sueldo: this.state.sueldo,
         cantidadPlazas: this.state.cantidadPlazas,
@@ -242,13 +242,13 @@ class SolicitarPuestos extends Component {
         profesionales: this.state.profesionales,
         academicos: this.state.academicos,
         numAcadm: this.state.numeroAcademicos,
-        deseos: this.state.deseos,
+        deseos: this.state.deseosRes,
+        condiciones: this.state.condicionesRes,
       }),
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
-          console.log(res);
       }).catch((err) => {
       });
   }
@@ -554,6 +554,7 @@ class SolicitarPuestos extends Component {
                 type='select'
                 onChange={e => this.setState({ lugar: e.target.value })}
               >
+                <option value='' />
                {empresas.map(({ value }) => (
                 <option key={value} value={value}>
                   {value}

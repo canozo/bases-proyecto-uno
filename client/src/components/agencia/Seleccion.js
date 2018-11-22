@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   card: {
@@ -35,6 +36,7 @@ class Seleccion extends Component {
   }
 
   render() {
+    const { solicitudesPuestos } = this.state;
     const { classes } = this.props;
 
     // mostrar todas las solicitudes de puestos de las empresas
@@ -51,11 +53,17 @@ class Seleccion extends Component {
     // boton de mandar su CV a la empresa
 
     // cuando se manda su CV a la empresa, se baja en uno las plazas
+
+    // suponiendo que en una solicitud se guarda absolutamente toda la informacion necesaria
     return (
       <div>
-        <Paper className={classes.root}>
-        
-        </Paper>
+        {/* {solicitudesPuestos.map(({ elem }) => (
+          <Paper className={classes.root}>
+            <Typography variant="h6" color="inherit" noWrap>
+              Solicitud de puesto
+            </Typography>
+          </Paper>
+        ))} */}
       </div>
     );
   }

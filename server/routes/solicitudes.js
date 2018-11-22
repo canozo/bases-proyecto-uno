@@ -15,50 +15,67 @@ router.get('/puestos', function(req, res) {
 router.put('/puestos', function(req, res) {
   // guardar la informacion obtenida en redis
   let error = false;
-  const { lugar, genero, estadoCivil, rangoEdad, sueldo, cantidadPlazas, condicionManejar, condicionIngles, condicionOffice, condicionPresion, condicionAuxilios} = req.body;
+  const { nombrePuesto, cargo, lugar, sueldo, cantidadPlazas, sanitarios, legales, laborales, profesionales, academicos, numAcadm, deseos, condiciones } = req.body;
 
-  if (lugar === '') {
-    error = true;
+  let sanitariosArr = [];
+  let legalesArr = [];
+  let laboralesArr = [];
+  let profesionalesArr = [];
+  let academicosArr = [];
+  let deseosArr = [];
+  let condicionesArr = [];
+  let pos = 0;
+
+  for (let key in sanitarios) {
+    if (sanitarios[key] === true) {
+      sanitariosArr.push(key);
+    }
   }
 
-  if (genero === '') {
-    error = true;
+  for (let key in legales) {
+    if (legales[key] === true) {
+      legalesArr.push(key);
+    }
   }
 
-  if (estadoCivil === '') {
-    error = true;
+  for (let key in laborales) {
+    if (laborales[key] === true) {
+      laboralesArr.push(key);
+    }
   }
 
-  if (rangoEdad === '') {
-    error = true;
+  for (let key in profesionales) {
+    if (profesionales[key] === true) {
+      profesionalesArr.push(key);
+    }
   }
 
-  if (sueldo === '') {
-    error = true;
+  for (let key in academicos) {
+    if (academicos[key] === true) {
+      academicosArr.push(key);
+    }
   }
 
-  if (cantidadPlazas === '') {
-    error = true;
+  for (let key in deseos) {
+    if (deseos[key] === 'Si ofrece') {
+      deseosArr.push(key);
+    }
   }
 
-  if (condicionManejar === '') {
-    error = true;
+  for (let key in condiciones) {
+    if (condiciones[key] === 'Obligatorio') {
+      condicionesArr.push(key);
+    }
   }
 
-  if (condicionIngles === '') {
-    error = true;
-  }
+  for (let key in academicos) {
+    if (academicos[key] === 'Ninguno')
+      break;
 
-  if (condicionOffice === '') {
-    error = true;
-  }
-
-  if (condicionPresion === '') {
-    error = true;
-  }
-
-  if (condicionAuxilios === '') {
-    error = true;
+    academicosArr[pos] = key;
+    pos += 1;
+    academicosArr[pos] = academicos[key];
+    pos += 1;
   }
 
   if (!error) {
@@ -67,13 +84,23 @@ router.put('/puestos', function(req, res) {
 
     // agregar la llave con toda la info
     client.hmset(`solicitud puesto #${llaves.solPuestos}`, [
+      'nombrePuesto', nombrePuesto,
+      'cargo', cargo,
       'lugar', lugar,
-      'genero', genero,
-      'estadoCivil', estadoCivil,
-      'rangoEdad', rangoEdad,
       'sueldo', sueldo,
       'cantidadPlazas', cantidadPlazas,
+      'sanitarios', sanitariosArr.toString(),
+      'legales', legalesArr.toString(),
+      'laborales', laboralesArr.toString(),
+      'profesionales', profesionalesArr.toString(),
+      'deseos', deseosArr.toString(),
+      'condiciones', condicionesArr.toString(),
     ]);
+
+    if (academicosArr.length > 0) {
+      // setear la informacion academica
+      client.hmset(`academicos puesto #${llaves.solPuestos}`, academicosArr);
+    }
 
     // aumentar el valor de la llave
     llaves.solPuestos += 1;
@@ -128,9 +155,6 @@ router.put('/empleos', function(req, res) {
     }
   }
 
-  console.log('prueba arr: ', puestosArr.toString());
-  console.log('prueba arr: ', condicionesArr.toString());
-  console.log('prueba arr: ', deseosArr.toString());
 
   if (!error) {
     // agregar la llave a la tabla general
