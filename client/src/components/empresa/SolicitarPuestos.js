@@ -60,6 +60,7 @@ class SolicitarPuestos extends Component {
 
     this.submitState = this.submitState.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
     this.cargarPuestos = this.cargarPuestos.bind(this);
     this.handleChangeCondiciones = this.handleChangeCondiciones.bind(this);
     this.handleChangeDeseos = this.handleChangeDeseos.bind(this);
@@ -101,7 +102,7 @@ class SolicitarPuestos extends Component {
     };
   }
 
-  handleChange(event) {
+  handleChange2(event) {
     this.setState({
       [event.target.id]: event.target.value,
     });
@@ -230,10 +231,9 @@ class SolicitarPuestos extends Component {
       },
       // informacion a enviar
       body: JSON.stringify({
+        nombrePuesto: this.state.nombrePuesto,
+        cargo :this.state.cargo,
         lugar: this.state.lugar,
-        genero: this.state.genero,
-        estadoCivil: this.state.estadoCivil,
-        rangoEdad: this.state.rangoEdad,
         sueldo: this.state.sueldo,
         cantidadPlazas: this.state.cantidadPlazas,
         sanitarios: this.state.sanitarios,
@@ -578,7 +578,7 @@ class SolicitarPuestos extends Component {
               type='select'
               id='nombrePuesto'
               value={this.state.nombrePuesto}
-              onChange={this.handleChange}>
+              onChange={this.handleChange2}>
               <option value=''/>
               {puestos.map(({ value }) => (
                 <option key={value} value={value}>{value}</option>
@@ -592,7 +592,7 @@ class SolicitarPuestos extends Component {
             type='select'
             id='cargo'
             value={this.state.cargo}
-            onChange={this.handleChange}>
+            onChange={this.handleChange2}>
             <option value=''/>
             <option value='Jefe'>Jefe</option>
             <option value='Gerente'>Gerente</option>
