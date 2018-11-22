@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Form, FormGroup, Input, Label, CustomInput } from 'reactstrap';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   card: {
@@ -64,9 +70,12 @@ class SolicitarEmpleo extends Component {
   constructor(props) {
     super(props);
 
+    this.props = props;
+
     this.cargarPersonas = this.cargarPersonas.bind(this);
     this.cargarPuestos = this.cargarPuestos.bind(this);
     this.checkearPuestos = this.checkearPuestos.bind(this);
+    this.cargarSolicitudes = this.cargarSolicitudes.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitState = this.submitState.bind(this);
     this.handleChangeCondiciones = this.handleChangeCondiciones.bind(this);
@@ -80,6 +89,7 @@ class SolicitarEmpleo extends Component {
       puestos:[],
       condiciones: [],
       deseos: [],
+      solicitudes: [],
       checkPuestos: {},
     };
   }
@@ -88,6 +98,37 @@ class SolicitarEmpleo extends Component {
     var checkPuestos = this.state.checkPuestos;
     checkPuestos[event.target.id] = event.target.checked;
     this.setState({ checkPuestos: checkPuestos });
+  }
+
+  cargarSolicitudes() {
+    fetch('/seleccion/empleos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        let solicitudes = [];
+        console.log(res);
+        for (let key in res)
+          solicitudes.push({
+            solicitante: res[key].solicitante,
+            tipo: res[key].tipo,
+            llave: res[key].llave,
+            requisitos: res[key].requisitos,
+            deseos: res[key].deseos,
+            condiciones: res[key].condiciones,
+          });
+
+        this.setState({
+          solicitudes: solicitudes || [],
+        });
+      })
+        .catch((error) => {
+      });
   }
 
   cargarPersonas() {
@@ -185,6 +226,7 @@ class SolicitarEmpleo extends Component {
   }
 
   componentDidMount() {
+    this.cargarSolicitudes();
     this.cargarPersonas();
     this.cargarPuestos();
     this.cargarCondiciones();
@@ -244,68 +286,106 @@ class SolicitarEmpleo extends Component {
   }
 
   render() {
-    const { personas, puestos, condiciones, deseos } = this.state;
+    const { classes } = this.props;
+    const { personas, puestos, condiciones, deseos, solicitudes } = this.state;
 
     return (
-      <Form onSubmit={this.submitState}>
-        <FormGroup>
-          <Label>Solicitante:</Label>
-            <Input
-              type='select'
-              id='idSolicitante'
-              value={this.state.idSolicitante}
-              onChange={this.handleChange}>
-              <option value=''/>
-              {personas.map(({ id, nombre }) => (
-                <option key={id} value={id}>{nombre}</option>
-              ))}
-            </Input>
-        </FormGroup>
+      <div>
+        <Form onSubmit={this.submitState}>
+          <FormGroup>
+            <Label>Solicitante:</Label>
+              <Input
+                type='select'
+                id='idSolicitante'
+                value={this.state.idSolicitante}
+                onChange={this.handleChange}>
+                <option value=''/>
+                {personas.map(({ id, nombre }) => (
+                  <option key={id} value={id}>{nombre}</option>
+                ))}
+              </Input>
+          </FormGroup>
 
-        <FormGroup>
-          <Label for="puestos">Puestos</Label>
-          <div id="puestos">
-          {puestos.map(({id, value}) =>(
-              <CustomInput key={id} type="checkbox" id={id} label={value} onChange={this.checkearPuestos} />
-              ))}
-          </div>
-        </FormGroup>
-        <FormGroup>
-          <Label>Condiciones que cumple:</Label>
-          {condiciones.map(({ value }) => (
-            <FormGroup key={value}>
-              <Label>{value}</Label>
-              <Input
-                type='select'
-                id={value}
-                value={this.state.condicionesRes[value]}
-                onChange={this.handleChangeCondiciones}>
-                <option value=''/>
-                <option value='Si'>Si</option>
-                <option value='No'>No</option>
-              </Input>
-            </FormGroup>
-          ))}
-        </FormGroup>
-        <FormGroup>
-          <Label>Deseos de trabajo:</Label>
-          {deseos.map(({ value }) => (
-            <FormGroup key={value}>
-              <Label>{value}</Label>
-              <Input
-                type='select'
-                id={value}
-                value={this.state.deseosRes[value]}
-                onChange={this.handleChangeDeseos}>
-                <option value=''/>
-                <option value='Si'>Si</option>
-                <option value='No'>No</option>
-              </Input>
-            </FormGroup>
-          ))}
-        </FormGroup>
-        <Button>Guardar</Button>
-      </Form>
+          <FormGroup>
+            <Label for="puestos">Puestos</Label>
+            <div id="puestos">
+            {puestos.map(({id, value}) =>(
+                <CustomInput key={id} type="checkbox" id={id} label={value} onChange={this.checkearPuestos} />
+                ))}
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label>Condiciones que cumple:</Label>
+            {condiciones.map(({ value }) => (
+              <FormGroup key={value}>
+                <Label>{value}</Label>
+                <Input
+                  type='select'
+                  id={value}
+                  value={this.state.condicionesRes[value]}
+                  onChange={this.handleChangeCondiciones}>
+                  <option value=''/>
+                  <option value='Si'>Si</option>
+                  <option value='No'>No</option>
+                </Input>
+              </FormGroup>
+            ))}
+          </FormGroup>
+          <FormGroup>
+            <Label>Deseos de trabajo:</Label>
+            {deseos.map(({ value }) => (
+              <FormGroup key={value}>
+                <Label>{value}</Label>
+                <Input
+                  type='select'
+                  id={value}
+                  value={this.state.deseosRes[value]}
+                  onChange={this.handleChangeDeseos}>
+                  <option value=''/>
+                  <option value='Si'>Si</option>
+                  <option value='No'>No</option>
+                </Input>
+              </FormGroup>
+            ))}
+          </FormGroup>
+          <Button>Guardar</Button>
+        </Form>
+
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Id Solicitud Empleo</TableCell>
+                <TableCell>Solicitante</TableCell>
+                <TableCell>Requisitos</TableCell>
+                <TableCell>Deseos</TableCell>
+                <TableCell>Condiciones</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {solicitudes.map(({ llave, requisitos, deseos, condiciones, solicitante }) => (
+              <TableRow key={llave}>
+                <TableCell component="th" scope="row">
+                  {llave}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {solicitante}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {requisitos}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {deseos}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {condiciones}
+                </TableCell>
+              </TableRow>
+            ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
     );
   }
 }

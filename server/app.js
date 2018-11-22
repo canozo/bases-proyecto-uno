@@ -11,6 +11,7 @@ var requisitosRouter = require('./routes/requisitos');
 var empresasRouter = require('./routes/empresas');
 var solicitudesRouter = require('./routes/solicitudes');
 var personasRouter = require('./routes/personas');
+var seleccionRouter = require('./routes/seleccion');
 
 var app = express();
 
@@ -27,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // cliente de redis
 client = redis.createClient();
 llaves = {
-  solPuestos: 1,
-  solEmpleos: 1,
+  solPuestos: -1,
+  solEmpleos: -1,
 };
 
 client.on('connect', () => {
@@ -64,6 +65,7 @@ app.use('/puestos', puestosRouter);
 app.use('/empresas', empresasRouter);
 app.use('/solicitudes', solicitudesRouter);
 app.use('/personas', personasRouter);
+app.use('/seleccion', seleccionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

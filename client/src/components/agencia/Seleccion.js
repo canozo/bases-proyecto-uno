@@ -31,7 +31,7 @@ class Seleccion extends Component {
     this.props = props;
 
     this.state = {
-      solicitudesPuestos: {},
+      solicitudesPuestos: [],
     };
   }
 
@@ -57,10 +57,10 @@ class Seleccion extends Component {
     // suponiendo que en una solicitud se guarda absolutamente toda la informacion necesaria
     return (
       <div>
-        {/* {solicitudesPuestos.map(({ elem }) => (
+        {/* {solicitudesPuestos.map(({ nombreEmpresa, nombrePuesto }) => (
           <Paper className={classes.root}>
             <Typography variant="h6" color="inherit" noWrap>
-              Solicitud de puesto
+              Solicitud de {nombreEmpresa}, {nombrePuesto}
             </Typography>
           </Paper>
         ))} */}

@@ -14,13 +14,9 @@ router.get('/puestos', function(req, res) {
 
 router.put('/puestos', function(req, res) {
   // guardar la informacion obtenida en redis
-  let error = false;
-  const { nombrePuesto, cargo, lugar, sueldo, cantidadPlazas, sanitarios, legales, laborales, profesionales, academicos, numAcadm, deseos, condiciones } = req.body;
+  const { nombrePuesto, cargo, lugar, sueldo, cantidadPlazas, sanitarios, legales, laborales, profesionales, academicos, deseos, condiciones } = req.body;
 
-  let sanitariosArr = [];
-  let legalesArr = [];
-  let laboralesArr = [];
-  let profesionalesArr = [];
+  let requisitosArr = [];
   let academicosArr = [];
   let deseosArr = [];
   let condicionesArr = [];
@@ -28,31 +24,25 @@ router.put('/puestos', function(req, res) {
 
   for (let key in sanitarios) {
     if (sanitarios[key] === true) {
-      sanitariosArr.push(key);
+      requisitosArr.push(key);
     }
   }
 
   for (let key in legales) {
     if (legales[key] === true) {
-      legalesArr.push(key);
+      requisitosArr.push(key);
     }
   }
 
   for (let key in laborales) {
     if (laborales[key] === true) {
-      laboralesArr.push(key);
+      requisitosArr.push(key);
     }
   }
 
   for (let key in profesionales) {
     if (profesionales[key] === true) {
-      profesionalesArr.push(key);
-    }
-  }
-
-  for (let key in academicos) {
-    if (academicos[key] === true) {
-      academicosArr.push(key);
+      requisitosArr.push(key);
     }
   }
 
@@ -78,33 +68,30 @@ router.put('/puestos', function(req, res) {
     pos += 1;
   }
 
-  if (!error) {
-    // agregar la llave a la tabla general
-    client.hmset('solicitud puesto', [llaves.solPuestos, `solicitud puesto #${llaves.solPuestos}`]);
+  // agregar la llave a la tabla general
+  client.hmset('solicitud puesto', [llaves.solPuestos, `solicitud puesto #${llaves.solPuestos}`]);
 
-    // agregar la llave con toda la info
-    client.hmset(`solicitud puesto #${llaves.solPuestos}`, [
-      'nombrePuesto', nombrePuesto,
-      'cargo', cargo,
-      'lugar', lugar,
-      'sueldo', sueldo,
-      'cantidadPlazas', cantidadPlazas,
-      'sanitarios', sanitariosArr.toString(),
-      'legales', legalesArr.toString(),
-      'laborales', laboralesArr.toString(),
-      'profesionales', profesionalesArr.toString(),
-      'deseos', deseosArr.toString(),
-      'condiciones', condicionesArr.toString(),
-    ]);
+  // agregar la llave con toda la info
+  client.hmset(`solicitud puesto #${llaves.solPuestos}`, [
+    'nombrePuesto', nombrePuesto,
+    'cargo', cargo,
+    'lugar', lugar,
+    'sueldo', sueldo,
+    'cantidadPlazas', cantidadPlazas,
+    'requisitos', requisitosArr.toString(),
+    'deseos', deseosArr.toString(),
+    'condiciones', condicionesArr.toString(),
+  ]);
 
-    if (academicosArr.length > 0) {
-      // setear la informacion academica
-      client.hmset(`academicos puesto #${llaves.solPuestos}`, academicosArr);
-    }
-
-    // aumentar el valor de la llave
-    llaves.solPuestos += 1;
+  if (academicosArr.length > 0) {
+    // setear la informacion academica
+    client.hmset(`academicos puesto #${llaves.solPuestos}`, academicosArr);
   }
+
+  // aumentar el valor de la llave
+  llaves.solPuestos += 1;
+
+  res.json({ error: false });
 });
 
 router.get('/empleos', function(req, res) {

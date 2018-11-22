@@ -45,7 +45,32 @@ router.put('/', function(req, res) {
   const numAcadm = req.body.numAcadm;
 
   let academicosArr = [];
+  let requisitosArr = [];
   let pos = 0;
+
+  for (let key in sanitarios) {
+    if (sanitarios[key] === true) {
+      requisitosArr.push(key);
+    }
+  }
+
+  for (let key in legales) {
+    if (legales[key] === true) {
+      requisitosArr.push(key);
+    }
+  }
+
+  for (let key in laborales) {
+    if (laborales[key] === true) {
+      requisitosArr.push(key);
+    }
+  }
+
+  for (let key in profesionales) {
+    if (profesionales[key] === true) {
+      requisitosArr.push(key);
+    }
+  }
 
   for (let key in academicos) {
     if (academicos[key] === 'Ninguno')
@@ -68,11 +93,7 @@ router.put('/', function(req, res) {
     'genero', genero,
     'fecha_nacimiento', fecha_nacimiento,
     'estado_civil', estado_civil,
-    'familiares', Object.keys(familiares).toString(),
-    'sanitarios', Object.keys(sanitarios).toString(),
-    'legales', Object.keys(legales).toString(),
-    'laborales', Object.keys(laborales).toString(),
-    'profesionales', Object.keys(profesionales).toString(),
+    'requisitos', requisitosArr.toString(),
     'num_academicos', numAcadm,
     'empleo', '',
   ], function(err, reply) {
