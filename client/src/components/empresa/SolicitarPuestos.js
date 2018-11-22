@@ -10,13 +10,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-  },
   title: {
     paddingTop: '20px',
     paddingBottom: '10px',
@@ -39,10 +32,6 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   formControl: {
     margin: theme.spacing.unit,
     width: '100%',
@@ -51,6 +40,18 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   root_table: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
+  },
+  root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
@@ -172,6 +173,7 @@ class SolicitarPuestos extends Component {
       .then(res => {
         // logica de respuesta
         let solicitudes = [];
+        console.log(res);
         for (let key in res)
           solicitudes.push({
             tipo: res[key].tipo,
@@ -180,6 +182,8 @@ class SolicitarPuestos extends Component {
             deseos: res[key].deseos,
             condiciones: res[key].condiciones,
           });
+
+          console.log(solicitudes);
 
         this.setState({
           solicitudes: solicitudes || [],

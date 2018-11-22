@@ -5,17 +5,26 @@ var router = express.Router();
 router.get('/puestos', function(req, res) {
   let promises = [];
 
-    for (let i = 0; i <= llaves.solPuestos; i++) {
+    for (let i = 0; i < llaves.solPuestos; i++) {
       promises.push(new Promise((resolve, reject) => {
         client.hgetall(`solicitud puesto #${i}`, function(err, obj) {
           if (err)
             reject(err);
-          obj.tipo = 'solicitud puesto';
-          obj.llave = `solicitud puesto #${i}`;
-          obj.requisitos = obj.requisitos.split(',');
-          obj.deseos = obj.deseos.split(',');
-          obj.condiciones = obj.condiciones.split(',');
-          resolve(obj);
+          if (obj) {
+            obj.tipo = 'solicitud puesto';
+            obj.llave = `solicitud puesto #${i}`;
+
+            let requisitos = [];
+            requisitos = requisitos.concat(obj.sanitarios.split(','));
+            requisitos = requisitos.concat(obj.legales.split(','));
+            requisitos = requisitos.concat(obj.laborales.split(','));
+            requisitos = requisitos.concat(obj.profesionales.split(','));
+            obj.requisitos = requisitos;
+
+            obj.deseos = obj.deseos.split(',');
+            obj.condiciones = obj.condiciones.split(',');
+            resolve(obj);
+          }
         });
       }));
     }
@@ -29,17 +38,19 @@ router.get('/puestos', function(req, res) {
 router.get('/empleos', function(req, res) {
   let promises = [];
 
-  for (let i = 0; i <= llaves.solEmpleos; i++) {
+  for (let i = 0; i < llaves.solEmpleos; i++) {
     promises.push(new Promise((resolve, reject) => {
       client.hgetall(`solicitud empleo #${i}`, function(err, obj) {
         if (err)
           reject(err);
-        obj.tipo = 'solicitud empleo';
-        obj.llave = `solicitud empleo #${i}`;
-        obj.puestos = obj.puestos.split(',');
-        obj.deseos = obj.deseos.split(',');
-        obj.condiciones = obj.condiciones.split(',');
-        resolve(obj);
+        if (obj) {
+          obj.tipo = 'solicitud empleo';
+          obj.llave = `solicitud empleo #${i}`;
+          obj.puestos = obj.puestos.split(',');
+          obj.deseos = obj.deseos.split(',');
+          obj.condiciones = obj.condiciones.split(',');
+          resolve(obj);
+        }
       });
     }));
   }
@@ -65,9 +76,11 @@ router.get('/', function(req, res) {
         client.hgetall(key, function(err, obj2) {
           if (err)
             reject(err);
-          obj2.tipo = 'personas';
-          obj2.requisitos = obj2.requisitos.split(',');
-          resolve(obj2);
+          if (obj2) {
+            obj2.tipo = 'personas';
+            obj2.requisitos = familiares + ',' + sanitarios + ',' + legales + ',' + laborales + ',' + profesionales;
+            resolve(obj2);
+          }
         });
       }));
     }

@@ -46,6 +46,7 @@ class AdminPuestos extends Component {
 
     this.state = {
       puestos: [],
+      modoEditar: false,
       tipoPuesto: '',
       dropdownOpen: false,
       selectedName: 'Ninguno',
@@ -84,6 +85,7 @@ class AdminPuestos extends Component {
   }
 
   handleEditar(value) {
+    this.setState({ modoEditar: true });
     fetch(`/puestos/${value}`, {
       method: 'get',
       headers: {
@@ -106,6 +108,7 @@ class AdminPuestos extends Component {
   }
 
   handleEliminar(value) {
+    this.setState({ modoEditar: false });
     fetch(`/puestos/${value}`, {
       method: 'delete',
       headers: {
@@ -135,6 +138,7 @@ class AdminPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
+    this.setState({ modoEditar: false });
     fetch('/puestos', {
       method: 'put',
       headers : {
@@ -167,7 +171,7 @@ class AdminPuestos extends Component {
         <Form onSubmit={this.submitState}>
           <FormGroup>
             <Label for="tipoPuesto">Tipo de Puesto</Label>
-            <Input type="text" name="tipoPuesto" id="tipoPuesto" value={this.state.tipoPuesto} placeholder="Programador WEB"
+            <Input type="text" disabled={this.state.modoEditar} name="tipoPuesto" id="tipoPuesto" value={this.state.tipoPuesto} placeholder="Programador WEB"
             onChange={e => this.setState({ tipoPuesto: e.target.value })}/>
           </FormGroup>
           <FormGroup>

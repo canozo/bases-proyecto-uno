@@ -48,9 +48,10 @@ class AdminPersonas extends Component {
     this.agregarAcademicos = this.agregarAcademicos.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleEditar = this.handleEditar.bind(this);
-    this.handleEliminar = this.handleEliminar.bind(this);
+    // this.handleEliminar = this.handleEliminar.bind(this);
 
     this.state = {
+      modoEditar: false,
       nombre: '',
       numID: '',
       telefono: '',
@@ -101,22 +102,24 @@ class AdminPersonas extends Component {
       });
   }
 
-  handleEliminar(id) {
-    fetch(`/personas/${id}`, {
-      method: 'delete',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        // logica de respuesta
-        this.cargarPersonas();
-      });
-  }
+  // handleEliminar(id) {
+  //   this.setState({ modoEditar: false });
+  //   fetch(`/personas/${id}`, {
+  //     method: 'delete',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       // logica de respuesta
+  //       this.cargarPersonas();
+  //     });
+  // }
 
   handleEditar(id) {
+    this.setState({ modoEditar: true });
     fetch(`/personas/${id}`, {
       method: 'get',
       headers: {
@@ -548,6 +551,7 @@ class AdminPersonas extends Component {
               type='text'
               name='num-identidad'
               id='num-identidad'
+              disabled={this.state.modoEditar}
               value={this.state.numID}
               placeholder='0000-0000-00000'
               onChange={e => this.setState({ numID: e.target.value })}

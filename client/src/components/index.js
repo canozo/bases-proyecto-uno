@@ -14,6 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Link, Switch } from 'react-router-dom';
 import ItemNavegacion from './ItemNavegacion';
 import Home from './agencia/Home';
+import Familiares from './persona/Familiares';
 import Seleccion from './agencia/Seleccion';
 import SolicitarEmpleo from './persona/SolicitarEmpleo';
 import SolicitarPuestos from './empresa/SolicitarPuestos';
@@ -144,6 +145,12 @@ class App extends React.Component {
               icon_name='assign person'
             />
           </Link>
+          <Link to='/familiares'>
+            <ItemNavegacion
+              text='Ver familiares'
+              icon_name='assign person'
+            />
+          </Link>
           <Link to='/solicitarempleo'>
             <ItemNavegacion
               text='Solicitar empleo'
@@ -212,6 +219,7 @@ class App extends React.Component {
             <Route path="/seleccion" exact component={Seleccion} />
             <Route path="/solicitarempleo" exact component={SolicitarEmpleo} />
             <Route path="/solicitarpuestos" exact component={SolicitarPuestos} />
+            <Route path="/familiares" exact component={Familiares} />
             <Route path="/adminpuestos" exact component={AdminPuestos} />
             <Route path="/adminpersonas" exact component={AdminPersonas} />
             <Route path="/adminempresas" exact component={AdminEmpresas} />

@@ -12,6 +12,56 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/familiares/:id', function(req, res) {
+  const numID = req.params.id;
+
+  client.hgetall(numID, function(err, obj) {
+    if (!err && obj) {
+      res.json(obj.familiares.split(','));
+    }
+  });
+});
+
+router.get('/familiares/info/:id', function(req, res) {
+  const numID = req.params.id;
+  let promises = [];
+
+  let promesa = new Promise((resolve, reject) => {
+    client.hgetall(numID, function(err, obj) {
+      if (err || !obj) {
+        reject(err);
+      } else {
+        resolve(obj.familiares.split(','));
+      }
+    });
+  })
+    .catch((err) => {
+  });
+
+  promesa.then((values) => {
+    for (let i = 0; i < values.length; i++) {
+      promises.push(new Promise((resolve, reject) => {
+        client.hgetall(values[i], function(err, obj) {
+          if (err || !obj)
+            reject(err);
+          else
+            resolve(obj);
+        });
+      })
+        .catch((err) => {
+      }));
+    }
+  })
+    .catch((err) => {
+  });
+
+  Promise.all(promises).then((values) => {
+    res.json(values);
+  })
+    .catch((err) => {
+  });
+});
+
 router.delete('/:id', function(req, res) {
   const numID = req.params.id;
   client.del(numID);
@@ -45,32 +95,7 @@ router.put('/', function(req, res) {
   const numAcadm = req.body.numAcadm;
 
   let academicosArr = [];
-  let requisitosArr = [];
   let pos = 0;
-
-  for (let key in sanitarios) {
-    if (sanitarios[key] === true) {
-      requisitosArr.push(key);
-    }
-  }
-
-  for (let key in legales) {
-    if (legales[key] === true) {
-      requisitosArr.push(key);
-    }
-  }
-
-  for (let key in laborales) {
-    if (laborales[key] === true) {
-      requisitosArr.push(key);
-    }
-  }
-
-  for (let key in profesionales) {
-    if (profesionales[key] === true) {
-      requisitosArr.push(key);
-    }
-  }
 
   for (let key in academicos) {
     if (academicos[key] === 'Ninguno')
@@ -93,7 +118,11 @@ router.put('/', function(req, res) {
     'genero', genero,
     'fecha_nacimiento', fecha_nacimiento,
     'estado_civil', estado_civil,
-    'requisitos', requisitosArr.toString(),
+    'familiares', Object.keys(familiares).toString(),
+    'sanitarios', Object.keys(sanitarios).toString(),
+    'legales', Object.keys(legales).toString(),
+    'laborales', Object.keys(laborales).toString(),
+    'profesionales', Object.keys(profesionales).toString(),
     'num_academicos', numAcadm,
     'empleo', '',
   ], function(err, reply) {

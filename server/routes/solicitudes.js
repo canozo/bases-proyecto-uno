@@ -14,9 +14,12 @@ router.get('/puestos', function(req, res) {
 
 router.put('/puestos', function(req, res) {
   // guardar la informacion obtenida en redis
-  const { nombrePuesto, cargo, lugar, sueldo, cantidadPlazas, sanitarios, legales, laborales, profesionales, academicos, deseos, condiciones } = req.body;
+  const { nombrePuesto, cargo, lugar, sueldo, cantidadPlazas, sanitarios, legales, laborales, profesionales, academicos, numAcadm, deseos, condiciones } = req.body;
 
-  let requisitosArr = [];
+  let sanitariosArr = [];
+  let legalesArr = [];
+  let laboralesArr = [];
+  let profesionalesArr = [];
   let academicosArr = [];
   let deseosArr = [];
   let condicionesArr = [];
@@ -24,25 +27,31 @@ router.put('/puestos', function(req, res) {
 
   for (let key in sanitarios) {
     if (sanitarios[key] === true) {
-      requisitosArr.push(key);
+      sanitariosArr.push(key);
     }
   }
 
   for (let key in legales) {
     if (legales[key] === true) {
-      requisitosArr.push(key);
+      legalesArr.push(key);
     }
   }
 
   for (let key in laborales) {
     if (laborales[key] === true) {
-      requisitosArr.push(key);
+      laboralesArr.push(key);
     }
   }
 
   for (let key in profesionales) {
     if (profesionales[key] === true) {
-      requisitosArr.push(key);
+      profesionalesArr.push(key);
+    }
+  }
+
+  for (let key in academicos) {
+    if (academicos[key] === true) {
+      academicosArr.push(key);
     }
   }
 
@@ -68,6 +77,10 @@ router.put('/puestos', function(req, res) {
     pos += 1;
   }
 
+  if (llaves.solPuestos == -1) {
+    llaves.solPuestos = 0;
+  }
+
   // agregar la llave a la tabla general
   client.hmset('solicitud puesto', [llaves.solPuestos, `solicitud puesto #${llaves.solPuestos}`]);
 
@@ -78,7 +91,10 @@ router.put('/puestos', function(req, res) {
     'lugar', lugar,
     'sueldo', sueldo,
     'cantidadPlazas', cantidadPlazas,
-    'requisitos', requisitosArr.toString(),
+    'sanitarios', sanitariosArr.toString(),
+    'legales', legalesArr.toString(),
+    'laborales', laboralesArr.toString(),
+    'profesionales', profesionalesArr.toString(),
     'deseos', deseosArr.toString(),
     'condiciones', condicionesArr.toString(),
   ]);
@@ -142,6 +158,9 @@ router.put('/empleos', function(req, res) {
     }
   }
 
+  if (llaves.solEmpleos == -1) {
+    llaves.solEmpleos = 0;
+  }
 
   if (!error) {
     // agregar la llave a la tabla general

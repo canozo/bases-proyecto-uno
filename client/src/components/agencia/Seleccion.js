@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Paper from '@material-ui/core/Paper';
+// import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   card: {
@@ -31,13 +31,13 @@ class Seleccion extends Component {
     this.props = props;
 
     this.state = {
-      solicitudesPuestos: [],
+      solicitudesPuestos: {},
     };
   }
 
   render() {
-    const { solicitudesPuestos } = this.state;
-    const { classes } = this.props;
+    // const { solicitudesPuestos } = this.state;
+    // const { classes } = this.props;
 
     // mostrar todas las solicitudes de puestos de las empresas
     // para cada solicitud con plazas disponibles mostrar
@@ -57,10 +57,10 @@ class Seleccion extends Component {
     // suponiendo que en una solicitud se guarda absolutamente toda la informacion necesaria
     return (
       <div>
-        {/* {solicitudesPuestos.map(({ nombreEmpresa, nombrePuesto }) => (
+        {/* {solicitudesPuestos.map(({ elem }) => (
           <Paper className={classes.root}>
             <Typography variant="h6" color="inherit" noWrap>
-              Solicitud de {nombreEmpresa}, {nombrePuesto}
+              Solicitud de puesto
             </Typography>
           </Paper>
         ))} */}

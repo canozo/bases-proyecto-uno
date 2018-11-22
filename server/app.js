@@ -35,11 +35,12 @@ llaves = {
 client.on('connect', () => {
   console.log('Conectado a Redis.');
   // ver el maximo de solicitudes de empleo:
-  client.hgetall('solicitudes empleo', function(err, obj) {
-    let size = 0;
+  client.hgetall('solicitud empleo', function(err, obj) {
+    let size;
     if (!obj) {
-      size = 0;
+      size = -1;
     } else {
+      size = 0;
       for (let key in obj)
         size += 1;
     }
@@ -47,11 +48,12 @@ client.on('connect', () => {
   });
 
   // ver el maximo de solicitudes de puestos:
-  client.hgetall('solicitudes puesto', function(err, obj) {
-    let size = 0;
+  client.hgetall('solicitud puesto', function(err, obj) {
+    let size;
     if (!obj) {
-      size = 0;
+      size = -1;
     } else {
+      size = 0;
       for (let key in obj)
         size += 1;
     }

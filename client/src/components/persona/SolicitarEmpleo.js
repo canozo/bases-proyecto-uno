@@ -10,17 +10,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-  },
   title: {
     paddingTop: '20px',
     paddingBottom: '10px',
-    paddingLeft: '10px',
+    paddingLeft: '20px',
   },
   button: {
     margin: theme.spacing.unit,
@@ -30,7 +23,6 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
-    display: 'flex',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
@@ -40,12 +32,7 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   formControl: {
-    display: 'flex',
     margin: theme.spacing.unit,
     width: '100%',
   },
@@ -53,13 +40,23 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   root_table: {
-    display: 'flex',
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
+  },
+  root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
-    display: 'flex',
     minWidth: 700,
   },
 });
@@ -357,22 +354,18 @@ class SolicitarEmpleo extends Component {
               <TableRow>
                 <TableCell>Id Solicitud Empleo</TableCell>
                 <TableCell>Solicitante</TableCell>
-                <TableCell>Requisitos</TableCell>
                 <TableCell>Deseos</TableCell>
                 <TableCell>Condiciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-            {solicitudes.map(({ llave, requisitos, deseos, condiciones, solicitante }) => (
+            {solicitudes.map(({ llave, deseos, condiciones, solicitante }) => (
               <TableRow key={llave}>
                 <TableCell component="th" scope="row">
                   {llave}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {solicitante}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {requisitos}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {deseos}

@@ -44,6 +44,7 @@ class AdminEmpresas extends Component {
     this.submitState = this.submitState.bind(this);
 
     this.state = {
+      modoEditar: false,
       empresas: [],
       nombre: '',
       direccion: '',
@@ -75,10 +76,12 @@ class AdminEmpresas extends Component {
         this.setState({
           empresas: empresas || [],
         });
-      });
+      })
+        .catch((err) => {});
   }
 
   handleEditar(value) {
+    this.setState({ modoEditar: true });
     fetch(`/empresas/${value}`, {
       method: 'get',
       headers: {
@@ -104,6 +107,7 @@ class AdminEmpresas extends Component {
   }
 
   handleEliminar(value) {
+    this.setState({ modoEditar: false });
     fetch(`/empresas/${value}`, {
       method: 'delete',
       headers: {
@@ -121,6 +125,7 @@ class AdminEmpresas extends Component {
   }
 
   submitState(event){
+    this.setState({ modoEditar: false });
     event.preventDefault();
     fetch('/empresas', {
       method: 'put',
@@ -159,28 +164,28 @@ class AdminEmpresas extends Component {
       <div>
         <Form onSubmit ={this.submitState}>
           <FormGroup>
-            <Label for="director">Nombre de Empresa</Label>
-            <Input type="text" name="nombre" id="nombre" placeholder="ENEE" value={this.state.nombre}
+            <Label for='director'>Nombre de Empresa</Label>
+            <Input type='text' disabled={this.state.modoEditar} name='nombre' id='nombre' placeholder='ENEE' value={this.state.nombre}
             onChange={e => this.setState({ nombre: e.target.value })}/>
           </FormGroup>
           <FormGroup>
-            <Label for="director">Nombre del director</Label>
-            <Input type="text" name="director" id="director" placeholder="Juan Mauricio"   value={this.state.director}
+            <Label for='director'>Nombre del director</Label>
+            <Input type='text' name='director' id='director' placeholder='Juan Mauricio'   value={this.state.director}
             onChange={e => this.setState({ director: e.target.value })}/>
           </FormGroup>
           <FormGroup>
-            <Label for="direccion">Direccion de la empresa</Label>
-            <Input type="text" name="direccion" id="direccion" placeholder="Col. Miramomtes 3 ave"  value={this.state.direccion}
+            <Label for='direccion'>Direccion de la empresa</Label>
+            <Input type='text' name='direccion' id='direccion' placeholder='Col. Miramomtes 3 ave'  value={this.state.direccion}
             onChange={e => this.setState({ direccion: e.target.value })}/>
           </FormGroup>
           <FormGroup>
-            <Label for="rubro">Rubro</Label>
-            <Input type="text" name="rubro" id="rubro" placeholder="Telecomunicaciones"  value={this.state.rubro}
+            <Label for='rubro'>Rubro</Label>
+            <Input type='text' name='rubro' id='rubro' placeholder='Telecomunicaciones'  value={this.state.rubro}
             onChange={e => this.setState({ rubro: e.target.value })}/>
           </FormGroup>
           <FormGroup>
-            <Label for="cfi">CFI</Label>
-            <Input type="text" name="cfi" id="cfi" placeholder="CFI"  value={this.state.cfi}
+            <Label for='cfi'>CFI</Label>
+            <Input type='text' name='cfi' id='cfi' placeholder='CFI'  value={this.state.cfi}
             onChange={e => this.setState({ cfi: e.target.value })}/>
           </FormGroup>
           <Button>Guardar</Button>
@@ -199,21 +204,21 @@ class AdminEmpresas extends Component {
             <TableBody>
               {empresas.map(({ nombre }) => (
                 <TableRow key={nombre}>
-                  <TableCell component="th" scope="row">
+                  <TableCell component='th' scope='row'>
                     {nombre}
                   </TableCell>
-                  {/* <TableCell component="th" scope="row">
+                  {/* <TableCell component='th' scope='row'>
                     {rubro}
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component='th' scope='row'>
                     {direccion}
                   </TableCell> */}
                   <TableCell numeric>
-                    <IconButton aria-label="Edit" value={nombre}
+                    <IconButton aria-label='Edit' value={nombre}
                       onClick={() => {this.handleEditar(nombre);}}>
                         <EditIcon />
                     </IconButton>
-                    <IconButton aria-label="Delete" value={nombre}
+                    <IconButton aria-label='Delete' value={nombre}
                       onClick={() => {this.handleEliminar(nombre);}}>
                       <DeleteIcon />
                     </IconButton>
