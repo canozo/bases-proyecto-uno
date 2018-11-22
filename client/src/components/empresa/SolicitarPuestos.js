@@ -77,9 +77,6 @@ class SolicitarPuestos extends Component {
       lugar: '',
       cargo: '',
       nombrePuesto: '',
-      genero: '',
-      estadoCivil: '',
-      rangoEdad: '',
       sueldo: '',
       cantidadPlazas: '',
       condicionesRes: {},
@@ -88,7 +85,6 @@ class SolicitarPuestos extends Component {
       condiciones: [],
       deseos: [],
       puestos: [],
-      familiares: {},
       sanitarios: {},
       legales: {},
       laborales: {},
@@ -226,7 +222,6 @@ class SolicitarPuestos extends Component {
 
   submitState(event){
     event.preventDefault();
-    console.log(this.state);
     fetch('/solicitudes/puestos', {
       method: 'put',
       headers : {
@@ -241,11 +236,19 @@ class SolicitarPuestos extends Component {
         rangoEdad: this.state.rangoEdad,
         sueldo: this.state.sueldo,
         cantidadPlazas: this.state.cantidadPlazas,
+        sanitarios: this.state.sanitarios,
+        legales: this.state.legales,
+        laborales: this.state.laborales,
+        profesionales: this.state.profesionales,
+        academicos: this.state.academicos,
+        numAcadm: this.state.numeroAcademicos,
+        deseos: this.state.deseos,
       }),
     })
       .then(res => res.json())
       .then(res => {
         // logica de respuesta
+          console.log(res);
       }).catch((err) => {
       });
   }
@@ -543,7 +546,7 @@ class SolicitarPuestos extends Component {
         <FormGroup>
           <FormGroup>
             <Label for='nombrePuesto'>Nombre del puesto</Label>
-            <Input type='text' name='nombrePuesto' id='nombrePuedo' value={this.state.nombrePuesto} placeholder='Gerente de Ventas'
+            <Input type='text' name='nombrePuesto' id='nombrePuesto' value={this.state.nombrePuesto} placeholder='Gerente de Ventas'
             onChange={e => this.setState({ nombrePuesto: e.target.value })}/>
           </FormGroup>
           <Label for='LugarEmpleo'>Lugar de Empleo</Label>
