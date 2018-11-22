@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Form, FormGroup, Label, CustomInput } from 'reactstrap';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import { Button, Form, FormGroup, Input, Label, CustomInput } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -78,6 +86,8 @@ class SolicitarEmpleo extends Component {
     this.checkearPuestos = this.checkearPuestos.bind(this);
     this.handleChange =  this.handleChange.bind(this);
     this.submitState =  this.submitState.bind(this);
+    this.handleChangeCondiciones = this.handleChangeCondiciones.bind(this);
+    this.handleChangeDeseos = this.handleChangeDeseos.bind(this);
 
 
     this.state = {
@@ -89,8 +99,12 @@ class SolicitarEmpleo extends Component {
       condicionOffice: '',
       condicionPresion: '',
       condicionAuxilios: '',
+      condicionesRes: {},
+      deseosRes: {},
       personas:[],
       puestos:[],
+      condiciones: [],
+      deseos: [],
       checkPuestos: {},
       labelWidth : 0,
     };
@@ -150,13 +164,89 @@ class SolicitarEmpleo extends Component {
       });
   }
 
+  cargarCondiciones() {
+    fetch('/requisitos/condiciones', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        let condiciones = [];
+        for (let key in res)
+          condiciones.push({ value: key });
+
+        this.setState({
+          condiciones: condiciones || [],
+        });
+      })
+        .catch((error) => {
+      });
+  }
+
+  cargarDeseos() {
+    fetch('requisitos/deseos', {
+      method: 'get',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        // logica de respuesta
+        let deseos = [];
+        for (let key in res)
+          deseos.push({ value: key });
+
+        this.setState({
+          deseos: deseos || [],
+        });
+      })
+        .catch((error) => {
+      });
+  }
+
   componentDidMount() {
     this.cargarPersonas();
     this.cargarPuestos();
+    this.cargarCondiciones();
+    this.cargarDeseos();
     // this.setState({
     //   labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     // });
   }
+
+  handleChangeCondiciones(event) {
+    let condicionesNuevo = this.state.condicionesRes;
+    condicionesNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      condicionesRes: condicionesNuevo,
+    });
+  }
+
+  handleChangeDeseos(event) {
+    let deseosNuevo = this.state.deseosRes;
+    deseosNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      academicos: deseosNuevo,
+    });
+  }
+
+  handleChangeDeseos(event) {
+    let deseosNuevo = this.state.deseosRes;
+    deseosNuevo[event.target.id] = event.target.value;
+
+    this.setState({
+      academicos: deseosNuevo,
+    });
+  }
+
 
   handleEditar(value) {
     fetch(`/empleos/${value}`, {
@@ -238,7 +328,7 @@ class SolicitarEmpleo extends Component {
 
   render() {
     const { classes } = this.props;
-    const {personas, puestos} = this.state;
+    const {personas, puestos, condiciones, deseos} = this.state;
     return (
       <Form onSubmit={this.submitState}>
         <FormGroup>
@@ -347,6 +437,41 @@ class SolicitarEmpleo extends Component {
             <option value='No'>No</option>
           </Select>
         </FormControl>
+            
+        <FormGroup>
+          <Label>Condiciones:</Label>
+          {condiciones.map(({ value }) => (
+            <FormGroup key={value}>
+              <Label>{value}</Label>
+              <Input
+                type='select'
+                id={value}
+                value={this.state.condicionesRes[value]}
+                onChange={this.handleChangeCondiciones}>
+                <option value=''/>
+                <option value='Si'>Si</option>
+                <option value='No'>No</option>
+              </Input>
+            </FormGroup>
+          ))}
+        </FormGroup>
+        <FormGroup>
+          <Label>Deseos que puede cumplir:</Label>
+          {deseos.map(({ value }) => (
+            <FormGroup key={value}>
+              <Label>{value}</Label>
+              <Input
+                type='select'
+                id={value}
+                value={this.state.deseosRes[value]}
+                onChange={this.handleChangeDeseos}>
+                <option value=''/>
+                <option value='Si'>Si</option>
+                <option value='No'>No</option>
+              </Input>
+            </FormGroup>
+          ))}
+        </FormGroup>
         <Button>Guardar</Button>
       </Form>
     );
